@@ -11,10 +11,15 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
+    var navigationBarAppearace = UINavigationBar.appearance()
+    var uiLabelAppearace = UILabel.appearance()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         // Override point for customization after application launch.
+        navigationBarAppearace.shadowImage = UIImage()
+        navigationBarAppearace.barTintColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+        navigationBarAppearace.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "HYgsrB", size: 16)!, NSAttributedString.Key.foregroundColor: UIColor.white]
+        uiLabelAppearace.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         return true
     }
 
