@@ -29,11 +29,6 @@ class ViewController: UIViewController
         loadTitle()
     }
     
-    override var preferredStatusBarStyle: UIStatusBarStyle
-    {
-        return .lightContent
-    }
-    
     private func titleInit(titleString: String){
         //삼행시 제목 첫번째 글자 초기화
         titleFirst.font = UIFont(name: "HYgsrB", size: 27)
@@ -49,6 +44,14 @@ class ViewController: UIViewController
         titleThird.font = UIFont(name: "HYgsrB", size: 27)
         titleThird.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         titleThird.text = String(titleString[titleString.index(before: titleString.endIndex)])
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        _ = segue.destination
+        
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        navigationItem.backBarButtonItem = backItem
     }
     
     private func backgroundInit(){
