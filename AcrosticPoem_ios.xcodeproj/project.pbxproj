@@ -17,6 +17,10 @@
 		2F5C96642371775800A248C1 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C96632371775800A248C1 /* MainViewController.swift */; };
 		2FA60E3523750297006A2445 /* sm.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2FA60E3323750297006A2445 /* sm.ttf */; };
 		2FBF1AC5237E30BD00574BE3 /* PoemAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBF1AC4237E30BD00574BE3 /* PoemAddViewController.swift */; };
+		2FC3DA202387ADDF00A737EE /* fghj.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC3DA1F2387ADDF00A737EE /* fghj.swift */; };
+		2FC3DA222387ADEA00A737EE /* jhgfgh.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FC3DA212387ADEA00A737EE /* jhgfgh.xib */; };
+		2FC44597238279D8005C914D /* ExtractPoemList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC44596238279D8005C914D /* ExtractPoemList.swift */; };
+		2FCFA9902386B3E9004F4F1A /* PoemMainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FCFA98F2386B3E9004F4F1A /* PoemMainView.swift */; };
 		6CE9CE08C49BB1CBD595E2C1 /* Pods_AcrosticPoem_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E9C15D80C3F95C3EDB1D6B /* Pods_AcrosticPoem_ios.framework */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +39,10 @@
 		2FA60E3323750297006A2445 /* sm.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = sm.ttf; path = ../../Downloads/b51691a5a19de8b2/font/sm.ttf; sourceTree = SOURCE_ROOT; };
 		2FA60E3423750297006A2445 /* gungseo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = gungseo.ttf; path = ../../Downloads/b51691a5a19de8b2/font/gungseo.ttf; sourceTree = SOURCE_ROOT; };
 		2FBF1AC4237E30BD00574BE3 /* PoemAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemAddViewController.swift; sourceTree = "<group>"; };
+		2FC3DA1F2387ADDF00A737EE /* fghj.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fghj.swift; sourceTree = "<group>"; };
+		2FC3DA212387ADEA00A737EE /* jhgfgh.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = jhgfgh.xib; sourceTree = "<group>"; };
+		2FC44596238279D8005C914D /* ExtractPoemList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtractPoemList.swift; sourceTree = "<group>"; };
+		2FCFA98F2386B3E9004F4F1A /* PoemMainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemMainView.swift; sourceTree = "<group>"; };
 		C6AAD7468D29BB4951E9952B /* Pods-AcrosticPoem_ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AcrosticPoem_ios.debug.xcconfig"; path = "Target Support Files/Pods-AcrosticPoem_ios/Pods-AcrosticPoem_ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,11 +81,15 @@
 			children = (
 				2FA60E322375027F006A2445 /* Fonts */,
 				2F5C964F23714CA500A248C1 /* AppDelegate.swift */,
+				2FC44596238279D8005C914D /* ExtractPoemList.swift */,
 				2F5C965123714CA500A248C1 /* SceneDelegate.swift */,
 				2F5C965323714CA500A248C1 /* ViewController.swift */,
 				2FBF1AC4237E30BD00574BE3 /* PoemAddViewController.swift */,
 				2F5C96632371775800A248C1 /* MainViewController.swift */,
 				2F5C965523714CA500A248C1 /* Main.storyboard */,
+				2FC3DA1F2387ADDF00A737EE /* fghj.swift */,
+				2FC3DA212387ADEA00A737EE /* jhgfgh.xib */,
+				2FCFA98F2386B3E9004F4F1A /* PoemMainView.swift */,
 				2F5C965823714CAA00A248C1 /* Assets.xcassets */,
 				2F5C965A23714CAA00A248C1 /* LaunchScreen.storyboard */,
 				2F5C965D23714CAA00A248C1 /* Info.plist */,
@@ -172,6 +184,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F5C965C23714CAA00A248C1 /* LaunchScreen.storyboard in Resources */,
+				2FC3DA222387ADEA00A737EE /* jhgfgh.xib in Resources */,
 				2F49BDD5237DA3F500065870 /* gungseo.ttf in Resources */,
 				2F5C965923714CAA00A248C1 /* Assets.xcassets in Resources */,
 				2FA60E3523750297006A2445 /* sm.ttf in Resources */,
@@ -232,6 +245,9 @@
 				2F5C965023714CA500A248C1 /* AppDelegate.swift in Sources */,
 				2F5C965223714CA500A248C1 /* SceneDelegate.swift in Sources */,
 				2F5C96642371775800A248C1 /* MainViewController.swift in Sources */,
+				2FC3DA202387ADDF00A737EE /* fghj.swift in Sources */,
+				2FC44597238279D8005C914D /* ExtractPoemList.swift in Sources */,
+				2FCFA9902386B3E9004F4F1A /* PoemMainView.swift in Sources */,
 				2FBF1AC5237E30BD00574BE3 /* PoemAddViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

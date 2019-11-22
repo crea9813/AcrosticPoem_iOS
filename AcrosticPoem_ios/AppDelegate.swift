@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,12 +16,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var uiLabelAppearace = UILabel.appearance()
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+        if launchedBefore
+        {
+            print("Not first launch.")
+        }
+        else
+        {
+            print("First launch")
+            Alamofire.request("https://acrosticpoem.azurewebsites.net/guest", method: .get).responseString {
+                response in
+                switch(response.result){
+                case .success(_):
+                    if let guestToken = response.result.value{
+                        UserDefaults.standard.set(guestToken, forKey: "GuestToken")
+                    }
+                case .failure(_):
+                    print(response.result.error!)
+                }
+            }
+            UserDefaults.standard.set(true, forKey: "launchedBefore")
+        }
+        
         // Override point for customization after application launch.
         navigationBarAppearace.shadowImage = UIImage()
         navigationBarAppearace.barTintColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         navigationBarAppearace.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "HYgsrB", size: 16)!, NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationBarAppearace.topItem?.title = ""
         uiLabelAppearace.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+        
         return true
     }
 
