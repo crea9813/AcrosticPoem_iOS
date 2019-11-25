@@ -37,7 +37,6 @@ class ViewController: UIViewController
         loadTitle()
         collectionViewInit()
         poemList.addList(Sort: true)
-        poemList.getInformation(nowPoem: nowPage)
     }
     
     public func loadTitle(){
@@ -71,6 +70,8 @@ class ViewController: UIViewController
         titleThird.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         titleThird.text = String(titleString[titleString.index(before: titleString.endIndex)])
     }
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         _ = segue.destination

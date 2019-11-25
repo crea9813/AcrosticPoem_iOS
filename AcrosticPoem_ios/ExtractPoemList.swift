@@ -34,6 +34,7 @@ public class ExtractPoemList {
         print("Today : ",self.today)
         print("Your GuestToken: ",self.guestToken)
     }
+    
     private func getToken(){
         if (UserDefaults.standard.value(forKey: "GuestToken") != nil) {
             self.guestToken = UserDefaults.standard.value(forKey: "GuestToken") as! String
@@ -91,22 +92,28 @@ public class ExtractPoemList {
     }
     
     public func getInformation(nowPoem : Int){
-        Alamofire.request(self.BASE_URL + "poem?token="+self.guestToken+"&poemid="+self.data[0], method: .get, encoding: JSONEncoding.default).responseJSON {
+        Alamofire.request(self.BASE_URL + "poem?token="+self.guestToken+"&poemid="+self.data[nowPoem], method: .get, encoding: JSONEncoding.default).responseJSON {
             response in
-            self.word = response.result.value as! NSDictionary
-            print(self.word)
+            switch(response.result){
+            case .success(_):
+                self.word = response.result.value as! NSDictionary
+                print(self.word)
+            case .failure(_):
+                print(response.result.error!)
+            }
+            
         }
     }
     
     public func addList(Sort : Bool){
-        if Sort == true {
+        switch(Sort){
+        case true:
             randomPoemList{
                 (result) in
+                print(result)
                 self.data = result["poemId"] as! [String]
-                print(self.data)
-                print(self.BASE_URL + "poem?token="+self.guestToken+"&poemid="+self.data[1])
             }
-        }else if Sort == false{
+        case false:
             BestPoemList{
                 result in
                 self.data = result["poemId"] as! [String]
