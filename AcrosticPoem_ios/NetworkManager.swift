@@ -66,7 +66,7 @@ class NetworkManager {
     }
     
     //오늘의 주제 가져오기
-    private func todayTitle(completionHandler: @escaping (_ result: String)->()) {
+    public func todayTitle(completionHandler: @escaping (_ result: String)->()) {
         Alamofire.request(BASE_URL+"title", method: .get).responseString {
             response in
             switch(response.result){
@@ -82,6 +82,6 @@ class NetworkManager {
     
     //삼행시 제출
     private func submitPoem(){
-        Alamofire.request(BASE_URL+"poem", method: .post, parameters: ["poem" : ])
+        Alamofire.request(BASE_URL+"poem", method: .post)
     }
 }
