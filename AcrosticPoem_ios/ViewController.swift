@@ -24,8 +24,8 @@ class ViewController: UIViewController
     
     var nowPage:Int = 0
     var peomItems = [""]
-    var poemList = ExtractPoemList()
     var networkManager = NetworkManager()
+    var todayTitle = ""
     
     
     // ! 는 Unwraping 하는 구문 변수가 nil 이 되진 않을 명확한 약속이 없을 때 사용
@@ -35,31 +35,28 @@ class ViewController: UIViewController
         
         // Do any additional setup after loading the view.
         backgroundInit()
-        setTitle()
+        networkManager.todayTitle(completionHandler: {
+            result in
+            self.setTitle(todayTitle: result)
+        })
     }
     
-    
-    private func setTitle() {
-        networkManager.todayTitle(completionHandler: {
-            (result) in
-            let title = result as String
-        })
-        
-        print("오늘의 주제 :", title!)
-        //삼행시 제목 첫번째 글자 초기화
+    private func setTitle(todayTitle : String) {
+        print("오늘의 주제 :", todayTitle)
+//        삼행시 제목 첫번째 글자 초기화
         titleFirst.font = UIFont(name: "HYgsrB", size: 27)
         titleFirst.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
-        titleFirst.text = String(title![(title!.startIndex)])
-        
+        titleFirst.text = String(todayTitle[(todayTitle.startIndex)])
+
         //삼행시 제목 두번째 글자 초기화
         titleSecond.font = UIFont(name: "HYgsrB", size: 27)
         titleSecond.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
-        titleSecond.text = String(title![title!.index(title!.startIndex, offsetBy: 1)])
-        
+        titleSecond.text = String(todayTitle[todayTitle.index(todayTitle.startIndex, offsetBy: 1)])
+
         //삼행시 제목 세번째 글자 초기화
         titleThird.font = UIFont(name: "HYgsrB", size: 27)
         titleThird.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
-        titleThird.text = String(title![title!.index(before: title!.endIndex)])
+        titleThird.text = String(todayTitle[todayTitle.index(before: todayTitle.endIndex)])
     }
     
     
