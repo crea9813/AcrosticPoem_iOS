@@ -39,6 +39,8 @@ class ViewController: UIViewController
             result in
             self.setTitle(todayTitle: result)
         })
+        networkManager.poemSort()
+        
     }
     
     private func setTitle(todayTitle : String) {
