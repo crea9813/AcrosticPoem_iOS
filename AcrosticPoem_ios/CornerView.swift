@@ -1,7 +1,7 @@
 import UIKit
 
 @IBDesignable
-class MainViewController: UIView {
+class CornerView: UIView {
 
     var cornerRadiusValue : CGFloat = 0
     var corners : UIRectCorner = []

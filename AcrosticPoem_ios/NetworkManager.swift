@@ -18,6 +18,10 @@ class NetworkManager {
     private let sort:Bool
     private var poemList:Array<String> = []
     
+    var imageArr = [String]()
+    var wordArr = [NSArray]()
+    var likeArr = [Int]()
+    
     init() {
         let date = NSDate()
         let dateFormatter = DateFormatter()
@@ -122,21 +126,21 @@ class NetworkManager {
     
     //추천 시 가져오기
     public func getBestPoem(completionHandler: @escaping (_ result: [String:Any]) -> ()) {
-    Alamofire.request(BASE_URL+"poem/best?date="+today+"&count="+count, method: .get, encoding: JSONEncoding.default).responseJSON {
-        response in
-        switch(response.result){
-        case .success(_):
-            if let best = response.result.value as? [String:Any] {
-                if best["poemId"] == nil {
-                    print("등록된 시가 없음")
-                }else{
-                    print("PoemId : ", best["poemId"] as! [String])
-                    completionHandler(best)
+        Alamofire.request(BASE_URL+"poem/best?date="+today+"&count="+count, method: .get, encoding: JSONEncoding.default).responseJSON {
+            response in
+            switch(response.result){
+            case .success(_):
+                if let best = response.result.value as? [String:Any] {
+                    if best["poemId"] == nil {
+                        print("등록된 시가 없음")
+                    }else{
+                        print("PoemId : ", best["poemId"] as! [String])
+                        completionHandler(best)
+                    }
                 }
+            case .failure(_):
+                print(response.result.error!)
             }
-        case .failure(_):
-            print(response.result.error!)
-        }
         }
     }
     
@@ -146,16 +150,18 @@ class NetworkManager {
             response in
             switch(response.result){
             case .success(_):
-                if let poemInfo = response.result.value as? NSDictionary {
+                if let poemInfo = response.result.value as? NSDictionary{
                     print(poemInfo)
+                    self.imageArr.append(poemInfo["image"] as! String)
+                    self.wordArr.append(poemInfo["word"] as! NSArray)
+                    print(self.imageArr,self.wordArr)
                 }
             case .failure(_):
                 print(response.result.error!)
             }
-
         }
     }
-    
+    //랜덤으로 가져올지 인기순으로 가져올지
     public func poemSort(){
         var poem:Array<String> = []
         switch(sort){
@@ -163,7 +169,10 @@ class NetworkManager {
             getRandomPeom{
                 result in
                 poem = result["poemId"] as! [String]
-                self.getPoemInfo(poemId: poem[0])
+                for count in 0..<poem.count {
+                    self.getPoemInfo(poemId: poem[count])
+                }
+                
             }
         case false:
             getBestPoem{
@@ -173,7 +182,7 @@ class NetworkManager {
             }
         }
     }
-    
+    //시 좋아요
     public func likePoem(poemId : String){
         Alamofire.request(BASE_URL+"poem/like", method: .post, parameters: ["token" : TOKEN, "poemId" : poemId], encoding: JSONEncoding.default).responseJSON{
             response in
@@ -189,7 +198,7 @@ class NetworkManager {
             }
         }
     }
-    
+    //시 신고하기
     public func reportPoem(poemId : String){
         Alamofire.request(BASE_URL+"poem/report", method: .post, parameters: ["token" : TOKEN, "poemId" : poemId], encoding: JSONEncoding.default).responseJSON{
             response in
@@ -207,5 +216,4 @@ class NetworkManager {
             }
         }
     }
-    
 }

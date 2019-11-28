@@ -20,13 +20,10 @@ class ViewController: UIViewController
     @IBOutlet var titleSecond: UILabel!
     @IBOutlet var titleThird: UILabel!
     
-    @IBOutlet weak var collectionView: UICollectionView!
-    
     var nowPage:Int = 0
     var peomItems = [""]
     var networkManager = NetworkManager()
     var todayTitle = ""
-    
     
     // ! 는 Unwraping 하는 구문 변수가 nil 이 되진 않을 명확한 약속이 없을 때 사용
     override func viewDidLoad()
@@ -77,9 +74,6 @@ class ViewController: UIViewController
         
     }
     private func collectionViewInit(){
-        
-//
-//
 //        collectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
 //
 //        collectionView.delegate = self
