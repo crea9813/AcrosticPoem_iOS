@@ -178,7 +178,9 @@ class NetworkManager {
             getBestPoem{
                 result in
                 poem = result["poemId"] as! [String]
-                self.getPoemInfo(poemId: poem[0])
+                for count in 0..<poem.count {
+                    self.getPoemInfo(poemId: poem[count])
+                }
             }
         }
     }
