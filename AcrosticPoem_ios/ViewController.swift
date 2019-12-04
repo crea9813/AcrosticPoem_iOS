@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import InfiniteCarouselCollectionView
 
 class ViewController: UIViewController
 {
@@ -28,19 +29,16 @@ class ViewController: UIViewController
     // ! 는 Unwraping 하는 구문 변수가 nil 이 되진 않을 명확한 약속이 없을 때 사용
     override func viewDidLoad()
     {
-        super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
-        backgroundInit()
         networkManager.todayTitle(completionHandler: {
             result in
             self.setTitle(todayTitle: result)
         })
-        networkManager.poemSort()
         
+        super.viewDidLoad()
+        backgroundInit()
     }
     
-    private func setTitle(todayTitle : String) {
+    public func setTitle(todayTitle : String) {
         print("오늘의 주제 :", todayTitle)
 //        삼행시 제목 첫번째 글자 초기화
         titleFirst.font = UIFont(name: "HYgsrB", size: 27)

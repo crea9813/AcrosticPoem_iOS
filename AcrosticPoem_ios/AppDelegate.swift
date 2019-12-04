@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Alamofire
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var uiLabelAppearace = UILabel.appearance()
     
     let networkManager = NetworkManager()
+    let viewController = ViewController()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         UserDefaults.standard.set("Random", forKey: "Sort")
@@ -28,6 +28,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearace.topItem?.title = ""
         uiLabelAppearace.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         
+//        networkManager.todayTitle(completionHandler: {
+//            result in
+//            self.viewController.setTitle(todayTitle: result)
+//        })
+        networkManager.poemSort()
         return true
     }
 

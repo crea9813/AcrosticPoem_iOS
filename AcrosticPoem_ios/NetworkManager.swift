@@ -6,38 +6,32 @@
 //  Copyright © 2019 Minestrone. All rights reserved.
 //
 
-import Alamofire
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class NetworkManager {
-    
+
     private let BASE_URL:String
     private var TOKEN:String
-    private let today:String
     private var count:String
     private let sort:Bool
     private var poemList:Array<String> = []
     
     var imageArr = [String]()
-    var wordArr = [NSArray]()
+    var wordArr = [NSDictionary]()
     var likeArr = [Int]()
     
     init() {
-        let date = NSDate()
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ko_kr")
-        dateFormatter.dateFormat = "yyyyMMdd"
-        
-        BASE_URL = "https://acrosticpoem.azurewebsites.net/"
+        BASE_URL = "http://149.28.22.157:4568/"
         TOKEN = UserDefaults.standard.value(forKey: "GuestToken") as! String
-        today = dateFormatter.string(from: date as Date)
         count = "3"
         sort = true
     }
     
     // 토큰 생성
     private func generationToken() {
-        Alamofire.request("https://acrosticpoem.azurewebsites.net/guest", method: .get).responseString {
+        Alamofire.request("http://149.28.22.157:4568/guest", method: .get).responseString {
             response in
             switch(response.result){
             case .success(_):
@@ -45,7 +39,7 @@ class NetworkManager {
                     UserDefaults.standard.set(guestToken, forKey: "GuestToken")
                 }
             case .failure(_):
-                print(response.result.error!)
+                print("토큰 생성 실패: ",response.result.error!)
             }
         }
     }
@@ -86,7 +80,7 @@ class NetworkManager {
     
     //오늘의 주제 가져오기
     public func todayTitle(completionHandler: @escaping (_ result: String)->()) {
-        Alamofire.request(BASE_URL+"title", method: .get).responseString {
+        Alamofire.request(BASE_URL+"title/3", method: .get).responseString {
             response in
             switch(response.result){
             case .success(_):
@@ -106,7 +100,7 @@ class NetworkManager {
     
     //랜덤 시 가져오기
     public func getRandomPeom(completionHandler: @escaping (_ result: [String:Any]) -> ()) {
-        Alamofire.request(BASE_URL+"poem/random?date="+today+"&count="+count, method: .get, encoding: JSONEncoding.default).responseJSON {
+        Alamofire.request(BASE_URL+"poem/random/3?count="+count, method: .get, encoding: JSONEncoding.default).responseJSON {
             result in
             switch(result.result){
             case .success(_):
@@ -119,14 +113,14 @@ class NetworkManager {
                     }
                 }
             case .failure(_):
-                print(result.result.error!)
+                print("랜덤 시 불러오기 실패",result.result.error!)
             }
         }
     }
     
     //추천 시 가져오기
     public func getBestPoem(completionHandler: @escaping (_ result: [String:Any]) -> ()) {
-        Alamofire.request(BASE_URL+"poem/best?date="+today+"&count="+count, method: .get, encoding: JSONEncoding.default).responseJSON {
+        Alamofire.request(BASE_URL+"poem/best/3?count="+count, method: .get, encoding: JSONEncoding.default).responseJSON {
             response in
             switch(response.result){
             case .success(_):
@@ -146,18 +140,25 @@ class NetworkManager {
     
     //시 정보 가져오기
     private func getPoemInfo(poemId : String){
-        Alamofire.request(BASE_URL+"poem?token="+TOKEN+"&poemid="+poemId, method: .get, encoding: JSONEncoding.default).responseJSON {
+        Alamofire.request(BASE_URL+"poem/3?token="+TOKEN+"&poemid="+poemId, method: .get, encoding: JSONEncoding.default , headers:  ["Content-Type":"application/json;charset=utf-8"] ).responseJSON {
             response in
             switch(response.result){
             case .success(_):
-                if let poemInfo = response.result.value as? NSDictionary{
-                    print(poemInfo)
-                    self.imageArr.append(poemInfo["image"] as! String)
-                    self.wordArr.append(poemInfo["word"] as! NSArray)
-                    print(self.imageArr,self.wordArr)
+                if let poemData = try? JSONSerialization.data(withJSONObject: response.result.value!, options: .prettyPrinted){
+                    let poemInfo = try? JSON(data: poemData)
+                    
+                    self.imageArr.append(poemInfo!["image"].string!)
+                    print(poemInfo!["word"].arrayValue)
+                    self.likeArr.append(poemInfo!["like"].int!)
+                    print(self.imageArr,self.wordArr,self.likeArr)
                 }
+//                if let poemInfo = response.result.value as? NSDictionary{
+//                    self.imageArr.append(poemInfo["image"] as! String)
+//                    self.wordArr.append(poemInfo["word"] as! NSArray)
+//                    print(self.imageArr,self.wordArr)
+//                }
             case .failure(_):
-                print(response.result.error!)
+                print("시 정보 불러오기 실패",response.result.error!)
             }
         }
     }
@@ -186,7 +187,7 @@ class NetworkManager {
     }
     //시 좋아요
     public func likePoem(poemId : String){
-        Alamofire.request(BASE_URL+"poem/like", method: .post, parameters: ["token" : TOKEN, "poemId" : poemId], encoding: JSONEncoding.default).responseJSON{
+        Alamofire.request(BASE_URL+"poem/like/3", method: .post, parameters: ["token" : TOKEN, "poemId" : poemId], encoding: JSONEncoding.default).responseJSON{
             response in
             switch(response.response?.statusCode){
             case 200:
@@ -202,7 +203,7 @@ class NetworkManager {
     }
     //시 신고하기
     public func reportPoem(poemId : String){
-        Alamofire.request(BASE_URL+"poem/report", method: .post, parameters: ["token" : TOKEN, "poemId" : poemId], encoding: JSONEncoding.default).responseJSON{
+        Alamofire.request(BASE_URL+"poem/report/3", method: .post, parameters: ["token" : TOKEN, "poemId" : poemId], encoding: JSONEncoding.default).responseJSON{
             response in
             switch(response.response?.statusCode){
             case 200:
