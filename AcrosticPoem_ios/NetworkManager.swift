@@ -19,7 +19,7 @@ class NetworkManager {
     private var poemList:Array<String> = []
     
     var imageArr = [String]()
-    var wordArr = [NSDictionary]()
+    var wordArr = [NSArray]()
     var likeArr = [Int]()
     
     init() {
@@ -29,6 +29,9 @@ class NetworkManager {
         sort = true
     }
     
+    public func getPoemList() -> Int{
+        return poemList.count
+    }
     // 토큰 생성
     private func generationToken() {
         Alamofire.request("http://149.28.22.157:4568/guest", method: .get).responseString {
@@ -146,11 +149,9 @@ class NetworkManager {
             case .success(_):
                 if let poemData = try? JSONSerialization.data(withJSONObject: response.result.value!, options: .prettyPrinted){
                     let poemInfo = try? JSON(data: poemData)
-                    
-                    self.imageArr.append(poemInfo!["image"].string!)
-                    print(poemInfo!["word"].arrayValue)
-                    self.likeArr.append(poemInfo!["like"].int!)
-                    print(self.imageArr,self.wordArr,self.likeArr)
+                    self.imageArr.append(poemInfo!["image"].string! as String)
+                    self.wordArr.append(poemInfo!["word"].array! as NSArray)
+                    self.likeArr.append(poemInfo!["like"].int! as Int)
                 }
 //                if let poemInfo = response.result.value as? NSDictionary{
 //                    self.imageArr.append(poemInfo["image"] as! String)

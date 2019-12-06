@@ -7,11 +7,13 @@
 //
 
 import UIKit
+import SnapKit
 import Alamofire
 import InfiniteCarouselCollectionView
 
-class ViewController: UIViewController
+class ViewController: UIViewController, CarouselCollectionViewDataSource
 {
+    
     //인터페이스 빌더와 객체를 연결
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet var likeButton: UIView!
@@ -20,11 +22,15 @@ class ViewController: UIViewController
     @IBOutlet var titleFirst: UILabel!
     @IBOutlet var titleSecond: UILabel!
     @IBOutlet var titleThird: UILabel!
+    @IBOutlet var poemView: UIView!
+    @IBOutlet weak var titleView: UIImageView!
     
     var nowPage:Int = 0
-    var peomItems = [""]
+    var poemItems:Int = 0
     var networkManager = NetworkManager()
     var todayTitle = ""
+    var numberOfItems: Int = 0
+    let collectionView = CarouselCollectionView(frame: .zero, collectionViewFlowLayout: UICollectionViewFlowLayout())
     
     // ! 는 Unwraping 하는 구문 변수가 nil 이 되진 않을 명확한 약속이 없을 때 사용
     override func viewDidLoad()
@@ -33,9 +39,15 @@ class ViewController: UIViewController
             result in
             self.setTitle(todayTitle: result)
         })
-        
+//        self.numberOfItems = networkManager.getPoemList()
+        self.numberOfItems = 3
         super.viewDidLoad()
         backgroundInit()
+    }
+
+    func carouselCollectionView(_ carouselCollectionView: CarouselCollectionView, cellForItemAt index: Int, fakeIndexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: fakeIndexPath) as! CVCell
+        return cell
     }
     
     public func setTitle(todayTitle : String) {
@@ -70,6 +82,21 @@ class ViewController: UIViewController
         //배경 색상 지정
         self.view.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         
+        poemView.addSubview(collectionView)
+        collectionView.snp.makeConstraints{ (make) -> Void in
+            make.top.equalTo(titleView.snp.bottom).inset(8)
+            make.left.equalTo(poemView).offset(8)
+            make.bottom.equalTo(poemView).offset(-8)
+            make.right.equalTo(poemView).offset(-8)
+        }
+        
+        collectionView.register(CVCell.self, forCellWithReuseIdentifier:"id")
+        collectionView.reloadData()
+        collectionView.carouselDataSource = self
+        collectionView.isAutoscrollEnabled = false
+        let size = collectionView.contentSize
+        collectionView.flowLayout.estimatedItemSize = CGSize(width: size.width, height: size.height)
+        
     }
     private func collectionViewInit(){
 //        collectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
@@ -80,4 +107,21 @@ class ViewController: UIViewController
 //        // 스크롤 시 빠르게 감속 되도록 설정
 //        collectionView.decelerationRate = UIScrollViewDecelerationRateFast
     }
+}
+
+final class CVCell: UICollectionViewCell {
+  let label = UILabel()
+
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    addSubview(label)
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.font = UIFont.boldSystemFont(ofSize: 40.0)
+    label.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+    label.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+  }
+
+  required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 }
