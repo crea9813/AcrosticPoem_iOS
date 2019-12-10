@@ -9,11 +9,9 @@
 import UIKit
 import SnapKit
 import Alamofire
-import InfiniteCarouselCollectionView
 
-class ViewController: UIViewController, CarouselCollectionViewDataSource
+class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 {
-    
     //인터페이스 빌더와 객체를 연결
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet var likeButton: UIView!
@@ -29,8 +27,41 @@ class ViewController: UIViewController, CarouselCollectionViewDataSource
     var poemItems:Int = 0
     var networkManager = NetworkManager()
     var todayTitle = ""
-    var numberOfItems: Int = 0
-    let collectionView = CarouselCollectionView(frame: .zero, collectionViewFlowLayout: UICollectionViewFlowLayout())
+    
+    //Carousel 뷰 설정
+    let carouselCollectionView: UICollectionView = {
+            
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.minimumLineSpacing = 26
+        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.backgroundColor = .white
+        collectionView.isPagingEnabled = true
+        
+
+        return collectionView
+    }()
+    
+    //셀 갯수
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    //셀 스타일
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        cell.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+        return cell
+    }
+    
+    //셀 사이즈
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width - 80, height: view.frame.height)
+    }
     
     // ! 는 Unwraping 하는 구문 변수가 nil 이 되진 않을 명확한 약속이 없을 때 사용
     override func viewDidLoad()
@@ -40,15 +71,10 @@ class ViewController: UIViewController, CarouselCollectionViewDataSource
             self.setTitle(todayTitle: result)
         })
 //        self.numberOfItems = networkManager.getPoemList()
-        self.numberOfItems = 3
         super.viewDidLoad()
         backgroundInit()
     }
 
-    func carouselCollectionView(_ carouselCollectionView: CarouselCollectionView, cellForItemAt index: Int, fakeIndexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: fakeIndexPath) as! CVCell
-        return cell
-    }
     
     public func setTitle(todayTitle : String) {
         print("오늘의 주제 :", todayTitle)
@@ -81,31 +107,28 @@ class ViewController: UIViewController, CarouselCollectionViewDataSource
     private func backgroundInit(){
         //배경 색상 지정
         self.view.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
-        
-        poemView.addSubview(collectionView)
-        collectionView.snp.makeConstraints{ (make) -> Void in
+//
+        poemView.addSubview(carouselCollectionView)
+        carouselCollectionView.snp.makeConstraints{ (make) -> Void in
             make.top.equalTo(titleView.snp.bottom).inset(8)
-            make.left.equalTo(poemView).offset(8)
+            make.left.equalTo(poemView).offset(0)
             make.bottom.equalTo(poemView).offset(-8)
-            make.right.equalTo(poemView).offset(-8)
+            make.right.equalTo(poemView).offset(0)
         }
+////
+        carouselCollectionView.delegate = self
+        carouselCollectionView.dataSource = self
+        carouselCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         
-        collectionView.register(CVCell.self, forCellWithReuseIdentifier:"id")
-        collectionView.reloadData()
-        collectionView.carouselDataSource = self
-        collectionView.isAutoscrollEnabled = false
-        let size = collectionView.contentSize
-        collectionView.flowLayout.estimatedItemSize = CGSize(width: size.width, height: size.height)
-        
-    }
-    private func collectionViewInit(){
-//        collectionView.contentInset = UIEdgeInsets(top: insetY, left: insetX, bottom: insetY, right: insetX)
-//
-//        collectionView.delegate = self
-//        collectionView.dataSource = self
-//
-//        // 스크롤 시 빠르게 감속 되도록 설정
-//        collectionView.decelerationRate = UIScrollViewDecelerationRateFast
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+//        collectionView.register(CVCell.self, forCellWithReuseIdentifier:"id")
+//        collectionView.reloadData()
+//        collectionView.carouselDataSource = self
+//        collectionView.isAutoscrollEnabled = false
+//        let size = collectionView.contentSize
+//        collectionView.flowLayout.estimatedItemSize = CGSize(width: size.width, height: size.height)
+         
     }
 }
 
