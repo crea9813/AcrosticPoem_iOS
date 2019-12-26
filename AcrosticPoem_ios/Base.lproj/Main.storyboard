@@ -240,7 +240,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="OQe-Ba-sZM">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <segue destination="R8a-Q7-Cug" kind="show" id="PJh-40-TP1"/>
+                                <segue destination="R8a-Q7-Cug" kind="show" identifier="" id="PJh-40-TP1"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>

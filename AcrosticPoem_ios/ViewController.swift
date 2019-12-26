@@ -12,8 +12,8 @@ import Alamofire
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 {
+    
     //인터페이스 빌더와 객체를 연결
-    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet var likeButton: UIView!
     @IBOutlet var shareButton: UIView!
     @IBOutlet var reportButton: UIView!
@@ -23,10 +23,14 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet var poemView: UIView!
     @IBOutlet weak var titleView: UIImageView!
     
+    let BASE_URL = "http://149.28.22.157:4568/"
     var nowPage:Int = 0
     var poemItems:Int = 0
     var networkManager = NetworkManager()
     var todayTitle = ""
+    
+    var poemInfo : [PoemModel] = [PoemModel(titleFirst: "삼", titleSecond: "행", titleThird: "시", wordFirst: "삼", wordSecond: "행", wordThird: "시"),
+    PoemModel(titleFirst: "삼", titleSecond: "행", titleThird: "시", wordFirst: "삼", wordSecond: "행", wordThird: "시")]
     
     //Carousel 뷰 설정
     let carouselCollectionView: UICollectionView = {
@@ -47,14 +51,20 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }()
     
     //셀 갯수
+    
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        
+        return poemInfo.count
     }
     
     //셀 스타일
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+//        cell.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+//        return cell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PoemCell", for: indexPath) as! PoemCell
+        cell.configure(with: poemInfo[indexPath.row])
         return cell
     }
     
@@ -66,15 +76,33 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     // ! 는 Unwraping 하는 구문 변수가 nil 이 되진 않을 명확한 약속이 없을 때 사용
     override func viewDidLoad()
     {
-        networkManager.todayTitle(completionHandler: {
-            result in
-            self.setTitle(todayTitle: result)
-        })
+        DispatchQueue.global().sync {
+            networkManager.todayTitle(completionHandler: {
+                result in
+                self.setTitle(todayTitle: result)
+            })
+        }
+        
 //        self.numberOfItems = networkManager.getPoemList()
         super.viewDidLoad()
         backgroundInit()
+        getPoem()
     }
-
+    
+    func getPoem(){
+        var poem:Array<String> = []
+        
+        networkManager.getRandomPeom{
+            result in
+            poem = result["poemId"] as! [String]
+            for count in 0..<poem.count {
+                self.networkManager.getPoemInfo(poemId: poem[count]){
+                    result in
+                    print(result["word"])
+                }
+            }
+        }
+    }
     
     public func setTitle(todayTitle : String) {
         print("오늘의 주제 :", todayTitle)
@@ -93,8 +121,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         titleThird.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         titleThird.text = String(todayTitle[todayTitle.index(before: todayTitle.endIndex)])
     }
-    
-    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         _ = segue.destination
@@ -118,16 +144,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 ////
         carouselCollectionView.delegate = self
         carouselCollectionView.dataSource = self
-        carouselCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        
+        carouselCollectionView.register(UINib.init(nibName: "PoemCell", bundle: nil), forCellWithReuseIdentifier: "PoemCell")
+//        carouselCollectionView.register(UINib.init(nibName: "PoemCell", bundle: nil), forCellWithReuseIdentifier: "PoemCell")
+//        carouselCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+//
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
-//        collectionView.register(CVCell.self, forCellWithReuseIdentifier:"id")
-//        collectionView.reloadData()
-//        collectionView.carouselDataSource = self
-//        collectionView.isAutoscrollEnabled = false
-//        let size = collectionView.contentSize
-//        collectionView.flowLayout.estimatedItemSize = CGSize(width: size.width, height: size.height)
          
     }
 }

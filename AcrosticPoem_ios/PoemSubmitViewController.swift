@@ -21,16 +21,11 @@ class PoemSubmitViewController : UIViewController{
     
     @IBOutlet weak var importImg: UIImageView!
     
-    let networkManager = NetworkManager()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        networkManager.todayTitle(completionHandler: {
-            result in
-            self.setTitle(todayTitle: result)
-        })
     }
     
     private func setTitle(todayTitle : String) {

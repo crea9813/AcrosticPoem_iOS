@@ -18,17 +18,21 @@ class NetworkManager {
     private let sort:Bool
     private var poemList:Array<String> = []
     
-    var imageArr = [String]()
+    public var imageArr = [String]()
     var wordArr = [NSArray]()
     var likeArr = [Int]()
+    
     
     init() {
         BASE_URL = "http://149.28.22.157:4568/"
         TOKEN = UserDefaults.standard.value(forKey: "GuestToken") as! String
         count = "3"
         sort = true
+        DispatchQueue.global().sync {
+            launchedOption()
+        }
     }
-    
+      
     public func getPoemList() -> Int{
         return poemList.count
     }
@@ -142,17 +146,15 @@ class NetworkManager {
     }
     
     //시 정보 가져오기
-    private func getPoemInfo(poemId : String){
+    public func getPoemInfo(poemId : String, completionHandler: @escaping (_ result: JSON) -> ()){
         Alamofire.request(BASE_URL+"poem/3?token="+TOKEN+"&poemid="+poemId, method: .get, encoding: JSONEncoding.default , headers:  ["Content-Type":"application/json;charset=utf-8"] ).responseJSON {
             response in
             switch(response.result){
             case .success(_):
-                if let poemData = try? JSONSerialization.data(withJSONObject: response.result.value!, options: .prettyPrinted){
-                    let poemInfo = try? JSON(data: poemData)
-                    self.imageArr.append(poemInfo!["image"].string! as String)
-                    self.wordArr.append(poemInfo!["word"].array! as NSArray)
-                    self.likeArr.append(poemInfo!["like"].int! as Int)
-                }
+                    if let poemData = try? JSONSerialization.data(withJSONObject: response.result.value!, options: .prettyPrinted){
+                        let poemInfo = try? JSON(data: poemData)
+                        completionHandler(poemInfo!)
+                    }
 //                if let poemInfo = response.result.value as? NSDictionary{
 //                    self.imageArr.append(poemInfo["image"] as! String)
 //                    self.wordArr.append(poemInfo["word"] as! NSArray)
@@ -163,25 +165,44 @@ class NetworkManager {
             }
         }
     }
+    
+//    public func getPoemInfo(poemId : String, completion: @escaping ([PoemData]) -> ()) {
+//        Alamofire.request(BASE_URL+"poem/3?token="+TOKEN+"&poemid="+poemId, method: .get, encoding: JSONEncoding.default).responseJSON{
+//            (response) in
+//            guard let data = response.data else {return}
+//            do{
+//                let poems = try JSONDecoder().decode([PoemData].self, from:data)
+//            }catch{
+//                print(error.localizedDescription)
+//            }
+//        }
+//
+//    }
     //랜덤으로 가져올지 인기순으로 가져올지
     public func poemSort(){
         var poem:Array<String> = []
+        
         switch(sort){
         case true:
             getRandomPeom{
                 result in
                 poem = result["poemId"] as! [String]
                 for count in 0..<poem.count {
-                    self.getPoemInfo(poemId: poem[count])
+                    self.getPoemInfo(poemId: poem[count]){
+                        result in
+                        
+                    }
                 }
-                
             }
         case false:
             getBestPoem{
                 result in
                 poem = result["poemId"] as! [String]
                 for count in 0..<poem.count {
-                    self.getPoemInfo(poemId: poem[count])
+                    self.getPoemInfo(poemId: poem[count]){
+                        result in
+                        
+                    }
                 }
             }
         }

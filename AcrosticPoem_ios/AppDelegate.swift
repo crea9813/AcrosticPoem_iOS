@@ -14,12 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigationBarAppearace = UINavigationBar.appearance()
     var uiLabelAppearace = UILabel.appearance()
     
-    let networkManager = NetworkManager()
-    let viewController = ViewController()
-    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
         UserDefaults.standard.set("Random", forKey: "Sort")
-        networkManager.launchedOption()
+        
         
         //네비게이션바 스타일 설정
         navigationBarAppearace.shadowImage = UIImage()
@@ -32,7 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //            result in
 //            self.viewController.setTitle(todayTitle: result)
 //        })
-        networkManager.poemSort()
         return true
     }
 
