@@ -29,8 +29,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var networkManager = NetworkManager()
     var todayTitle = ""
     
-    var poemInfo : [PoemModel] = [PoemModel(titleFirst: "삼", titleSecond: "행", titleThird: "시", wordFirst: "삼", wordSecond: "행", wordThird: "시"),
-    PoemModel(titleFirst: "삼", titleSecond: "행", titleThird: "시", wordFirst: "삼", wordSecond: "행", wordThird: "시")]
+    var poemInfo : [PoemModel] = [PoemModel(imageUrl: "", titleFirst: "삼", titleSecond: "행", titleThird: "시", wordFirst: "삼", wordSecond: "행", wordThird: "시"),
+                                  PoemModel(imageUrl: "", titleFirst: "삼", titleSecond: "행", titleThird: "시", wordFirst: "삼", wordSecond: "행", wordThird: "시")]
     
     //Carousel 뷰 설정
     let carouselCollectionView: UICollectionView = {
@@ -46,7 +46,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         collectionView.backgroundColor = .white
         collectionView.isPagingEnabled = true
         
-
+        
         return collectionView
     }()
     
@@ -61,7 +61,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     //셀 스타일
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 //        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-//        cell.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+//        cell.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0) 
 //        return cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PoemCell", for: indexPath) as! PoemCell
         cell.configure(with: poemInfo[indexPath.row])
@@ -70,7 +70,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     //셀 사이즈
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width - 80, height: view.frame.height)
+        return CGSize(width: view.frame.width - 80, height: view.frame.height - 300)
     }
     
     // ! 는 Unwraping 하는 구문 변수가 nil 이 되진 않을 명확한 약속이 없을 때 사용

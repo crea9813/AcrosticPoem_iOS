@@ -9,6 +9,7 @@
 import UIKit
 
 struct PoemModel {
+    let imageUrl : String
     let titleFirst : String
     let titleSecond : String
     let titleThird : String
@@ -18,13 +19,16 @@ struct PoemModel {
 }
 
 class PoemCell: UICollectionViewCell {
-
+    
+    @IBOutlet var poemImage: UIImageView!
     @IBOutlet var titleFirst: UILabel!
     @IBOutlet var titleSecond: UILabel!
     @IBOutlet var titleThird: UILabel!
     @IBOutlet var wordFirst: UILabel!
     @IBOutlet var wordSecond: UILabel!
     @IBOutlet var wordThird: UILabel!
+    
+    let BASE_URL = "http://149.28.22.157:4568/"
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -33,6 +37,15 @@ class PoemCell: UICollectionViewCell {
     }
     
     public func configure(with model: PoemModel){
+        if model.imageUrl != ""{
+            let url = URL(string: BASE_URL+model.imageUrl)
+            let data = try! Data(contentsOf: url!)
+            
+            poemImage.image = UIImage(data: data)
+        }else{
+            poemImage.image = nil
+        }
+        
         titleFirst.text = model.titleFirst
         titleSecond.text = model.titleSecond
         titleThird.text = model.titleThird
