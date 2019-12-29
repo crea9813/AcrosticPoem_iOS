@@ -16,8 +16,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+            let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+            
+            if launchedBefore
+            {
+                NetworkManager().tokenValidation()
+                print("첫 실행이 아님.")
+            }
+            else
+            {
+                print("앱 설치 이후 첫 실행 Guest Token 생성 중")
+                UserDefaults.standard.set("", forKey: "GuestToken")
+                NetworkManager().generationToken()
+                UserDefaults.standard.set(true, forKey: "launchedBefore")
+            }
         UserDefaults.standard.set("Random", forKey: "Sort")
-        
         
         //네비게이션바 스타일 설정
         navigationBarAppearace.shadowImage = UIImage()

@@ -9,6 +9,7 @@
 import UIKit
 import SnapKit
 import Alamofire
+import SwiftyJSON
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 {
@@ -29,12 +30,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var networkManager = NetworkManager()
     var todayTitle = ""
     
-    var poemInfo : [PoemModel] = [PoemModel(imageUrl: "", titleFirst: "삼", titleSecond: "행", titleThird: "시", wordFirst: "삼", wordSecond: "행", wordThird: "시"),
-                                  PoemModel(imageUrl: "", titleFirst: "삼", titleSecond: "행", titleThird: "시", wordFirst: "삼", wordSecond: "행", wordThird: "시")]
+    var poemInfo : [PoemModel] = []
     
     //Carousel 뷰 설정
     let carouselCollectionView: UICollectionView = {
-            
+        
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumLineSpacing = 26
@@ -51,8 +51,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }()
     
     //셀 갯수
-    
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return poemInfo.count
@@ -70,43 +68,67 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     //셀 사이즈
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width - 80, height: view.frame.height - 300)
+        return CGSize(width: view.frame.width - 80, height: poemView.frame.height - 130)
     }
     
-    // ! 는 Unwraping 하는 구문 변수가 nil 이 되진 않을 명확한 약속이 없을 때 사용
     override func viewDidLoad()
     {
-        DispatchQueue.global().sync {
-            networkManager.todayTitle(completionHandler: {
+        super.viewDidLoad()
+        setupView()
+    }
+    
+    func setupView() {
+        
+        DispatchQueue.global().async {
+            self.networkManager.todayTitle(completionHandler: {
                 result in
                 self.setTitle(todayTitle: result)
             })
         }
-        
-//        self.numberOfItems = networkManager.getPoemList()
-        super.viewDidLoad()
-        backgroundInit()
-        getPoem()
-    }
-    
-    func getPoem(){
         var poem:Array<String> = []
         
-        networkManager.getRandomPeom{
-            result in
-            poem = result["poemId"] as! [String]
-            for count in 0..<poem.count {
-                self.networkManager.getPoemInfo(poemId: poem[count]){
-                    result in
-                    print(result["word"])
+        DispatchQueue.global().async {
+            self.networkManager.getRandomPeom{
+                result in
+                poem = result["poemId"] as! [String]
+                for count in 0..<poem.count {
+                    NetworkManager().getPoemInfo(poemId: poem[count]) {
+                        result in
+                        print(result)
+                        
+                        let wordObj = result["word"].arrayValue.map{
+                            $0["line"].stringValue
+                        }
+                        
+                        print(wordObj)
+                        self.poemInfo.append(PoemModel(imageUrl: result["image"].stringValue, titleFirst: self.titleFirst.text!, titleSecond: self.titleSecond.text!, titleThird: self.titleThird.text!, wordFirst: "", wordSecond: "", wordThird: ""))
+                        self.carouselCollectionView.reloadData()
+                    }
                 }
             }
         }
+        
+        self.view.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+
+        //CarouselCollectionView
+        poemView.addSubview(carouselCollectionView)
+        carouselCollectionView.snp.makeConstraints{ (make) -> Void in
+            make.top.equalTo(titleView.snp.bottom).inset(8)
+            make.left.equalTo(poemView).offset(0)
+            make.bottom.equalTo(poemView).offset(-8)
+            make.right.equalTo(poemView).offset(0)
+        }
+        carouselCollectionView.delegate = self
+        carouselCollectionView.dataSource = self
+        carouselCollectionView.register(UINib.init(nibName: "PoemCell", bundle: nil), forCellWithReuseIdentifier: "PoemCell")
+        
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
     }
     
     public func setTitle(todayTitle : String) {
         print("오늘의 주제 :", todayTitle)
-//        삼행시 제목 첫번째 글자 초기화
+        //삼행시 제목 첫번째 글자 초기화
         titleFirst.font = UIFont(name: "HYgsrB", size: 27)
         titleFirst.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         titleFirst.text = String(todayTitle[(todayTitle.startIndex)])
@@ -130,43 +152,4 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         navigationItem.backBarButtonItem = backItem
     }
     
-    private func backgroundInit(){
-        //배경 색상 지정
-        self.view.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
-//
-        poemView.addSubview(carouselCollectionView)
-        carouselCollectionView.snp.makeConstraints{ (make) -> Void in
-            make.top.equalTo(titleView.snp.bottom).inset(8)
-            make.left.equalTo(poemView).offset(0)
-            make.bottom.equalTo(poemView).offset(-8)
-            make.right.equalTo(poemView).offset(0)
-        }
-////
-        carouselCollectionView.delegate = self
-        carouselCollectionView.dataSource = self
-        carouselCollectionView.register(UINib.init(nibName: "PoemCell", bundle: nil), forCellWithReuseIdentifier: "PoemCell")
-//        carouselCollectionView.register(UINib.init(nibName: "PoemCell", bundle: nil), forCellWithReuseIdentifier: "PoemCell")
-//        carouselCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-//
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.scrollDirection = .horizontal
-         
-    }
-}
-
-final class CVCell: UICollectionViewCell {
-  let label = UILabel()
-
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-    addSubview(label)
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.font = UIFont.boldSystemFont(ofSize: 40.0)
-    label.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
-    label.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
 }

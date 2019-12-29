@@ -13,7 +13,7 @@ import SwiftyJSON
 class NetworkManager {
 
     private let BASE_URL:String
-    private var TOKEN:String
+    private var TOKEN:String = ""
     private var count:String
     private let sort:Bool
     private var poemList:Array<String> = []
@@ -25,19 +25,16 @@ class NetworkManager {
     
     init() {
         BASE_URL = "http://149.28.22.157:4568/"
-        TOKEN = UserDefaults.standard.value(forKey: "GuestToken") as! String
         count = "3"
         sort = true
-        DispatchQueue.global().sync {
-            launchedOption()
-        }
+        TOKEN = UserDefaults.standard.value(forKey: "GuestToken") as! String
     }
       
     public func getPoemList() -> Int{
         return poemList.count
     }
     // 토큰 생성
-    private func generationToken() {
+    public func generationToken() {
         Alamofire.request("http://149.28.22.157:4568/guest", method: .get).responseString {
             response in
             switch(response.result){
@@ -51,26 +48,14 @@ class NetworkManager {
         }
     }
     // 앱 첫 실행 or 첫 실행 이후 토큰 검사
-    public func launchedOption() {
-        let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
-        
-        if launchedBefore
-        {
-            tokenValidation()
-            print("첫 실행이 아님.")
-        }
-        else
-        {
-            print("앱 설치 이후 첫 실행 Guest Token 생성 중")
-            generationToken()
-            UserDefaults.standard.set(true, forKey: "launchedBefore")
-        }
-    }
     
     // 토큰 유효성 검사
-    private func tokenValidation() {
+    public func tokenValidation() {
         Alamofire.request(BASE_URL+"guest", method: .post, parameters: ["token" : TOKEN], encoding: JSONEncoding.default).responseString {
             response in
+            defer {
+                
+            }
             switch(response.response?.statusCode){
             case 200:
                 print("토큰 인증됨.")
