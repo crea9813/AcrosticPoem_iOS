@@ -16,7 +16,6 @@
 		2F5C96642371775800A248C1 /* CornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C96632371775800A248C1 /* CornerView.swift */; };
 		2F948D1D23A111E20052042E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC938F0238B63EE00A77FC9 /* NetworkManager.swift */; };
 		2FBF1AC5237E30BD00574BE3 /* PoemAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBF1AC4237E30BD00574BE3 /* PoemAddViewController.swift */; };
-		2FC938F3238BE65800A77FC9 /* PoemSubmitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC938F2238BE65800A77FC9 /* PoemSubmitViewController.swift */; };
 		2FEC8109239F724D006F110A /* gungseo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC8107239F724D006F110A /* gungseo.ttf */; };
 		2FEC810A239F724D006F110A /* sm.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC8108239F724D006F110A /* sm.ttf */; };
 		2FEC8116239FBE4E006F110A /* PoemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEC8114239FBE4E006F110A /* PoemCell.swift */; };
@@ -41,7 +40,6 @@
 		2F828D462394F2FF007E743E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		2FBF1AC4237E30BD00574BE3 /* PoemAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemAddViewController.swift; sourceTree = "<group>"; };
 		2FC938F0238B63EE00A77FC9 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		2FC938F2238BE65800A77FC9 /* PoemSubmitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemSubmitViewController.swift; sourceTree = "<group>"; };
 		2FEC8107239F724D006F110A /* gungseo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gungseo.ttf; sourceTree = "<group>"; };
 		2FEC8108239F724D006F110A /* sm.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sm.ttf; sourceTree = "<group>"; };
 		2FEC8114239FBE4E006F110A /* PoemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemCell.swift; sourceTree = SOURCE_ROOT; };
@@ -93,7 +91,6 @@
 				2FBF1AC4237E30BD00574BE3 /* PoemAddViewController.swift */,
 				2F5C96632371775800A248C1 /* CornerView.swift */,
 				2F5C965523714CA500A248C1 /* Main.storyboard */,
-				2FC938F2238BE65800A77FC9 /* PoemSubmitViewController.swift */,
 				2F5C965823714CAA00A248C1 /* Assets.xcassets */,
 				2F5C965A23714CAA00A248C1 /* LaunchScreen.storyboard */,
 				2F5C965D23714CAA00A248C1 /* Info.plist */,
@@ -253,7 +250,6 @@
 				2F948D1D23A111E20052042E /* NetworkManager.swift in Sources */,
 				2F5C965223714CA500A248C1 /* SceneDelegate.swift in Sources */,
 				2F5C96642371775800A248C1 /* CornerView.swift in Sources */,
-				2FC938F3238BE65800A77FC9 /* PoemSubmitViewController.swift in Sources */,
 				2FEC8116239FBE4E006F110A /* PoemCell.swift in Sources */,
 				2FBF1AC5237E30BD00574BE3 /* PoemAddViewController.swift in Sources */,
 			);

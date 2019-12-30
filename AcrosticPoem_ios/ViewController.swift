@@ -21,16 +21,20 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet var titleFirst: UILabel!
     @IBOutlet var titleSecond: UILabel!
     @IBOutlet var titleThird: UILabel!
+    @IBOutlet var likeCount: UILabel!
     @IBOutlet var poemView: UIView!
     @IBOutlet weak var titleView: UIImageView!
+    
     
     let BASE_URL = "http://149.28.22.157:4568/"
     var nowPage:Int = 0
     var poemItems:Int = 0
+    let ad = UIApplication.shared.delegate as? AppDelegate
     var networkManager = NetworkManager()
     var todayTitle = ""
     
     var poemInfo : [PoemModel] = []
+    var likeArray : [String] = []
     
     //Carousel 뷰 설정
     let carouselCollectionView: UICollectionView = {
@@ -82,6 +86,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         DispatchQueue.global().async {
             self.networkManager.todayTitle(completionHandler: {
                 result in
+                self.ad?.titleString = result
                 self.setTitle(todayTitle: result)
             })
         }
@@ -92,16 +97,21 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 result in
                 poem = result["poemId"] as! [String]
                 for count in 0..<poem.count {
-                    NetworkManager().getPoemInfo(poemId: poem[count]) {
+                    NetworkManager().getPoemInfo(poemId: poem[count]){
                         result in
                         print(result)
                         
+                        //단어 파싱
                         let wordObj = result["word"].arrayValue.map{
                             $0["line"].stringValue
                         }
                         
-                        print(wordObj)
-                        self.poemInfo.append(PoemModel(imageUrl: result["image"].stringValue, titleFirst: self.titleFirst.text!, titleSecond: self.titleSecond.text!, titleThird: self.titleThird.text!, wordFirst: "", wordSecond: "", wordThird: ""))
+                        //배열에 넣기
+                        self.poemInfo.append(PoemModel(imageUrl: result["image"].stringValue, titleFirst: self.titleFirst.text!, titleSecond: self.titleSecond.text!, titleThird: self.titleThird.text!, wordFirst: wordObj[0], wordSecond: wordObj[1], wordThird: wordObj[2]))
+                        
+                        //좋아요 개수
+                        self.likeArray.append(result["like"].stringValue)
+                        
                         self.carouselCollectionView.reloadData()
                     }
                 }
@@ -132,16 +142,17 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         titleFirst.font = UIFont(name: "HYgsrB", size: 27)
         titleFirst.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         titleFirst.text = String(todayTitle[(todayTitle.startIndex)])
-
+        
         //삼행시 제목 두번째 글자 초기화
         titleSecond.font = UIFont(name: "HYgsrB", size: 27)
         titleSecond.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         titleSecond.text = String(todayTitle[todayTitle.index(todayTitle.startIndex, offsetBy: 1)])
-
+        
         //삼행시 제목 세번째 글자 초기화
         titleThird.font = UIFont(name: "HYgsrB", size: 27)
         titleThird.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         titleThird.text = String(todayTitle[todayTitle.index(before: todayTitle.endIndex)])
+        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

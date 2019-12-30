@@ -14,6 +14,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var navigationBarAppearace = UINavigationBar.appearance()
     var uiLabelAppearace = UILabel.appearance()
     
+    var titleString : String?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
             let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")

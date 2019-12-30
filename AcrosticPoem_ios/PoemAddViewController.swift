@@ -10,19 +10,56 @@ import UIKit
 import Alamofire
 
 class PoemAddViewController: UIViewController{
-    private var titleString: String?
+    
+    let ad = UIApplication.shared.delegate as? AppDelegate
     
     @IBOutlet var titleFirst: UILabel!
     @IBOutlet var titleSecond: UILabel!
     @IBOutlet var titleThird: UILabel!
+    @IBOutlet var TextTitleFirst: UILabel!
+    @IBOutlet var TextTitleSecond: UILabel!
+    @IBOutlet var TextTitleThird: UILabel!
     
+    @IBOutlet var TextFirst: UITextField!
+    @IBOutlet var TextSecond: UITextField!
+    @IBOutlet var TextThird: UITextField!
+    
+    @IBOutlet var importImage: UIImageView!
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
+        setupView(todayTitle: ad!.titleString!)
         UINavigationBar.appearance().barTintColor = UIColor.white
         UINavigationBar.appearance().tintColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+        
+    }
+    
+    private func setupView(todayTitle : String) {
+        //폰트 초기화
+        titleFirst.font = UIFont(name: "HYgsrB", size: 27)
+        titleSecond.font = UIFont(name: "HYgsrB", size: 27)
+        titleThird.font = UIFont(name: "HYgsrB", size: 27)
+        TextTitleFirst.font = UIFont(name: "HYgsrB", size: 27)
+        TextTitleSecond.font = UIFont(name: "HYgsrB", size: 27)
+        TextTitleThird.font = UIFont(name: "HYgsrB", size: 27)
+        
+        // 글 색상 초기화
+        titleFirst.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+        titleSecond.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+        titleThird.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+        TextTitleFirst.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+        TextTitleSecond.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+        TextTitleThird.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+        
+        //단어 초기화
+        titleFirst.text = String(todayTitle[(todayTitle.startIndex)])
+        titleSecond.text = String(todayTitle[todayTitle.index(todayTitle.startIndex, offsetBy: 1)])
+        titleThird.text = String(todayTitle[todayTitle.index(before: todayTitle.endIndex)])
+        TextTitleFirst.text = titleFirst.text
+        TextTitleSecond.text = titleSecond.text
+        TextTitleThird.text = titleThird.text
+        
         
     }
     
