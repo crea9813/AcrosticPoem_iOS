@@ -16,6 +16,10 @@ struct PoemModel {
     let wordFirst : String
     let wordSecond : String
     let wordThird : String
+    let poemId : String
+    let reported : Bool
+    let like : String
+    let liked : Bool
 }
 struct PoemPostModel {
     let token : String

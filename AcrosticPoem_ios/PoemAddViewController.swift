@@ -36,8 +36,18 @@ class PoemAddViewController: UIViewController {
         setupView(todayTitle: ad!.titleString!)
         
     }
+    
+    func convertImageToBase64(_ image: UIImage) -> String {
+        let imageData:NSData = image.jpegData(compressionQuality: 0.4)! as NSData
+           let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
+           return strBase64
+    }
+
+    
     @IBAction func submitPoemAction(_ sender: Any) {
-        PoemInfo = PoemPostModel(token: UserDefaults.standard.value(forKey: "GuestToken") as! String, Image: "", word: [Word(word: titleFirst.text!, line: TextFirst.text!),Word(word: titleSecond.text!, line: TextSecond.text!),Word(word:  titleThird.text!, line: TextThird.text!)])
+        let imageUrl = convertImageToBase64(importImage.image!)
+        
+        PoemInfo = PoemPostModel(token: UserDefaults.standard.value(forKey: "GuestToken") as! String, Image: imageUrl, word: [Word(word: titleFirst.text!, line: TextFirst.text!),Word(word: titleSecond.text!, line: TextSecond.text!),Word(word:  titleThird.text!, line: TextThird.text!)])
         
 //        DispatchQueue.global().sync {
 //            NetworkManager().submitPoem(postPoemModel: PoemInfo!)

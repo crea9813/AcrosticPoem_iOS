@@ -24,6 +24,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet var likeCount: UILabel!
     @IBOutlet var poemView: UIView!
     @IBOutlet weak var titleView: UIImageView!
+    @IBOutlet var likeHeart: UIImageView!
     
     
     let BASE_URL = "http://149.28.22.157:4568/"
@@ -32,6 +33,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     let ad = UIApplication.shared.delegate as? AppDelegate
     var networkManager = NetworkManager()
     var todayTitle = ""
+    var currentPage = 0
     
     var poemInfo : [PoemModel] = []
     var likeArray : [String] = []
@@ -75,6 +77,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return CGSize(width: view.frame.width - 80, height: poemView.frame.height - 130)
     }
     
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        let page = Int(targetContentOffset.pointee.x / self.view.frame.width)
+        self.currentPage = page
+        
+        likeCount.text = poemInfo[self.currentPage].like
+        if poemInfo[self.currentPage].liked != false {
+            likeHeart.image = UIImage(systemName: "heart.fill")
+        }else{
+            likeHeart.image = UIImage(systemName: "heart")
+        }
+        print(self.currentPage)
+    }
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -82,6 +97,18 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     func setupView() {
+        
+        let reportGesture = UITapGestureRecognizer(target: self, action: #selector(reportAction))
+        reportButton.addGestureRecognizer(reportGesture)
+        reportButton.isUserInteractionEnabled = true
+        
+        let likeGesture = UITapGestureRecognizer(target: self, action: #selector(likeAction))
+        likeButton.addGestureRecognizer(likeGesture)
+        likeButton.isUserInteractionEnabled = true
+        
+        let shareGesture = UITapGestureRecognizer(target: self, action: #selector(shareAction))
+        shareButton.addGestureRecognizer(shareGesture)
+        shareButton.isUserInteractionEnabled = true
         
         DispatchQueue.global().async {
             self.networkManager.todayTitle(completionHandler: {
@@ -107,10 +134,12 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                         }
                         
                         //배열에 넣기
-                        self.poemInfo.append(PoemModel(imageUrl: result["image"].stringValue, titleFirst: self.titleFirst.text!, titleSecond: self.titleSecond.text!, titleThird: self.titleThird.text!, wordFirst: wordObj[0], wordSecond: wordObj[1], wordThird: wordObj[2]))
+                        self.poemInfo.append(PoemModel(imageUrl: result["image"].stringValue, titleFirst: self.titleFirst.text!, titleSecond: self.titleSecond.text!, titleThird: self.titleThird.text!, wordFirst: wordObj[0], wordSecond: wordObj[1], wordThird: wordObj[2],poemId: result["poemId"].stringValue, reported: result["reported"].boolValue, like: result["like"].stringValue, liked: result["liked"].boolValue))
                         
                         //좋아요 개수
                         self.likeArray.append(result["like"].stringValue)
+                        
+                        self.likeCount.text = self.likeArray[0]
                         
                         self.carouselCollectionView.reloadData()
                     }
@@ -161,6 +190,51 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         let backItem = UIBarButtonItem()
         backItem.title = ""
         navigationItem.backBarButtonItem = backItem
+    }
+    
+    @objc private func likeAction() {
+        let poemId = poemInfo[currentPage].poemId
+        if poemInfo[currentPage].liked != true {
+            networkManager.likePoem(poemId: poemId)
+            likeHeart.image = UIImage(systemName: "heart.fill")
+            carouselCollectionView.reloadItems(at: carouselCollectionView.indexPathsForVisibleItems)
+        }else{
+            print("이미 좋아요 된 시")
+        }
+    }
+    
+    @objc private func reportAction() {
+        print(poemInfo[currentPage].poemId)
+        let poemId = poemInfo[currentPage].poemId
+        if poemInfo[currentPage].reported != true {
+            networkManager.reportPoem(poemId: poemId)
+            let alert = UIAlertController(title: "알림", message: "신고되었습니다", preferredStyle: UIAlertController.Style.alert)
+            let cancel = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
+            alert.addAction(cancel)
+            self.present(alert, animated: false)
+        }
+        else{
+            print("이미 신고된 삼행시")
+            let alert = UIAlertController(title: "알림", message: "이미 신고된 시 입니다", preferredStyle: UIAlertController.Style.alert)
+            let cancel = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
+            alert.addAction(cancel)
+            self.present(alert, animated: false)
+        }
+    }
+    
+    @objc private func shareAction() {
+        print("공유하기")
+        
+        let text = poemInfo[currentPage].titleFirst + " : " + poemInfo[currentPage].wordFirst + "\n" + poemInfo[currentPage].titleSecond + " : " + poemInfo[currentPage].wordSecond + "\n" + poemInfo[currentPage].titleThird + " : " + poemInfo[currentPage].wordThird
+        
+        let textToShare = [ text ]
+        
+        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+        
+        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.airDrop]
+        
+        self.present(activityViewController, animated: true, completion: nil)
+        
     }
     
 }

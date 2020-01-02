@@ -224,7 +224,7 @@ class NetworkManager {
             response in
             switch(response.response?.statusCode){
             case 200:
-                print("삼행시 제출 성공")
+                print("좋아요 성공")
             case 401:
                 print("토큰 틀림")
             case 404:
@@ -240,7 +240,7 @@ class NetworkManager {
             response in
             switch(response.response?.statusCode){
             case 200:
-                print("삼행시 제출 성공")
+                print("신고 제출 성공")
             case 401:
                 print("토큰 틀림")
             case 404:
