@@ -9,7 +9,7 @@
 import UIKit
 import Alamofire
 
-class PoemAddViewController: UIViewController{
+class PoemAddViewController: UIViewController {
     
     let ad = UIApplication.shared.delegate as? AppDelegate
     
@@ -26,16 +26,30 @@ class PoemAddViewController: UIViewController{
     
     @IBOutlet var importImage: UIImageView!
     
+    @IBOutlet var submitPoemButton: UIBarButtonItem!
+    
+    var PoemInfo : PoemPostModel?
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
         setupView(todayTitle: ad!.titleString!)
-        UINavigationBar.appearance().barTintColor = UIColor.white
-        UINavigationBar.appearance().tintColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         
+    }
+    @IBAction func submitPoemAction(_ sender: Any) {
+        PoemInfo = PoemPostModel(token: UserDefaults.standard.value(forKey: "GuestToken") as! String, Image: "", word: [Word(word: titleFirst.text!, line: TextFirst.text!),Word(word: titleSecond.text!, line: TextSecond.text!),Word(word:  titleThird.text!, line: TextThird.text!)])
+        
+//        DispatchQueue.global().sync {
+//            NetworkManager().submitPoem(postPoemModel: PoemInfo!)
+//        }
+        self.dismiss(animated: true, completion: nil)
     }
     
     private func setupView(todayTitle : String) {
+        
+        UINavigationBar.appearance().barTintColor = UIColor.white
+        UINavigationBar.appearance().tintColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+        
         //폰트 초기화
         titleFirst.font = UIFont(name: "HYgsrB", size: 27)
         titleSecond.font = UIFont(name: "HYgsrB", size: 27)
@@ -59,7 +73,6 @@ class PoemAddViewController: UIViewController{
         TextTitleFirst.text = titleFirst.text
         TextTitleSecond.text = titleSecond.text
         TextTitleThird.text = titleThird.text
-        
         
     }
     

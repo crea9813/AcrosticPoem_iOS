@@ -25,7 +25,7 @@ class NetworkManager {
     
     init() {
         BASE_URL = "http://149.28.22.157:4568/"
-        count = "3"
+        count = "10"
         sort = true
         TOKEN = UserDefaults.standard.value(forKey: "GuestToken") as! String
     }
@@ -53,9 +53,6 @@ class NetworkManager {
     public func tokenValidation() {
         Alamofire.request(BASE_URL+"guest", method: .post, parameters: ["token" : TOKEN], encoding: JSONEncoding.default).responseString {
             response in
-            defer {
-                
-            }
             switch(response.response?.statusCode){
             case 200:
                 print("토큰 인증됨.")
@@ -86,8 +83,37 @@ class NetworkManager {
     }
     
     //삼행시 제출
-    private func submitPoem(){
-        Alamofire.request(BASE_URL+"poem", method: .post)
+    public func submitPoem(postPoemModel : PoemPostModel){
+        let word = postPoemModel.word
+        let parameters = [
+            "token" : postPoemModel.token,
+            "image" : postPoemModel.Image,
+            "word" : [[
+                    "word" : word[0].word,
+                    "line" : word[0].line
+                ],
+                [
+                    "word" : word[1].word,
+                    "line" : word[1].line
+                ],
+                [
+                    "word" : word[2].word,
+                    "line" : word[2].line
+                ]
+            ]
+            ] as [String : Any]
+        
+        Alamofire.request(BASE_URL+"poem/"+"3", method: .post, parameters: parameters, encoding: JSONEncoding.default).responseString {
+            response in
+            switch(response.response?.statusCode){
+            case 200:
+                print("삼행시 제출 성공")
+            case 401:
+                print("토큰 틀림")
+            default:
+                break;
+            }
+        }
     }
     
     //랜덤 시 가져오기

@@ -17,6 +17,16 @@ struct PoemModel {
     let wordSecond : String
     let wordThird : String
 }
+struct PoemPostModel {
+    let token : String
+    let Image : String
+    let word : [Word]
+}
+
+struct Word {
+    let word : String
+    let line : String
+}
 
 class PoemCell: UICollectionViewCell {
     
