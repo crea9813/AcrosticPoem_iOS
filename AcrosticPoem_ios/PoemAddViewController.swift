@@ -9,7 +9,9 @@
 import UIKit
 import Alamofire
 
-class PoemAddViewController: UIViewController {
+class PoemAddViewController: UIViewController , UIImagePickerControllerDelegate{
+    
+    let picker = UIImagePickerController()
     
     let ad = UIApplication.shared.delegate as? AppDelegate
     
@@ -30,11 +32,21 @@ class PoemAddViewController: UIViewController {
     
     var PoemInfo : PoemPostModel?
     
+    
+    
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        picker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
         setupView(todayTitle: ad!.titleString!)
         
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
+            importImage.image = image
+        }
+        dismiss(animated: true, completion: nil)
     }
     
     func convertImageToBase64(_ image: UIImage) -> String {
@@ -56,6 +68,10 @@ class PoemAddViewController: UIViewController {
     }
     
     private func setupView(todayTitle : String) {
+        
+        let importGesture = UITapGestureRecognizer(target: self, action: #selector(importAction))
+        importImage.addGestureRecognizer(importGesture)
+        importImage.isUserInteractionEnabled = true
         
         UINavigationBar.appearance().barTintColor = UIColor.white
         UINavigationBar.appearance().tintColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
@@ -84,6 +100,34 @@ class PoemAddViewController: UIViewController {
         TextTitleSecond.text = titleSecond.text
         TextTitleThird.text = titleThird.text
         
+    }
+    
+    @objc private func importAction() {
+
+        let alert =  UIAlertController(title: "시 이미지", message: "시에 추가할 이미지를 선택해주세요", preferredStyle: .actionSheet)
+
+        let camera =  UIAlertAction(title: "카메라", style: .default) { (action) in
+        self.openCamera()
+        }
+        
+        let library =  UIAlertAction(title: "앨범", style: .default) { (action) in self.openLibrary()
+        }
+
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+
+        alert.addAction(library)
+        alert.addAction(camera)
+        alert.addAction(cancel)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    func openLibrary(){
+      picker.sourceType = .photoLibrary
+      present(picker, animated: false, completion: nil)
+    }
+    func openCamera(){
+      picker.sourceType = .camera
+      present(picker, animated: false, completion: nil)
     }
     
 }

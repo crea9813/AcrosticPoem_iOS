@@ -77,15 +77,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         return CGSize(width: view.frame.width - 80, height: poemView.frame.height - 130)
     }
     
-    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-        let page = Int(targetContentOffset.pointee.x / self.view.frame.width)
-        self.currentPage = page
-        
-        likeCount.text = poemInfo[self.currentPage].like
-        if poemInfo[self.currentPage].liked != false {
-            likeHeart.image = UIImage(systemName: "heart.fill")
-        }else{
-            likeHeart.image = UIImage(systemName: "heart")
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if let indexPath = carouselCollectionView.indexPathsForVisibleItems.first {
+            self.currentPage = indexPath.row
+            
+            likeCount.text = poemInfo[self.currentPage].like
+            if poemInfo[self.currentPage].liked != false {
+                likeHeart.image = UIImage(systemName: "heart.fill")
+                likeHeart.tintColor = UIColor(red: 0.84, green: 0.35, blue: 0.29, alpha: 1)
+            }else{
+                likeHeart.image = UIImage(systemName: "heart")
+                likeHeart.tintColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+                
+            }
         }
         print(self.currentPage)
     }
@@ -197,6 +201,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         if poemInfo[currentPage].liked != true {
             networkManager.likePoem(poemId: poemId)
             likeHeart.image = UIImage(systemName: "heart.fill")
+            likeHeart.tintColor = UIColor(red: 0.84, green: 0.35, blue: 0.29, alpha: 1)
             carouselCollectionView.reloadItems(at: carouselCollectionView.indexPathsForVisibleItems)
         }else{
             print("이미 좋아요 된 시")
