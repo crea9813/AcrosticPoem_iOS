@@ -91,7 +91,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 
             }
         }
-        print(self.currentPage)
     }
     
     override func viewDidLoad()
@@ -130,7 +129,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 for count in 0..<poem.count {
                     NetworkManager().getPoemInfo(poemId: poem[count]){
                         result in
-                        print(result)
                         
                         //단어 파싱
                         let wordObj = result["word"].arrayValue.map{
@@ -167,10 +165,10 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
+        
     }
     
     public func setTitle(todayTitle : String) {
-        print("오늘의 주제 :", todayTitle)
         //삼행시 제목 첫번째 글자 초기화
         titleFirst.font = UIFont(name: "HYgsrB", size: 27)
         titleFirst.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
@@ -197,49 +195,59 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     
     @objc private func likeAction() {
-        let poemId = poemInfo[currentPage].poemId
-        if poemInfo[currentPage].liked != true {
-            networkManager.likePoem(poemId: poemId)
-            likeHeart.image = UIImage(systemName: "heart.fill")
-            likeHeart.tintColor = UIColor(red: 0.84, green: 0.35, blue: 0.29, alpha: 1)
-            carouselCollectionView.reloadItems(at: carouselCollectionView.indexPathsForVisibleItems)
-        }else{
-            print("이미 좋아요 된 시")
+        
+        if poemInfo.isEmpty == false {
+            let poemId = poemInfo[currentPage].poemId
+            if poemInfo[currentPage].liked != true {
+                networkManager.likePoem(poemId: poemId)
+                likeHeart.image = UIImage(systemName: "heart.fill")
+                likeHeart.tintColor = UIColor(red: 0.84, green: 0.35, blue: 0.29, alpha: 1)
+                self.carouselCollectionView.reloadData()
+            }else{
+                
+            }
         }
     }
     
     @objc private func reportAction() {
-        print(poemInfo[currentPage].poemId)
-        let poemId = poemInfo[currentPage].poemId
-        if poemInfo[currentPage].reported != true {
-            networkManager.reportPoem(poemId: poemId)
-            let alert = UIAlertController(title: "알림", message: "신고되었습니다", preferredStyle: UIAlertController.Style.alert)
-            let cancel = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
-            alert.addAction(cancel)
-            self.present(alert, animated: false)
+        
+        if poemInfo.isEmpty == false {
+            let poemId = poemInfo[currentPage].poemId
+            if poemInfo[currentPage].reported != true {
+                networkManager.reportPoem(poemId: poemId)
+                let alert = UIAlertController(title: "알림", message: "신고되었습니다", preferredStyle: UIAlertController.Style.alert)
+                let cancel = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
+                alert.addAction(cancel)
+                self.present(alert, animated: false)
+            }
+            else{
+                let alert = UIAlertController(title: "알림", message: "이미 신고된 시 입니다", preferredStyle: UIAlertController.Style.alert)
+                let cancel = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
+                alert.addAction(cancel)
+                self.present(alert, animated: false)
+            }
         }
-        else{
-            print("이미 신고된 삼행시")
-            let alert = UIAlertController(title: "알림", message: "이미 신고된 시 입니다", preferredStyle: UIAlertController.Style.alert)
-            let cancel = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
-            alert.addAction(cancel)
-            self.present(alert, animated: false)
-        }
+        
     }
     
     @objc private func shareAction() {
-        print("공유하기")
-        
-        let text = poemInfo[currentPage].titleFirst + " : " + poemInfo[currentPage].wordFirst + "\n" + poemInfo[currentPage].titleSecond + " : " + poemInfo[currentPage].wordSecond + "\n" + poemInfo[currentPage].titleThird + " : " + poemInfo[currentPage].wordThird
-        
-        let textToShare = [ text ]
-        
-        let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-        
-        activityViewController.excludedActivityTypes = [UIActivity.ActivityType.airDrop]
-        
-        self.present(activityViewController, animated: true, completion: nil)
-        
-    }
+        if poemInfo.isEmpty == false {
+            let text = poemInfo[currentPage].titleFirst + " : " + poemInfo[currentPage].wordFirst + "\n" + poemInfo[currentPage].titleSecond + " : " + poemInfo[currentPage].wordSecond + "\n" + poemInfo[currentPage].titleThird + " : " + poemInfo[currentPage].wordThird
+                
+                let textToShare = [ text ]
+                
+                let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+                
+                activityViewController.excludedActivityTypes = [UIActivity.ActivityType.airDrop]
+                
+                self.present(activityViewController, animated: true, completion: nil)
+                
+            }
+        }
     
+    override func viewWillAppear(_ animated: Bool) {
+        DispatchQueue.main.async {
+            self.carouselCollectionView.reloadData()
+        }
+    }
 }

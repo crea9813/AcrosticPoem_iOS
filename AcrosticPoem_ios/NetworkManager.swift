@@ -25,7 +25,7 @@ class NetworkManager {
     
     init() {
         BASE_URL = "http://149.28.22.157:4568/"
-        count = "10"
+        count = "100"
         sort = true
         TOKEN = UserDefaults.standard.value(forKey: "GuestToken") as! String
     }
@@ -33,6 +33,7 @@ class NetworkManager {
     public func getPoemList() -> Int{
         return poemList.count
     }
+    
     // 토큰 생성
     public func generationToken() {
         Alamofire.request("http://149.28.22.157:4568/guest", method: .get).responseString {
@@ -47,7 +48,6 @@ class NetworkManager {
             }
         }
     }
-    // 앱 첫 실행 or 첫 실행 이후 토큰 검사
     
     // 토큰 유효성 검사
     public func tokenValidation() {

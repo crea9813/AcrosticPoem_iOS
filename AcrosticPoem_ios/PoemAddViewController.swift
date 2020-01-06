@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 
+
 class PoemAddViewController: UIViewController , UIImagePickerControllerDelegate{
     
     let picker = UIImagePickerController()
@@ -32,7 +33,7 @@ class PoemAddViewController: UIViewController , UIImagePickerControllerDelegate{
     
     var PoemInfo : PoemPostModel?
     
-    
+    var imagePick = false
     
     override func viewDidLoad() {
         
@@ -41,10 +42,10 @@ class PoemAddViewController: UIViewController , UIImagePickerControllerDelegate{
         setupView(todayTitle: ad!.titleString!)
         
     }
-    
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
             importImage.image = image
+            imagePick = true
         }
         dismiss(animated: true, completion: nil)
     }
@@ -57,14 +58,33 @@ class PoemAddViewController: UIViewController , UIImagePickerControllerDelegate{
 
     
     @IBAction func submitPoemAction(_ sender: Any) {
-        let imageUrl = convertImageToBase64(importImage.image!)
         
-        PoemInfo = PoemPostModel(token: UserDefaults.standard.value(forKey: "GuestToken") as! String, Image: imageUrl, word: [Word(word: titleFirst.text!, line: TextFirst.text!),Word(word: titleSecond.text!, line: TextSecond.text!),Word(word:  titleThird.text!, line: TextThird.text!)])
+        var imageUrl : String
         
-//        DispatchQueue.global().sync {
-//            NetworkManager().submitPoem(postPoemModel: PoemInfo!)
-//        }
-        self.dismiss(animated: true, completion: nil)
+        if imagePick {
+                   imageUrl = convertImageToBase64(importImage.image!)
+               }else{
+                   imageUrl = ""
+               }
+        
+        if TextFirst.text != "" && TextSecond.text != "" && TextThird.text != "" {
+            PoemInfo = PoemPostModel(token: UserDefaults.standard.value(forKey: "GuestToken") as! String, Image: imageUrl, word: [Word(word: titleFirst.text!, line: TextFirst.text!),Word(word: titleSecond.text!, line: TextSecond.text!),Word(word:  titleThird.text!, line: TextThird.text!)])
+                    
+                    DispatchQueue.global().async {
+                        NetworkManager().submitPoem(postPoemModel: self.PoemInfo!)
+                    }
+                    self.navigationController?.popViewController(animated: true)
+        }
+        else {
+            let alert = UIAlertController(title: "알림", message: "글을 입력해주세요", preferredStyle: UIAlertController.Style.alert)
+            let cancel = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
+            alert.addAction(cancel)
+            self.present(alert, animated: false)
+        }
+       
+        
+        
+        
     }
     
     private func setupView(todayTitle : String) {
@@ -106,17 +126,12 @@ class PoemAddViewController: UIViewController , UIImagePickerControllerDelegate{
 
         let alert =  UIAlertController(title: "시 이미지", message: "시에 추가할 이미지를 선택해주세요", preferredStyle: .actionSheet)
 
-        let camera =  UIAlertAction(title: "카메라", style: .default) { (action) in
-        self.openCamera()
-        }
-        
         let library =  UIAlertAction(title: "앨범", style: .default) { (action) in self.openLibrary()
         }
 
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 
         alert.addAction(library)
-        alert.addAction(camera)
         alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
     }
@@ -125,9 +140,4 @@ class PoemAddViewController: UIViewController , UIImagePickerControllerDelegate{
       picker.sourceType = .photoLibrary
       present(picker, animated: false, completion: nil)
     }
-    func openCamera(){
-      picker.sourceType = .camera
-      present(picker, animated: false, completion: nil)
-    }
-    
 }
