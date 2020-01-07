@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2F22219523C45FD50062E144 /* PoemStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22219423C45FD50062E144 /* PoemStruct.swift */; };
 		2F5C965023714CA500A248C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C964F23714CA500A248C1 /* AppDelegate.swift */; };
 		2F5C965223714CA500A248C1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C965123714CA500A248C1 /* SceneDelegate.swift */; };
 		2F5C965423714CA500A248C1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C965323714CA500A248C1 /* ViewController.swift */; };
@@ -27,6 +28,7 @@
 /* Begin PBXFileReference section */
 		15E9C15D80C3F95C3EDB1D6B /* Pods_AcrosticPoem_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AcrosticPoem_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		253D7F72AECCB5A0DE6F16C0 /* Pods-AcrosticPoem_ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AcrosticPoem_ios.release.xcconfig"; path = "Target Support Files/Pods-AcrosticPoem_ios/Pods-AcrosticPoem_ios.release.xcconfig"; sourceTree = "<group>"; };
+		2F22219423C45FD50062E144 /* PoemStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemStruct.swift; sourceTree = "<group>"; };
 		2F5C964C23714CA500A248C1 /* AcrosticPoem_ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AcrosticPoem_ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F5C964F23714CA500A248C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2F5C965123714CA500A248C1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 			children = (
 				2FA60E322375027F006A2445 /* Fonts */,
 				2FEC8114239FBE4E006F110A /* PoemCell.swift */,
+				2F22219423C45FD50062E144 /* PoemStruct.swift */,
 				2FEC8115239FBE4E006F110A /* PoemCell.xib */,
 				2FC938F0238B63EE00A77FC9 /* NetworkManager.swift */,
 				2F5C964F23714CA500A248C1 /* AppDelegate.swift */,
@@ -246,6 +249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2F5C965423714CA500A248C1 /* ViewController.swift in Sources */,
+				2F22219523C45FD50062E144 /* PoemStruct.swift in Sources */,
 				2F5C965023714CA500A248C1 /* AppDelegate.swift in Sources */,
 				2F948D1D23A111E20052042E /* NetworkManager.swift in Sources */,
 				2F5C965223714CA500A248C1 /* SceneDelegate.swift in Sources */,
