@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
+        // 앱 첫 실행인지 판단 후 게스트 토큰 생성 및 검사
             let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
             
             if launchedBefore
@@ -41,15 +42,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearace.topItem?.title = ""
         uiLabelAppearace.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         
-//        networkManager.todayTitle(completionHandler: {
-//            result in
-//            self.viewController.setTitle(todayTitle: result)
-//        })
         return true
     }
-
-    // MARK: UISceneSession Lifecycle
-
+    
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.

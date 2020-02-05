@@ -38,45 +38,53 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     var poemInfo : [PoemModel] = []
     var likeArray : [String] = []
     
-    //Carousel 뷰 설정
+    override func viewDidLoad()
+    {
+        super.viewDidLoad()
+        initView()
+    }
+    
+    //MARK: - HorizontalCollectionView 초기화
     let carouselCollectionView: UICollectionView = {
         
+        // 전체 레이아웃 초기화
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumLineSpacing = 26
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 
-        
+        // CollectionView 초기화
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
         collectionView.isPagingEnabled = true
         
-        
         return collectionView
     }()
     
-    //셀 갯수
+    // CollectionView의 아이템 갯수
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         
         return poemInfo.count
     }
     
-    //셀 스타일
+    // CollectionViewCell 설정
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 //        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
 //        cell.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0) 
 //        return cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PoemCell", for: indexPath) as! PoemCell
         cell.configure(with: poemInfo[indexPath.row])
+        
         return cell
     }
     
-    //셀 사이즈
+    // CollectionView 사이즈
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width - 80, height: poemView.frame.height - 130)
     }
     
+    // 페이징 이후 좋아요 갯수와 좋아요 상태 변경
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         if let indexPath = carouselCollectionView.indexPathsForVisibleItems.first {
             self.currentPage = indexPath.row
@@ -93,13 +101,8 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         }
     }
     
-    override func viewDidLoad()
-    {
-        super.viewDidLoad()
-        setupView()
-    }
-    
-    func setupView() {
+    // MARK: - 뷰 초기화
+    func initView() {
         
         let reportGesture = UITapGestureRecognizer(target: self, action: #selector(reportAction))
         reportButton.addGestureRecognizer(reportGesture)
@@ -134,7 +137,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                         let wordObj = result["word"].arrayValue.map{
                             $0["line"].stringValue
                         }
-                        
+                        print(result)
                         //배열에 넣기
                         self.poemInfo.append(PoemModel(imageUrl: result["image"].stringValue, titleFirst: self.titleFirst.text!, titleSecond: self.titleSecond.text!, titleThird: self.titleThird.text!, wordFirst: wordObj[0], wordSecond: wordObj[1], wordThird: wordObj[2],poemId: result["poemId"].stringValue, reported: result["reported"].boolValue, like: result["like"].stringValue, liked: result["liked"].boolValue))
                         
@@ -151,7 +154,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         self.view.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
 
-        //CarouselCollectionView
+        // CollectionView 오토레이아웃 설정
         poemView.addSubview(carouselCollectionView)
         carouselCollectionView.snp.makeConstraints{ (make) -> Void in
             make.top.equalTo(titleView.snp.bottom).inset(8)
@@ -159,15 +162,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             make.bottom.equalTo(poemView).offset(-8)
             make.right.equalTo(poemView).offset(0)
         }
+        
         carouselCollectionView.delegate = self
         carouselCollectionView.dataSource = self
         carouselCollectionView.register(UINib.init(nibName: "PoemCell", bundle: nil), forCellWithReuseIdentifier: "PoemCell")
+        carouselCollectionView.showsHorizontalScrollIndicator = false
+        carouselCollectionView.showsVerticalScrollIndicator = false
         
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         
     }
     
+    // 삼행시 주제 설정
     public func setTitle(todayTitle : String) {
         //삼행시 제목 첫번째 글자 초기화
         titleFirst.font = UIFont(name: "HYgsrB", size: 27)
@@ -185,15 +192,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         titleThird.text = String(todayTitle[todayTitle.index(before: todayTitle.endIndex)])
         
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        _ = segue.destination
-        
-        let backItem = UIBarButtonItem()
-        backItem.title = ""
-        navigationItem.backBarButtonItem = backItem
-    }
-    
+    //MARK: - 탭바 버튼 이벤트
     @objc private func likeAction() {
         
         if poemInfo.isEmpty == false {
@@ -245,9 +244,25 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             }
         }
     
+    // MARK: - 등록 이후 뷰 초기화
+    // FIXME: - 현재 작동 안함.. 버그
     override func viewWillAppear(_ animated: Bool) {
         DispatchQueue.main.async {
             self.carouselCollectionView.reloadData()
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        _ = segue.destination
+        
+        let backItem = UIBarButtonItem()
+        backItem.title = ""
+        navigationItem.backBarButtonItem = backItem
+    }
+    
+    // 뷰 이동을 위한 함수
+    @IBAction func unwindToMain(_ unwindSegue: UIStoryboardSegue){
+    }
+    
+    
 }

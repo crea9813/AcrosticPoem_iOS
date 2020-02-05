@@ -1,7 +1,6 @@
 import UIKit
 
-@IBDesignable
-class CornerView: UIView {
+@IBDesignable class CornerView: UIView {
 
     var cornerRadiusValue : CGFloat = 0
     var corners : UIRectCorner = []

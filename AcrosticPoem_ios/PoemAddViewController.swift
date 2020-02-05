@@ -7,10 +7,8 @@
 //
 
 import UIKit
-import Alamofire
 
-
-class PoemAddViewController: UIViewController , UIImagePickerControllerDelegate{
+class PoemAddViewController: UIViewController{
     
     let picker = UIImagePickerController()
     
@@ -27,42 +25,25 @@ class PoemAddViewController: UIViewController , UIImagePickerControllerDelegate{
     @IBOutlet var TextSecond: UITextField!
     @IBOutlet var TextThird: UITextField!
     
-    @IBOutlet var importImage: UIImageView!
+    @IBOutlet var selectedImage: UIImageView!
     
     @IBOutlet var submitPoemButton: UIBarButtonItem!
     
     var PoemInfo : PoemPostModel?
     
-    var imagePick = false
+    private var imagePick = false
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
-        picker.delegate = self as? UIImagePickerControllerDelegate & UINavigationControllerDelegate
-        setupView(todayTitle: ad!.titleString!)
-        
-    }
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
-            importImage.image = image
-            imagePick = true
-        }
-        dismiss(animated: true, completion: nil)
-    }
-    
-    func convertImageToBase64(_ image: UIImage) -> String {
-        let imageData:NSData = image.jpegData(compressionQuality: 0.4)! as NSData
-           let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
-           return strBase64
+        initView(todayTitle: ad!.titleString!)
     }
 
-    
+    // MARK: - 등록 버튼 이벤트
     @IBAction func submitPoemAction(_ sender: Any) {
-        
         var imageUrl : String
         
         if imagePick {
-                   imageUrl = convertImageToBase64(importImage.image!)
+                   imageUrl = convertImageToBase64(selectedImage.image!)
                }else{
                    imageUrl = ""
                }
@@ -72,8 +53,8 @@ class PoemAddViewController: UIViewController , UIImagePickerControllerDelegate{
                     
                     DispatchQueue.global().async {
                         NetworkManager().submitPoem(postPoemModel: self.PoemInfo!)
-                    }
-                    self.navigationController?.popViewController(animated: true)
+            }
+            performSegue(withIdentifier: "unwindToMain", sender: self)
         }
         else {
             let alert = UIAlertController(title: "알림", message: "글을 입력해주세요", preferredStyle: UIAlertController.Style.alert)
@@ -81,17 +62,14 @@ class PoemAddViewController: UIViewController , UIImagePickerControllerDelegate{
             alert.addAction(cancel)
             self.present(alert, animated: false)
         }
-       
-        
-        
-        
     }
     
-    private func setupView(todayTitle : String) {
+    // MARK: - 뷰 초기화
+    private func initView(todayTitle : String) {
         
-        let importGesture = UITapGestureRecognizer(target: self, action: #selector(importAction))
-        importImage.addGestureRecognizer(importGesture)
-        importImage.isUserInteractionEnabled = true
+        let importGesture = UITapGestureRecognizer(target: self, action: #selector(addPhoto))
+        selectedImage.addGestureRecognizer(importGesture)
+        selectedImage.isUserInteractionEnabled = true
         
         UINavigationBar.appearance().barTintColor = UIColor.white
         UINavigationBar.appearance().tintColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
@@ -121,23 +99,42 @@ class PoemAddViewController: UIViewController , UIImagePickerControllerDelegate{
         TextTitleThird.text = titleThird.text
         
     }
+}
+
+// MARK: - UIImagePicker
+extension PoemAddViewController : UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    @objc private func importAction() {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage{
+            selectedImage.image = image
+            imagePick = true
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    @objc private func addPhoto(_ sender: UIBarButtonItem) {
 
         let alert =  UIAlertController(title: "시 이미지", message: "시에 추가할 이미지를 선택해주세요", preferredStyle: .actionSheet)
-
-        let library =  UIAlertAction(title: "앨범", style: .default) { (action) in self.openLibrary()
+        
+        let importFromAlbum = UIAlertAction(title: "앨범에서 가져오기", style: .default) { _ in
+            let picker = UIImagePickerController()
+            picker.delegate = self
+            picker.sourceType = .savedPhotosAlbum
+            picker.allowsEditing = true
+            self.present(picker, animated:  true, completion: nil )
         }
 
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
 
-        alert.addAction(library)
+        alert.addAction(importFromAlbum)
         alert.addAction(cancel)
         present(alert, animated: true, completion: nil)
     }
     
-    func openLibrary(){
-      picker.sourceType = .photoLibrary
-      present(picker, animated: false, completion: nil)
-    }
+    // Base64 형식으로 이미지 변환
+    func convertImageToBase64(_ image: UIImage) -> String {
+           let imageData:NSData = image.jpegData(compressionQuality: 0.4)! as NSData
+              let strBase64 = imageData.base64EncodedString(options: .lineLength64Characters)
+              return strBase64
+       }
 }

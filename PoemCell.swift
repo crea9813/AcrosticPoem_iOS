@@ -26,7 +26,9 @@ class PoemCell: UICollectionViewCell {
         
     }
     
+    // PoemModel로 Cell의 내용을 초기화
     public func configure(with model: PoemModel){
+        
         if model.imageUrl != ""{
             let url = URL(string: BASE_URL+model.imageUrl)
             let data = try! Data(contentsOf: url!)

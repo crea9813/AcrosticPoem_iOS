@@ -24,7 +24,7 @@ class NetworkManager {
     
     
     init() {
-        BASE_URL = "http://149.28.22.157:4568/"
+        BASE_URL = "http://149.28.22.157:4567/"
         count = "100"
         sort = true
         TOKEN = UserDefaults.standard.value(forKey: "GuestToken") as! String
@@ -36,7 +36,7 @@ class NetworkManager {
     
     // 토큰 생성
     public func generationToken() {
-        Alamofire.request("http://149.28.22.157:4568/guest", method: .get).responseString {
+        Alamofire.request("http://149.28.22.157:4567/guest", method: .get).responseString {
             response in
             switch(response.result){
             case .success(_):
@@ -177,7 +177,7 @@ class NetworkManager {
         }
     }
     
-//    public func getPoemInfo(poemId : String, completion: @escaping ([PoemData]) -> ()) {
+//  public func getPoemInfo(poemId : String, completion: @escaping ([PoemData]) -> ()) {
 //        Alamofire.request(BASE_URL+"poem/3?token="+TOKEN+"&poemid="+poemId, method: .get, encoding: JSONEncoding.default).responseJSON{
 //            (response) in
 //            guard let data = response.data else {return}
@@ -189,6 +189,7 @@ class NetworkManager {
 //        }
 //
 //    }
+    
     //랜덤으로 가져올지 인기순으로 가져올지
     public func poemSort(){
         var poem:Array<String> = []
@@ -218,6 +219,7 @@ class NetworkManager {
             }
         }
     }
+    
     //시 좋아요
     public func likePoem(poemId : String){
         Alamofire.request(BASE_URL+"poem/like/3", method: .post, parameters: ["token" : TOKEN, "poemId" : poemId], encoding: JSONEncoding.default).responseJSON{
@@ -234,6 +236,7 @@ class NetworkManager {
             }
         }
     }
+    
     //시 신고하기
     public func reportPoem(poemId : String){
         Alamofire.request(BASE_URL+"poem/report/3", method: .post, parameters: ["token" : TOKEN, "poemId" : poemId], encoding: JSONEncoding.default).responseJSON{
