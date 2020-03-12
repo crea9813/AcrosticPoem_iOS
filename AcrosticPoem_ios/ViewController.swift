@@ -8,8 +8,6 @@
 
 import UIKit
 import SnapKit
-import Alamofire
-import SwiftyJSON
 
 class ViewController: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
 {
@@ -26,17 +24,17 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet weak var titleView: UIImageView!
     @IBOutlet var likeHeart: UIImageView!
     
+    private var nowPage:Int = 0
+    private var poemItems:Int = 0
+    private let ad = UIApplication.shared.delegate as? AppDelegate
+    private var networkManager = NetworkManager()
+    private var refreshControl = UIRefreshControl()
     
-    let BASE_URL = "http://149.28.22.157:4568/"
-    var nowPage:Int = 0
-    var poemItems:Int = 0
-    let ad = UIApplication.shared.delegate as? AppDelegate
-    var networkManager = NetworkManager()
-    var todayTitle = ""
-    var currentPage = 0
+    private var todayTitle = ""
+    private var currentPage = 0
     
-    var poemInfo : [PoemModel] = []
-    var likeArray : [String] = []
+    private var poemInfo : [PoemModel] = []
+    private var likeArray : [String] = []
     
     override func viewDidLoad()
     {
@@ -123,35 +121,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 self.setTitle(todayTitle: result)
             })
         }
-        var poem:Array<String> = []
-        
-        DispatchQueue.global().async {
-            self.networkManager.getRandomPeom{
-                result in
-                poem = result["poemId"] as! [String]
-                for count in 0..<poem.count {
-                    NetworkManager().getPoemInfo(poemId: poem[count]){
-                        result in
-                        
-                        //단어 파싱
-                        let wordObj = result["word"].arrayValue.map{
-                            $0["line"].stringValue
-                        }
-                        print(result)
-                        //배열에 넣기
-                        self.poemInfo.append(PoemModel(imageUrl: result["image"].stringValue, titleFirst: self.titleFirst.text!, titleSecond: self.titleSecond.text!, titleThird: self.titleThird.text!, wordFirst: wordObj[0], wordSecond: wordObj[1], wordThird: wordObj[2],poemId: result["poemId"].stringValue, reported: result["reported"].boolValue, like: result["like"].stringValue, liked: result["liked"].boolValue))
-                        
-                        //좋아요 개수
-                        self.likeArray.append(result["like"].stringValue)
-                        
-                        self.likeCount.text = self.likeArray[0]
-                        
-                        self.carouselCollectionView.reloadData()
-                    }
-                }
-            }
-        }
-        
+        setPoem()
         self.view.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
 
         // CollectionView 오토레이아웃 설정
@@ -166,12 +136,15 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         carouselCollectionView.delegate = self
         carouselCollectionView.dataSource = self
         carouselCollectionView.register(UINib.init(nibName: "PoemCell", bundle: nil), forCellWithReuseIdentifier: "PoemCell")
+        if #available(iOS 10.0, *){
+            carouselCollectionView.refreshControl = refreshControl
+        } else {
+            carouselCollectionView.addSubview(refreshControl)
+        }
         carouselCollectionView.showsHorizontalScrollIndicator = false
         carouselCollectionView.showsVerticalScrollIndicator = false
-        
-        let flowLayout = UICollectionViewFlowLayout()
-        flowLayout.scrollDirection = .horizontal
-        
+    
+        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
     }
     
     // 삼행시 주제 설정
@@ -190,6 +163,39 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         titleThird.font = UIFont(name: "HYgsrB", size: 27)
         titleThird.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         titleThird.text = String(todayTitle[todayTitle.index(before: todayTitle.endIndex)])
+        
+    }
+    
+    private func setPoem(){
+        var poem:Array<String> = []
+        self.poemInfo = []
+        self.likeArray = []
+        
+        DispatchQueue.global().async {
+                   self.networkManager.getRandomPeom{
+                       result in
+                       poem = result["poemId"] as! [String]
+                       for count in 0..<poem.count {
+                           NetworkManager().getPoemInfo(poemId: poem[count]){
+                                result in
+                               
+                               //단어 파싱
+                                let wordObj = result["word"].arrayValue.map{
+                                    $0["line"].stringValue
+                                }
+                               //배열에 넣기
+                                self.poemInfo.append(PoemModel(imageUrl: result["image"].stringValue, titleFirst: self.titleFirst.text!, titleSecond: self.titleSecond.text!, titleThird: self.titleThird.text!, wordFirst: wordObj[0], wordSecond: wordObj[1], wordThird: wordObj[2],poemId: result["poemId"].stringValue, reported: result["reported"].boolValue, like: result["like"].stringValue, liked: result["liked"].boolValue))
+                               
+                               //좋아요 개수
+                               self.likeArray.append(result["like"].stringValue)
+                               
+                               self.likeCount.text = self.likeArray[0]
+                               
+                               self.carouselCollectionView.reloadData()
+                           }
+                       }
+                   }
+               }
         
     }
     //MARK: - 탭바 버튼 이벤트
@@ -244,25 +250,19 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             }
         }
     
-    // MARK: - 등록 이후 뷰 초기화
-    // FIXME: - 현재 작동 안함.. 버그
-    override func viewWillAppear(_ animated: Bool) {
-        DispatchQueue.main.async {
-            self.carouselCollectionView.reloadData()
-        }
+    @objc private func refresh() {
+        setPoem()
+        refreshControl.endRefreshing()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        _ = segue.destination
-        
-        let backItem = UIBarButtonItem()
-        backItem.title = ""
-        navigationItem.backBarButtonItem = backItem
-    }
+    // MARK: - 등록 이후 뷰 초기화
+    // FIXME: - 현재 작동 안함.. 버그
     
     // 뷰 이동을 위한 함수
     @IBAction func unwindToMain(_ unwindSegue: UIStoryboardSegue){
+        setPoem()
     }
-    
-    
+    override func viewDidAppear(_ animated: Bool) {
+        setPoem()
+    }
 }

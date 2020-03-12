@@ -42,6 +42,7 @@ class NetworkManager {
             case .success(_):
                 if let guestToken = response.result.value{
                     UserDefaults.standard.set(guestToken, forKey: "GuestToken")
+                    print("생성 완료")
                 }
             case .failure(_):
                 print("토큰 생성 실패: ",response.result.error!)
