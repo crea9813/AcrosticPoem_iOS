@@ -88,6 +88,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
             self.currentPage = indexPath.row
             
             likeCount.text = poemInfo[self.currentPage].like
+            
             if poemInfo[self.currentPage].liked != false {
                 likeHeart.image = UIImage(systemName: "heart.fill")
                 likeHeart.tintColor = UIColor(red: 0.84, green: 0.35, blue: 0.29, alpha: 1)
@@ -121,7 +122,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 self.setTitle(todayTitle: result)
             })
         }
-        setPoem()
         self.view.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
 
         // CollectionView 오토레이아웃 설정
@@ -170,6 +170,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         var poem:Array<String> = []
         self.poemInfo = []
         self.likeArray = []
+        self.currentPage = 0
         
         DispatchQueue.global().async {
                    self.networkManager.getRandomPeom{

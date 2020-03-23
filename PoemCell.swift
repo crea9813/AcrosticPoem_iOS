@@ -18,7 +18,7 @@ class PoemCell: UICollectionViewCell {
     @IBOutlet var wordSecond: UILabel!
     @IBOutlet var wordThird: UILabel!
     
-    let BASE_URL = "http://149.28.22.157:4568/"
+    let BASE_URL = "http://149.28.22.157:4567/"
     
     override func awakeFromNib() {
         super.awakeFromNib()

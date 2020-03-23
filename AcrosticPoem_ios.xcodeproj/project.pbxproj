@@ -15,6 +15,7 @@
 		2F5C965923714CAA00A248C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F5C965823714CAA00A248C1 /* Assets.xcassets */; };
 		2F5C965C23714CAA00A248C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F5C965A23714CAA00A248C1 /* LaunchScreen.storyboard */; };
 		2F5C96642371775800A248C1 /* CornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C96632371775800A248C1 /* CornerView.swift */; };
+		2F875A6C2428601E00691273 /* Pods_AcrosticPoem_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E9C15D80C3F95C3EDB1D6B /* Pods_AcrosticPoem_ios.framework */; };
 		2F948D1D23A111E20052042E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC938F0238B63EE00A77FC9 /* NetworkManager.swift */; };
 		2FBF1AC5237E30BD00574BE3 /* PoemAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBF1AC4237E30BD00574BE3 /* PoemAddViewController.swift */; };
 		2FEC8109239F724D006F110A /* gungseo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC8107239F724D006F110A /* gungseo.ttf */; };
@@ -22,7 +23,6 @@
 		2FEC8116239FBE4E006F110A /* PoemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEC8114239FBE4E006F110A /* PoemCell.swift */; };
 		2FEC8117239FBE4E006F110A /* PoemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC8115239FBE4E006F110A /* PoemCell.xib */; };
 		2FEC811B23A07808006F110A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC811A23A07808006F110A /* InfoPlist.strings */; };
-		6CE9CE08C49BB1CBD595E2C1 /* Pods_AcrosticPoem_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E9C15D80C3F95C3EDB1D6B /* Pods_AcrosticPoem_ios.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -55,7 +55,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6CE9CE08C49BB1CBD595E2C1 /* Pods_AcrosticPoem_ios.framework in Frameworks */,
+				2F875A6C2428601E00691273 /* Pods_AcrosticPoem_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -416,7 +416,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.3;
+				MARKETING_VERSION = 1.5.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "minestrone.AcrosticPoem-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
@@ -441,7 +441,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.3;
+				MARKETING_VERSION = 1.5.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "minestrone.AcrosticPoem-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
