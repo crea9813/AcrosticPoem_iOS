@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import RxSwift
 import Alamofire
 import SwiftyJSON
 
 class NetworkManager {
 
     private let BASE_URL:String
-    private var TOKEN:String = ""
+    private var TOKEN:String
     private var count:String
     private let sort:Bool
     private var poemList:Array<String> = []
@@ -22,18 +23,16 @@ class NetworkManager {
     var wordArr = [NSArray]()
     var likeArr = [Int]()
     
-    
     init() {
         BASE_URL = "http://149.28.22.157:4567/"
         count = "100"
         sort = true
-        TOKEN = UserDefaults.standard.value(forKey: "GuestToken") as! String
+        TOKEN = ""
     }
       
     public func getPoemList() -> Int{
         return poemList.count
     }
-    
     // 토큰 생성
     public func generationToken() {
         Alamofire.request("http://149.28.22.157:4567/guest", method: .get).responseString {
@@ -42,6 +41,7 @@ class NetworkManager {
             case .success(_):
                 if let guestToken = response.result.value{
                     UserDefaults.standard.set(guestToken, forKey: "GuestToken")
+                    print(guestToken)
                     print("생성 완료")
                 }
             case .failure(_):
@@ -50,16 +50,17 @@ class NetworkManager {
         }
     }
     
+    
     // 토큰 유효성 검사
     public func tokenValidation() {
         Alamofire.request(BASE_URL+"guest", method: .post, parameters: ["token" : TOKEN], encoding: JSONEncoding.default).responseString {
             response in
             switch(response.response?.statusCode){
             case 200:
+                self.TOKEN = UserDefaults.standard.value(forKey: "GuestToken") as! String
                 print("토큰 인증됨.")
             case 401:
                 print("토큰 틀림 생성중..")
-                self.generationToken()
             case 415:
                 print("인코딩 형식이 잘못됨.")
             default:

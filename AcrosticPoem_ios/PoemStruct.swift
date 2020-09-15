@@ -6,8 +6,6 @@
 //  Copyright © 2020 Minestrone. All rights reserved.
 //
 
-import UIKit
-
 struct PoemModel {
     let imageUrl : String
     let titleFirst : String
@@ -32,3 +30,5 @@ struct Word {
     let word : String
     let line : String
 }
+
+

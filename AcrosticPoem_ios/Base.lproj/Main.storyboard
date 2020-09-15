@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="7U6-pT-Ij2">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="sig-83-QDk">
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -226,6 +226,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <navigationItem key="navigationItem" title="삼행시" id="teM-BV-GF5">
+                        <barButtonItem key="leftBarButtonItem" title="Menu" image="list.bullet" catalog="system" id="xsN-8b-usf"/>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="OQe-Ba-sZM">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -268,18 +269,19 @@
                                                 <rect key="frame" x="8" y="8" width="398" height="34"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYn-cc-MjQ">
-                                                        <rect key="frame" x="39.666666666666664" y="1.3333333333333162" width="7.6666666666666643" height="31.666666666666671"/>
+                                                        <rect key="frame" x="43" y="3.6666666666666856" width="9" height="27"/>
                                                         <fontDescription key="fontDescription" name="HYgsrB" family="HYgsrB" pointSize="27"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="최대 30자" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="7ux-fe-dc2">
-                                                        <rect key="frame" x="55.333333333333343" y="0.0" width="328.66666666666663" height="34"/>
+                                                        <rect key="frame" x="60" y="0.0" width="324" height="34"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="삼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GED-n5-AI0">
-                                                        <rect key="frame" x="8.0000000000000018" y="1.3333333333333162" width="23.666666666666671" height="31.666666666666671"/>
+                                                        <rect key="frame" x="8" y="3.6666666666666856" width="27" height="27"/>
                                                         <fontDescription key="fontDescription" name="HYgsrB" family="HYgsrB" pointSize="27"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -301,19 +303,20 @@
                                                 <rect key="frame" x="8" y="111" width="398" height="35"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="시" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bhb-Ev-vvg">
-                                                        <rect key="frame" x="8.0000000000000018" y="4" width="23.666666666666671" height="27"/>
+                                                        <rect key="frame" x="8" y="4" width="27" height="27"/>
                                                         <fontDescription key="fontDescription" name="HYgsrB" family="HYgsrB" pointSize="27"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IHy-wp-Gcn">
-                                                        <rect key="frame" x="39.666666666666664" y="4" width="7.6666666666666643" height="27"/>
+                                                        <rect key="frame" x="43" y="4" width="9" height="27"/>
                                                         <fontDescription key="fontDescription" name="HYgsrB" family="HYgsrB" pointSize="27"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="최대 30자" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bKR-pm-Udj">
-                                                        <rect key="frame" x="55.333333333333343" y="0.66666666666668561" width="328.66666666666663" height="34"/>
+                                                        <rect key="frame" x="60" y="0.66666666666668561" width="324" height="34"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
@@ -342,19 +345,20 @@
                                                 <rect key="frame" x="8" y="59" width="398" height="35"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="행" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G0D-Zh-8hV">
-                                                        <rect key="frame" x="8.0000000000000018" y="4" width="23.666666666666671" height="27"/>
+                                                        <rect key="frame" x="8" y="4" width="27" height="27"/>
                                                         <fontDescription key="fontDescription" name="HYgsrB" family="HYgsrB" pointSize="27"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=":" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PGT-wE-eQx">
-                                                        <rect key="frame" x="39.666666666666664" y="4" width="7.6666666666666643" height="27"/>
+                                                        <rect key="frame" x="43" y="4" width="9" height="27"/>
                                                         <fontDescription key="fontDescription" name="HYgsrB" family="HYgsrB" pointSize="27"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="최대 30자" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VBd-0f-Vdp">
-                                                        <rect key="frame" x="55.333333333333343" y="0.66666666666668561" width="328.66666666666663" height="34"/>
+                                                        <rect key="frame" x="60" y="0.66666666666668561" width="324" height="34"/>
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
@@ -374,7 +378,6 @@
                                                 </constraints>
                                             </view>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <constraints>
                                             <constraint firstItem="bZv-yC-tvA" firstAttribute="leading" secondItem="e3G-97-COp" secondAttribute="leading" constant="8" id="2Mk-DL-sOD"/>
                                             <constraint firstItem="XmV-yi-xMW" firstAttribute="leading" secondItem="e3G-97-COp" secondAttribute="leading" constant="8" id="5Mz-ao-NNG"/>
@@ -397,25 +400,25 @@
                                         <rect key="frame" x="0.0" y="37" width="414" height="175"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="title3" translatesAutoresizingMaskIntoConstraints="NO" id="5C4-dR-hSi">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="175"/>
                                             </imageView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JPZ-CS-oNQ">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="350"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="175"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="행" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qlD-Bt-TLp">
-                                                        <rect key="frame" x="195.33333333333334" y="159.33333333333331" width="23.666666666666657" height="31.666666666666657"/>
+                                                        <rect key="frame" x="193.66666666666666" y="74" width="27" height="27"/>
                                                         <fontDescription key="fontDescription" name="HYgsrB" family="HYgsrB" pointSize="27"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="시" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6to-uy-Sbb">
-                                                        <rect key="frame" x="252.99999999999997" y="159.33333333333331" width="23.666666666666657" height="31.666666666666657"/>
+                                                        <rect key="frame" x="254.66666666666663" y="74" width="27" height="27"/>
                                                         <fontDescription key="fontDescription" name="HYgsrB" family="HYgsrB" pointSize="27"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="삼" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bs1-01-yy2">
-                                                        <rect key="frame" x="137.66666666666666" y="159.33333333333331" width="23.666666666666657" height="31.666666666666657"/>
+                                                        <rect key="frame" x="132.66666666666666" y="74" width="27" height="27"/>
                                                         <fontDescription key="fontDescription" name="HYgsrB" family="HYgsrB" pointSize="27"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -466,7 +469,7 @@
                         <viewLayoutGuide key="safeArea" id="3z1-7s-7Gm"/>
                     </view>
                     <navigationItem key="navigationItem" id="f94-YK-iUi">
-                        <barButtonItem key="rightBarButtonItem" title="등록" id="Ev0-uq-ctX">
+                        <barButtonItem key="rightBarButtonItem" systemItem="stop" id="Ev0-uq-ctX">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
                                 <action selector="submitPoemAction:" destination="R8a-Q7-Cug" id="Zqw-N4-oOR"/>
@@ -512,12 +515,28 @@
             </objects>
             <point key="canvasLocation" x="129" y="127"/>
         </scene>
+        <!--Test View Controller-->
+        <scene sceneID="Whc-tP-FJY">
+            <objects>
+                <viewController id="sig-83-QDk" customClass="testViewController" customModule="AcrosticPoem_ios" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Mg0-cF-4cM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="q4g-P5-aIi"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pib-8E-BWV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="129" y="806"/>
+        </scene>
     </scenes>
     <resources>
         <image name="add_image" width="823" height="463"/>
-        <image name="exclamationmark.circle" catalog="system" width="64" height="60"/>
-        <image name="heart" catalog="system" width="64" height="54"/>
-        <image name="square.and.arrow.up.on.square" catalog="system" width="58" height="64"/>
+        <image name="exclamationmark.circle" catalog="system" width="128" height="121"/>
+        <image name="heart" catalog="system" width="128" height="109"/>
+        <image name="list.bullet" catalog="system" width="128" height="88"/>
+        <image name="square.and.arrow.up.on.square" catalog="system" width="117" height="128"/>
         <image name="title3" width="574" height="175"/>
     </resources>
 </document>

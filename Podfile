@@ -9,5 +9,7 @@ target 'AcrosticPoem_ios' do
 
   pod 'Alamofire', '4.7.3'
   pod 'SwiftyJSON', '~> 4.0'
-  pod 'SnapKit', '~> 5.0.0'  
+  pod 'SnapKit', '~> 5.0.0'
+  pod 'RxSwift'
+  pod 'RxCocoa'
 end

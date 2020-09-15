@@ -17,22 +17,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var titleString : String?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
-        // 앱 첫 실행인지 판단 후 게스트 토큰 생성 및 검사
-            let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
-            
-            if launchedBefore
-            {
-                NetworkManager().tokenValidation()
-                print("첫 실행이 아님.")
-            }
-            else
-            {
-                print("앱 설치 이후 첫 실행 Guest Token 생성 중")
-                UserDefaults.standard.set("", forKey: "GuestToken")
-                NetworkManager().generationToken()
-                UserDefaults.standard.set(true, forKey: "launchedBefore")
-            }
+//        
+//        // 앱 첫 실행인지 판단 후 게스트 토큰 생성 및 검사
+//            let launchedBefore = UserDefaults.standard.bool(forKey: "launchedBefore")
+//            
+//            if launchedBefore
+//            {
+//                NetworkManager().tokenValidation()
+//                print("첫 실행이 아님.")
+//            }
+//            else
+//            {
+//                print("앱 설치 이후 첫 실행 Guest Token 생성 중")
+//                UserDefaults.standard.set("", forKey: "GuestToken")
+//                NetworkManager().generationToken()
+//                UserDefaults.standard.set(true, forKey: "launchedBefore")
+//            }
+//        
         UserDefaults.standard.set("Random", forKey: "Sort")
         
         //네비게이션바 스타일 설정

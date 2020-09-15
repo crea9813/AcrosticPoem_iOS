@@ -17,12 +17,15 @@
 		2F5C96642371775800A248C1 /* CornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C96632371775800A248C1 /* CornerView.swift */; };
 		2F875A6C2428601E00691273 /* Pods_AcrosticPoem_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E9C15D80C3F95C3EDB1D6B /* Pods_AcrosticPoem_ios.framework */; };
 		2F948D1D23A111E20052042E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC938F0238B63EE00A77FC9 /* NetworkManager.swift */; };
+		2FB0D5DA250E5F4F0087D8AE /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB0D5D9250E5F4E0087D8AE /* NetworkService.swift */; };
+		2FB0D5DD250E78F30087D8AE /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB0D5DC250E78F30087D8AE /* testViewController.swift */; };
 		2FBF1AC5237E30BD00574BE3 /* PoemAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBF1AC4237E30BD00574BE3 /* PoemAddViewController.swift */; };
 		2FEC8109239F724D006F110A /* gungseo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC8107239F724D006F110A /* gungseo.ttf */; };
 		2FEC810A239F724D006F110A /* sm.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC8108239F724D006F110A /* sm.ttf */; };
 		2FEC8116239FBE4E006F110A /* PoemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEC8114239FBE4E006F110A /* PoemCell.swift */; };
 		2FEC8117239FBE4E006F110A /* PoemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC8115239FBE4E006F110A /* PoemCell.xib */; };
 		2FEC811B23A07808006F110A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC811A23A07808006F110A /* InfoPlist.strings */; };
+		2FF672FC251075460043BABC /* Poem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF672FB251075460043BABC /* Poem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +43,8 @@
 		2F5C96632371775800A248C1 /* CornerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerView.swift; sourceTree = "<group>"; };
 		2F828D452394F2FF007E743E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
 		2F828D462394F2FF007E743E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		2FB0D5D9250E5F4E0087D8AE /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		2FB0D5DC250E78F30087D8AE /* testViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
 		2FBF1AC4237E30BD00574BE3 /* PoemAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemAddViewController.swift; sourceTree = "<group>"; };
 		2FC938F0238B63EE00A77FC9 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		2FEC8107239F724D006F110A /* gungseo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gungseo.ttf; sourceTree = "<group>"; };
@@ -47,6 +52,7 @@
 		2FEC8114239FBE4E006F110A /* PoemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemCell.swift; sourceTree = SOURCE_ROOT; };
 		2FEC8115239FBE4E006F110A /* PoemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PoemCell.xib; sourceTree = SOURCE_ROOT; };
 		2FEC811A23A07808006F110A /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		2FF672FB251075460043BABC /* Poem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Poem.swift; sourceTree = "<group>"; };
 		C6AAD7468D29BB4951E9952B /* Pods-AcrosticPoem_ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AcrosticPoem_ios.debug.xcconfig"; path = "Target Support Files/Pods-AcrosticPoem_ios/Pods-AcrosticPoem_ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,7 +93,7 @@
 				2FEC8114239FBE4E006F110A /* PoemCell.swift */,
 				2F22219423C45FD50062E144 /* PoemStruct.swift */,
 				2FEC8115239FBE4E006F110A /* PoemCell.xib */,
-				2FC938F0238B63EE00A77FC9 /* NetworkManager.swift */,
+				2FB0D5DB250E5F560087D8AE /* Services */,
 				2F5C964F23714CA500A248C1 /* AppDelegate.swift */,
 				2F5C965123714CA500A248C1 /* SceneDelegate.swift */,
 				2F5C965323714CA500A248C1 /* ViewController.swift */,
@@ -98,6 +104,8 @@
 				2F5C965A23714CAA00A248C1 /* LaunchScreen.storyboard */,
 				2F5C965D23714CAA00A248C1 /* Info.plist */,
 				2FEC811A23A07808006F110A /* InfoPlist.strings */,
+				2FB0D5DC250E78F30087D8AE /* testViewController.swift */,
+				2FF672FB251075460043BABC /* Poem.swift */,
 			);
 			path = AcrosticPoem_ios;
 			sourceTree = "<group>";
@@ -109,6 +117,15 @@
 				2FEC8108239F724D006F110A /* sm.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		2FB0D5DB250E5F560087D8AE /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				2FC938F0238B63EE00A77FC9 /* NetworkManager.swift */,
+				2FB0D5D9250E5F4E0087D8AE /* NetworkService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		5195FC6FD03FBDFF0296B64F /* Pods */ = {
@@ -252,9 +269,12 @@
 				2F22219523C45FD50062E144 /* PoemStruct.swift in Sources */,
 				2F5C965023714CA500A248C1 /* AppDelegate.swift in Sources */,
 				2F948D1D23A111E20052042E /* NetworkManager.swift in Sources */,
+				2FB0D5DA250E5F4F0087D8AE /* NetworkService.swift in Sources */,
 				2F5C965223714CA500A248C1 /* SceneDelegate.swift in Sources */,
 				2F5C96642371775800A248C1 /* CornerView.swift in Sources */,
 				2FEC8116239FBE4E006F110A /* PoemCell.swift in Sources */,
+				2FB0D5DD250E78F30087D8AE /* testViewController.swift in Sources */,
+				2FF672FC251075460043BABC /* Poem.swift in Sources */,
 				2FBF1AC5237E30BD00574BE3 /* PoemAddViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,6 +425,7 @@
 			baseConfigurationReference = C6AAD7468D29BB4951E9952B /* Pods-AcrosticPoem_ios.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BZSC89933R;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -416,9 +437,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.5;
+				MARKETING_VERSION = 1.5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "minestrone.AcrosticPoem-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -430,6 +452,7 @@
 			baseConfigurationReference = 253D7F72AECCB5A0DE6F16C0 /* Pods-AcrosticPoem_ios.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = BZSC89933R;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -441,9 +464,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.5;
+				MARKETING_VERSION = 1.5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = "minestrone.AcrosticPoem-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
