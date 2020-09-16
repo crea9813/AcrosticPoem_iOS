@@ -67,15 +67,15 @@ class NetworkService {
         }
     }
     
-    func todayTitle() -> Observable<String>{
+    func todayTitle() -> Observable<[String:String]>{
         let url = BaseUrl + "title"
         
-        return Observable<String>.create { observer in
-            let request = Alamofire.request(url, method: .get).responseString {
+        return Observable<[String:String]>.create { observer in
+            let request = Alamofire.request(url, method: .get).responseJSON {
                 response in
                 switch response.result {
                 case .success(let value):
-                    observer.onNext(value)
+                    observer.onNext(value as! [String:String])
                     observer.onCompleted()
                 case .failure(let error):
                     switch response.response?.statusCode {
@@ -116,14 +116,24 @@ class NetworkService {
         }
     }
     
-    func getPoem() -> Observable<JSON> {
+    func getPoem() -> Observable<[String]> {
         let url = BaseUrl + "poem/random/3?count=100"
-        return Observable<JSON>.create { observer in
+        
+        var list:[String] = []
+        return Observable<[String]>.create { observer in
             let request = Alamofire.request(url,method: .get, encoding: JSONEncoding.default).responseJSON { response in
                 switch response.result {
                 case .success(let value):
-                    observer.onNext(value as! JSON)
-                    observer.onCompleted()
+                    if let data = value as? [String:Any] {
+                        if data["poemId"] == nil {
+                            observer.onCompleted()
+                        }else {
+                            list = data["poemId"] as! [String]
+                            observer.onNext(list)
+                            observer.onCompleted()
+                        }
+                    }
+                   
                 case .failure(let error):
                     switch response.response?.statusCode {
                     case 401: observer.onError(ApiError.unAuthorized)
@@ -138,15 +148,24 @@ class NetworkService {
         }
     }
     
-    func poemInfo(poemId : String) -> Observable<JSON> {
+    func poemInfo(poemId : String) -> Observable<Poem> {
+        let decoder = JSONDecoder()
         let token = UserDefaults.standard.value(forKey: "token") as! String
         let url = BaseUrl + "poem/3?token="+token+"&poemid="+poemId
-        return Observable<JSON>.create { observer in
+        return Observable<Poem>.create { observer in
             let request = Alamofire.request(url,method: .get, encoding: JSONEncoding.default,headers: ["Content-Type":"application/json;charset=utf-8"]).responseJSON { response in
             switch response.result {
             case .success(let value):
-                observer.onNext(value as! JSON)
-                observer.onCompleted()
+                    do {
+                        let jsonData = try JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
+                        let info = try decoder.decode(Poem.self, from: jsonData)
+                        
+                        observer.onNext(info)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                    observer.onCompleted()
+                
             case .failure(let error):
                 switch response.response?.statusCode {
                 case 401: observer.onError(ApiError.unAuthorized)

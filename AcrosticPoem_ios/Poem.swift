@@ -8,7 +8,11 @@
 
 import Foundation
 
-struct Poem {
+struct Poems {
+    let poem : [Poem]
+}
+
+struct Poem : Codable {
     let wordCount : Int
     let userName : String
     let userId : String
@@ -17,18 +21,18 @@ struct Poem {
     let liked : Bool
     let reported : Bool
     let title : String
-    let date : String
+    let date : Date
     let image : String
     let word : [Words]
 }
 
-struct PostPoem {
+struct PostPoem : Codable {
     let token : String
     let image : String
     let word : [Words]
 }
 
-struct Words {
+struct Words : Codable {
     let word : String
     let line : String
 }

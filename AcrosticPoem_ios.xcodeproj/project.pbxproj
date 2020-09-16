@@ -26,6 +26,7 @@
 		2FEC8117239FBE4E006F110A /* PoemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC8115239FBE4E006F110A /* PoemCell.xib */; };
 		2FEC811B23A07808006F110A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC811A23A07808006F110A /* InfoPlist.strings */; };
 		2FF672FC251075460043BABC /* Poem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF672FB251075460043BABC /* Poem.swift */; };
+		2FF672FF251228160043BABC /* PoemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF672FE251228160043BABC /* PoemCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		2FEC8115239FBE4E006F110A /* PoemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PoemCell.xib; sourceTree = SOURCE_ROOT; };
 		2FEC811A23A07808006F110A /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = SOURCE_ROOT; };
 		2FF672FB251075460043BABC /* Poem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Poem.swift; sourceTree = "<group>"; };
+		2FF672FE251228160043BABC /* PoemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemCollectionViewCell.swift; sourceTree = "<group>"; };
 		C6AAD7468D29BB4951E9952B /* Pods-AcrosticPoem_ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AcrosticPoem_ios.debug.xcconfig"; path = "Target Support Files/Pods-AcrosticPoem_ios/Pods-AcrosticPoem_ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -93,6 +95,7 @@
 				2FEC8114239FBE4E006F110A /* PoemCell.swift */,
 				2F22219423C45FD50062E144 /* PoemStruct.swift */,
 				2FEC8115239FBE4E006F110A /* PoemCell.xib */,
+				2FF672FE251228160043BABC /* PoemCollectionViewCell.swift */,
 				2FB0D5DB250E5F560087D8AE /* Services */,
 				2F5C964F23714CA500A248C1 /* AppDelegate.swift */,
 				2F5C965123714CA500A248C1 /* SceneDelegate.swift */,
@@ -272,6 +275,7 @@
 				2FB0D5DA250E5F4F0087D8AE /* NetworkService.swift in Sources */,
 				2F5C965223714CA500A248C1 /* SceneDelegate.swift in Sources */,
 				2F5C96642371775800A248C1 /* CornerView.swift in Sources */,
+				2FF672FF251228160043BABC /* PoemCollectionViewCell.swift in Sources */,
 				2FEC8116239FBE4E006F110A /* PoemCell.swift in Sources */,
 				2FB0D5DD250E78F30087D8AE /* testViewController.swift in Sources */,
 				2FF672FC251075460043BABC /* Poem.swift in Sources */,

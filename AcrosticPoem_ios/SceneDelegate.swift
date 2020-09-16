@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import RxSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
+    private let disposeBag = DisposeBag()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -20,9 +22,52 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         if ( UserDefaults.standard.value(forKey: "launchedBefore") == nil){
             UserDefaults.standard.set(true, forKey: "launchedBefore")
             NetworkService().generationToken()
-        }else {
-            
+                .observeOn(MainScheduler.instance)
+            .subscribe(
+                onNext: { token in
+                    UserDefaults.standard.set(token, forKey: "token")
+                },
+                onError: { error in
+                    switch error {
+                    case ApiError.unAuthorized:
+                        print("unAuthorized")
+                    case ApiError.internalServerError:
+                        print("Server Error")
+                    default:
+                        print("Unkown Error")
+                    }
+                }).disposed(by: disposeBag)
+        } else {
+            NetworkService().tokenValidation(token: UserDefaults.standard.value(forKey: "token") as! String)
+                .observeOn(MainScheduler.instance)
+            .subscribe(
+                onError: { error in
+                    switch error {
+                    case ApiError.unAuthorized:
+                        NetworkService().generationToken()
+                            .observeOn(MainScheduler.instance)
+                        .subscribe(
+                        onNext: { token in
+                            UserDefaults.standard.set(token, forKey: "token")
+                        },
+                        onError: { error in
+                            switch error {
+                            case ApiError.unAuthorized:
+                                print("unAuthorized")
+                            case ApiError.internalServerError:
+                                print("Server Error")
+                            default:
+                                print("Unkown Error")
+                            }
+                        }).disposed(by: self.disposeBag)
+                    case ApiError.internalServerError:
+                        print("Server Error")
+                    default:
+                        print("Unknown Error")
+                    }
+                }).disposed(by: disposeBag)
         }
+        
         guard let _ = (scene as? UIWindowScene) else { return }
     }
 
