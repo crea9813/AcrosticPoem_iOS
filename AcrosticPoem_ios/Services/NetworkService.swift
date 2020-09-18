@@ -94,20 +94,34 @@ class NetworkService {
         }
     }
     
-    func submitPoem(poem : PostPoem) -> Observable<String> {
-        let url = BaseUrl + "poem"
-        return Observable<String>.create { observer in
-            let request = Alamofire.request(url,method: .post).responseString { response in
-                switch response.result {
-                case .success(let value):
-                    observer.onNext(value)
-                    observer.onCompleted()
-                case .failure(let error):
-                    switch response.response?.statusCode {
-                    case 401: observer.onError(ApiError.unAuthorized)
-                    case 500: observer.onError(ApiError.internalServerError)
-                    default: observer.onError(error)
-                    }
+    func submitPoem(poem : PostPoem) -> Observable<Void> {
+        let url = BaseUrl + "poem/3"
+        let word = poem.word
+        let parameters = [
+            "token" : poem.token,
+            "image" : poem.image,
+            "word" : [[
+                    "word" : word[0].word,
+                    "line" : word[0].line
+                ],
+                [
+                    "word" : word[1].word,
+                    "line" : word[1].line
+                ],
+                [
+                    "word" : word[2].word,
+                    "line" : word[2].line
+                ]
+            ]
+            ] as [String : Any]
+        
+        return Observable<Void>.create { observer in
+            let request = Alamofire.request(url, method: .post, parameters: parameters, encoding: JSONEncoding.default).response { response in
+                switch response.response?.statusCode {
+                case 200: observer.onCompleted()
+                case 401: observer.onError(ApiError.unAuthorized)
+                case 500: observer.onError(ApiError.internalServerError)
+                default: observer.onError(ApiError.conflict)
                 }
             }
             return Disposables.create {
