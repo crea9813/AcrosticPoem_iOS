@@ -62,6 +62,9 @@ class PoemCell: UICollectionViewCell {
         wordFirst.text = String(wordTitle[0].word)
         wordSecond.text = String(wordTitle[1].word)
         wordThird.text = String(wordTitle[2].word)
+        wordFirst.adjustsFontSizeToFitWidth = true
+        wordSecond.adjustsFontSizeToFitWidth = true
+        wordThird.adjustsFontSizeToFitWidth = true
     }
 
 }

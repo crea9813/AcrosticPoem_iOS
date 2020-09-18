@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		2F22219523C45FD50062E144 /* PoemStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F22219423C45FD50062E144 /* PoemStruct.swift */; };
+		2F2071FF251488AD009B48FF /* ImageConvert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2071FE251488AD009B48FF /* ImageConvert.swift */; };
 		2F5C965023714CA500A248C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C964F23714CA500A248C1 /* AppDelegate.swift */; };
 		2F5C965223714CA500A248C1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C965123714CA500A248C1 /* SceneDelegate.swift */; };
 		2F5C965423714CA500A248C1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C965323714CA500A248C1 /* ViewController.swift */; };
@@ -16,23 +16,21 @@
 		2F5C965C23714CAA00A248C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F5C965A23714CAA00A248C1 /* LaunchScreen.storyboard */; };
 		2F5C96642371775800A248C1 /* CornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C96632371775800A248C1 /* CornerView.swift */; };
 		2F875A6C2428601E00691273 /* Pods_AcrosticPoem_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E9C15D80C3F95C3EDB1D6B /* Pods_AcrosticPoem_ios.framework */; };
-		2F948D1D23A111E20052042E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FC938F0238B63EE00A77FC9 /* NetworkManager.swift */; };
 		2FB0D5DA250E5F4F0087D8AE /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB0D5D9250E5F4E0087D8AE /* NetworkService.swift */; };
-		2FB0D5DD250E78F30087D8AE /* testViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FB0D5DC250E78F30087D8AE /* testViewController.swift */; };
-		2FBF1AC5237E30BD00574BE3 /* PoemAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FBF1AC4237E30BD00574BE3 /* PoemAddViewController.swift */; };
 		2FEC8109239F724D006F110A /* gungseo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC8107239F724D006F110A /* gungseo.ttf */; };
 		2FEC810A239F724D006F110A /* sm.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC8108239F724D006F110A /* sm.ttf */; };
 		2FEC8116239FBE4E006F110A /* PoemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEC8114239FBE4E006F110A /* PoemCell.swift */; };
 		2FEC8117239FBE4E006F110A /* PoemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC8115239FBE4E006F110A /* PoemCell.xib */; };
 		2FEC811B23A07808006F110A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2FEC811A23A07808006F110A /* InfoPlist.strings */; };
+		2FEFF07B25146A7C00AB7DD8 /* LabelTextSpacing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FEFF07A25146A7C00AB7DD8 /* LabelTextSpacing.swift */; };
 		2FF672FC251075460043BABC /* Poem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF672FB251075460043BABC /* Poem.swift */; };
-		2FF672FF251228160043BABC /* PoemCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF672FE251228160043BABC /* PoemCollectionViewCell.swift */; };
+		2FF6730125124F350043BABC /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FF6730025124F350043BABC /* AddViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		15E9C15D80C3F95C3EDB1D6B /* Pods_AcrosticPoem_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AcrosticPoem_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		253D7F72AECCB5A0DE6F16C0 /* Pods-AcrosticPoem_ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AcrosticPoem_ios.release.xcconfig"; path = "Target Support Files/Pods-AcrosticPoem_ios/Pods-AcrosticPoem_ios.release.xcconfig"; sourceTree = "<group>"; };
-		2F22219423C45FD50062E144 /* PoemStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemStruct.swift; sourceTree = "<group>"; };
+		2F2071FE251488AD009B48FF /* ImageConvert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageConvert.swift; sourceTree = "<group>"; };
 		2F5C964C23714CA500A248C1 /* AcrosticPoem_ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AcrosticPoem_ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F5C964F23714CA500A248C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2F5C965123714CA500A248C1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,16 +43,14 @@
 		2F828D452394F2FF007E743E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
 		2F828D462394F2FF007E743E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		2FB0D5D9250E5F4E0087D8AE /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
-		2FB0D5DC250E78F30087D8AE /* testViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testViewController.swift; sourceTree = "<group>"; };
-		2FBF1AC4237E30BD00574BE3 /* PoemAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemAddViewController.swift; sourceTree = "<group>"; };
-		2FC938F0238B63EE00A77FC9 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		2FEC8107239F724D006F110A /* gungseo.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = gungseo.ttf; sourceTree = "<group>"; };
 		2FEC8108239F724D006F110A /* sm.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sm.ttf; sourceTree = "<group>"; };
-		2FEC8114239FBE4E006F110A /* PoemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemCell.swift; sourceTree = SOURCE_ROOT; };
-		2FEC8115239FBE4E006F110A /* PoemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PoemCell.xib; sourceTree = SOURCE_ROOT; };
+		2FEC8114239FBE4E006F110A /* PoemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemCell.swift; sourceTree = "<group>"; };
+		2FEC8115239FBE4E006F110A /* PoemCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PoemCell.xib; sourceTree = "<group>"; };
 		2FEC811A23A07808006F110A /* InfoPlist.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = SOURCE_ROOT; };
+		2FEFF07A25146A7C00AB7DD8 /* LabelTextSpacing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelTextSpacing.swift; sourceTree = "<group>"; };
 		2FF672FB251075460043BABC /* Poem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Poem.swift; sourceTree = "<group>"; };
-		2FF672FE251228160043BABC /* PoemCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemCollectionViewCell.swift; sourceTree = "<group>"; };
+		2FF6730025124F350043BABC /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
 		C6AAD7468D29BB4951E9952B /* Pods-AcrosticPoem_ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AcrosticPoem_ios.debug.xcconfig"; path = "Target Support Files/Pods-AcrosticPoem_ios/Pods-AcrosticPoem_ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -92,23 +88,17 @@
 			isa = PBXGroup;
 			children = (
 				2FA60E322375027F006A2445 /* Fonts */,
-				2FEC8114239FBE4E006F110A /* PoemCell.swift */,
-				2F22219423C45FD50062E144 /* PoemStruct.swift */,
-				2FEC8115239FBE4E006F110A /* PoemCell.xib */,
-				2FF672FE251228160043BABC /* PoemCollectionViewCell.swift */,
+				2FEFF07F25146ADB00AB7DD8 /* CustomCell */,
+				2FEFF07E25146ACC00AB7DD8 /* Struct */,
 				2FB0D5DB250E5F560087D8AE /* Services */,
-				2F5C964F23714CA500A248C1 /* AppDelegate.swift */,
-				2F5C965123714CA500A248C1 /* SceneDelegate.swift */,
-				2F5C965323714CA500A248C1 /* ViewController.swift */,
-				2FBF1AC4237E30BD00574BE3 /* PoemAddViewController.swift */,
-				2F5C96632371775800A248C1 /* CornerView.swift */,
+				2FEFF08025146C9C00AB7DD8 /* Delegates */,
+				2FEFF07D25146ABE00AB7DD8 /* ViewControllers */,
+				2FEFF07C25146A9900AB7DD8 /* Extensions */,
 				2F5C965523714CA500A248C1 /* Main.storyboard */,
 				2F5C965823714CAA00A248C1 /* Assets.xcassets */,
 				2F5C965A23714CAA00A248C1 /* LaunchScreen.storyboard */,
 				2F5C965D23714CAA00A248C1 /* Info.plist */,
 				2FEC811A23A07808006F110A /* InfoPlist.strings */,
-				2FB0D5DC250E78F30087D8AE /* testViewController.swift */,
-				2FF672FB251075460043BABC /* Poem.swift */,
 			);
 			path = AcrosticPoem_ios;
 			sourceTree = "<group>";
@@ -125,10 +115,55 @@
 		2FB0D5DB250E5F560087D8AE /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				2FC938F0238B63EE00A77FC9 /* NetworkManager.swift */,
 				2FB0D5D9250E5F4E0087D8AE /* NetworkService.swift */,
 			);
 			path = Services;
+			sourceTree = "<group>";
+		};
+		2FEFF07C25146A9900AB7DD8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				2F5C96632371775800A248C1 /* CornerView.swift */,
+				2FEFF07A25146A7C00AB7DD8 /* LabelTextSpacing.swift */,
+				2F2071FE251488AD009B48FF /* ImageConvert.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		2FEFF07D25146ABE00AB7DD8 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				2F5C965323714CA500A248C1 /* ViewController.swift */,
+				2FF6730025124F350043BABC /* AddViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		2FEFF07E25146ACC00AB7DD8 /* Struct */ = {
+			isa = PBXGroup;
+			children = (
+				2FF672FB251075460043BABC /* Poem.swift */,
+			);
+			path = Struct;
+			sourceTree = "<group>";
+		};
+		2FEFF07F25146ADB00AB7DD8 /* CustomCell */ = {
+			isa = PBXGroup;
+			children = (
+				2FEC8114239FBE4E006F110A /* PoemCell.swift */,
+				2FEC8115239FBE4E006F110A /* PoemCell.xib */,
+			);
+			name = CustomCell;
+			path = AcrosticPoem_ios/CustomCell;
+			sourceTree = SOURCE_ROOT;
+		};
+		2FEFF08025146C9C00AB7DD8 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				2F5C964F23714CA500A248C1 /* AppDelegate.swift */,
+				2F5C965123714CA500A248C1 /* SceneDelegate.swift */,
+			);
+			path = Delegates;
 			sourceTree = "<group>";
 		};
 		5195FC6FD03FBDFF0296B64F /* Pods */ = {
@@ -268,18 +303,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2F2071FF251488AD009B48FF /* ImageConvert.swift in Sources */,
 				2F5C965423714CA500A248C1 /* ViewController.swift in Sources */,
-				2F22219523C45FD50062E144 /* PoemStruct.swift in Sources */,
+				2FEFF07B25146A7C00AB7DD8 /* LabelTextSpacing.swift in Sources */,
 				2F5C965023714CA500A248C1 /* AppDelegate.swift in Sources */,
-				2F948D1D23A111E20052042E /* NetworkManager.swift in Sources */,
 				2FB0D5DA250E5F4F0087D8AE /* NetworkService.swift in Sources */,
 				2F5C965223714CA500A248C1 /* SceneDelegate.swift in Sources */,
 				2F5C96642371775800A248C1 /* CornerView.swift in Sources */,
-				2FF672FF251228160043BABC /* PoemCollectionViewCell.swift in Sources */,
 				2FEC8116239FBE4E006F110A /* PoemCell.swift in Sources */,
-				2FB0D5DD250E78F30087D8AE /* testViewController.swift in Sources */,
 				2FF672FC251075460043BABC /* Poem.swift in Sources */,
-				2FBF1AC5237E30BD00574BE3 /* PoemAddViewController.swift in Sources */,
+				2FF6730125124F350043BABC /* AddViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

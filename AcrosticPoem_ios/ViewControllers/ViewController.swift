@@ -17,9 +17,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     @IBOutlet var likeButton: UIView!
     @IBOutlet var shareButton: UIView!
     @IBOutlet var reportButton: UIView!
-    @IBOutlet var titleFirst: UILabel!
-    @IBOutlet var titleSecond: UILabel!
-    @IBOutlet var titleThird: UILabel!
     @IBOutlet var likeCount: UILabel!
     @IBOutlet var poemView: UIView!
     @IBOutlet weak var titleView: UIImageView!
@@ -28,7 +25,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     private var nowPage:Int = 0
     private var poemItems:Int = 0
     private let ad = UIApplication.shared.delegate as? AppDelegate
-    private var networkManager = NetworkManager()
+    
     private var refreshControl = UIRefreshControl()
     
     private var currentPage = 0
@@ -38,12 +35,54 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     
     let disposeBag = DisposeBag()
     
+    let todayTitle : UILabel = {
+        let title = UILabel()
+        
+        title.translatesAutoresizingMaskIntoConstraints = false
+        title.font = UIFont(name: "HYgsrB", size: 27)
+        title.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+        title.adjustsFontSizeToFitWidth = true
+        title.textAlignment = .center
+        
+        return title
+    }()
+    
+    override func viewWillLayoutSubviews() {
+        
+        navigationItem.setHidesBackButton(true, animated: false)
+        navigationController?.isNavigationBarHidden = false
+        
+        //let moreIcon = UIImage(named: "more")
+        
+        self.view.backgroundColor = UIColor(red: 0.94, green: 0.93, blue: 0.89, alpha: 1.00)
+        // Do any additional setup after loading the view.
+        
+        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
+        //let more = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(moreTapped))
+        //(image: moreIcon, style: .plain, target: self, action: nil)
+        
+        self.navigationItem.rightBarButtonItems = [add]
+        self.navigationController?.navigationBar.topItem?.title = ""
+    }
+    
+    @objc func addTapped() {
+        let pushViewController = AddViewController()
+        pushViewController.title = "작성하기"
+        pushViewController.todayTitle.text = todayTitle.text
+        pushViewController.wordTitleFirst.text = poems[0].word[0].word + " :"
+        pushViewController.wordTitleSecond.text = poems[0].word[1].word + " :"
+        pushViewController.wordTitleThird.text = poems[0].word[2].word + " :"
+        self.navigationController?.pushViewController(pushViewController, animated: true)
+    }
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         initView()
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        carouselCollectionView.reloadData()
     }
     
     //MARK: - HorizontalCollectionView 초기화
@@ -52,7 +91,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         // 전체 레이아웃 초기화
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
-        flowLayout.minimumLineSpacing = 26
+        flowLayout.minimumLineSpacing = 0
         flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 
         // CollectionView 초기화
@@ -85,6 +124,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     // MARK: - 뷰 초기화
     func initView() {
         
+        titleView.addSubview(todayTitle)
+        
+        
+        todayTitle.snp.makeConstraints {
+            $0.centerX.centerY.equalTo(titleView)
+        }
+        
         setPoem()
         setTitle()
         setGestureRecognizer()
@@ -109,6 +155,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         poemView.addSubview(carouselCollectionView)
                
         carouselCollectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         // CollectionView 오토레이아웃 설정
         carouselCollectionView.snp.makeConstraints {
             $0.top.equalTo(titleView.snp.bottom)
@@ -120,44 +167,26 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         carouselCollectionView.dataSource = self
         carouselCollectionView.register(UINib(nibName: "PoemCell", bundle: nil), forCellWithReuseIdentifier: "PoemCell")
         
-        if #available(iOS 10.0, *) {
-            carouselCollectionView.refreshControl = refreshControl
-        } else {
-            carouselCollectionView.addSubview(refreshControl)
-        }
         carouselCollectionView.showsHorizontalScrollIndicator = false
         carouselCollectionView.showsVerticalScrollIndicator = false
             
-        refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
     }
     // 삼행시 주제 설정
     private func setTitle() {
+        navigationController?.title = "삼행시"
         NetworkService().todayTitle()
         .observeOn(MainScheduler.instance)
         .subscribe (
             onNext: { title in
-                let todayTitle = title["3"]!
-                
-                self.titleFirst.font = UIFont(name: "HYgsrB", size: 27)
-                self.titleFirst.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
-                self.titleFirst.text = String(todayTitle[(todayTitle.startIndex)])
-                
-                //삼행시 제목 두번째 글자 초기화
-                self.titleSecond.font = UIFont(name: "HYgsrB", size: 27)
-                self.titleSecond.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
-                self.titleSecond.text = String(todayTitle[todayTitle.index(todayTitle.startIndex, offsetBy: 1)])
-                
-                //삼행시 제목 세번째 글자 초기화
-                self.titleThird.font = UIFont(name: "HYgsrB", size: 27)
-                self.titleThird.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
-                self.titleThird.text = String(todayTitle[todayTitle.index(before: todayTitle.endIndex)])
+                self.todayTitle.text = title["3"]!
+                self.todayTitle.addCharacterSpacing(kernValue: 33)
             },
             onError: { error in
                 switch error {
                 case ApiError.unAuthorized:
                     print("unAuthorized")
                 case ApiError.internalServerError:
-                    print("Server Error")
+                    print("getTitle Server Error")
                 default:
                     print("Unknown Error")
                 }
@@ -181,14 +210,13 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                             case ApiError.unAuthorized:
                                 print("unAuthorized")
                             case ApiError.internalServerError:
-                                print("Server Error")
+                                print("Info Server Error")
                             default:
                                 print("Unknown Error")
                             }
                     },
                         onCompleted: {
                             if count == poem.count-1 {
-                                print(self.poems)
                                 self.setCollectionView()
                             }
                     }).disposed(by: self.disposeBag)
@@ -199,7 +227,7 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 case ApiError.unAuthorized:
                     print("unAuthorized")
                 case ApiError.internalServerError:
-                    print("Server Error")
+                    print("Poem Server Error")
                 default:
                     print("Unknown Error")
                 }
@@ -207,16 +235,27 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     }
     //MARK: - 탭바 버튼 이벤트
     @objc private func likeAction() {
-        
-        if poems.isEmpty == false {
+        if !(poems.isEmpty) {
             let poemId = poems[currentPage].poemId
-            if poems[currentPage].liked != true {
-                networkManager.likePoem(poemId: poemId)
-                likeHeart.image = UIImage(systemName: "heart.fill")
-                likeHeart.tintColor = UIColor(red: 0.84, green: 0.35, blue: 0.29, alpha: 1)
-                self.carouselCollectionView.reloadData()
-            }else{
-                
+            
+            if !(poems[currentPage].liked) {
+                NetworkService().likePoem(poemId: poemId)
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(
+                        onError: { error in
+                            switch error {
+                            case ApiError.unAuthorized:
+                                print("unAuthorized")
+                            case ApiError.internalServerError:
+                                print("Poem Server Error")
+                            default:
+                                print("Unknown Error")
+                            }
+                    },onCompleted: {
+                        self.likeHeart.image = UIImage(systemName: "heart.fill")
+                        self.likeHeart.tintColor = UIColor(red: 0.84, green: 0.35, blue: 0.29, alpha: 1)
+                        self.carouselCollectionView.reloadData()
+                    }).disposed(by: disposeBag)
             }
         }
     }
@@ -225,12 +264,27 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         
         if poems.isEmpty == false {
             let poemId = poems[currentPage].poemId
-            if poems[currentPage].reported != true {
-                networkManager.reportPoem(poemId: poemId)
-                let alert = UIAlertController(title: "알림", message: "신고되었습니다", preferredStyle: UIAlertController.Style.alert)
-                let cancel = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
-                alert.addAction(cancel)
-                self.present(alert, animated: false)
+            
+            if !(poems[currentPage].reported) {
+                NetworkService().reportPoem(poemId: poemId)
+                    .observeOn(MainScheduler.instance)
+                    .subscribe(
+                        onError: { error in
+                            switch error {
+                            case ApiError.unAuthorized:
+                                print("unAuthorized")
+                            case ApiError.internalServerError:
+                                print("Report Server Error")
+                            default:
+                                print("Unknown Error")
+                            }
+                    }, onCompleted: {
+                        let alert = UIAlertController(title: "알림", message: "신고되었습니다", preferredStyle: UIAlertController.Style.alert)
+                        let cancel = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
+                                           alert.addAction(cancel)
+                        self.present(alert, animated: false)
+                    }
+                ).disposed(by: disposeBag)
             }
             else{
                 let alert = UIAlertController(title: "알림", message: "이미 신고된 시 입니다", preferredStyle: UIAlertController.Style.alert)
@@ -239,38 +293,23 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
                 self.present(alert, animated: false)
             }
         }
-        
     }
     
     @objc private func shareAction() {
-//        if poems.isEmpty == false {
-//            let text = poems[currentPage].titleFirst + " : " + poems[currentPage].wordFirst + "\n" + poems[currentPage].titleSecond + " : " + poems[currentPage].wordSecond + "\n" + poems[currentPage].titleThird + " : " + poems[currentPage].wordThird
-//
-//                let textToShare = [ text ]
-//
-//                let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-//
-//                activityViewController.excludedActivityTypes = [UIActivity.ActivityType.airDrop]
-//
-//                self.present(activityViewController, animated: true, completion: nil)
-//
-//            }
-        }
-    
-    @objc private func refresh() {
-        setPoem()
-        refreshControl.endRefreshing()
-    }
-    
-    // MARK: - 등록 이후 뷰 초기화
-    // FIXME: - 현재 작동 안함.. 버그
-    
-    // 뷰 이동을 위한 함수
-    @IBAction func unwindToMain(_ unwindSegue: UIStoryboardSegue){
-        setPoem()
-    }
-}
+        if !(poems.isEmpty) {
+            let text = poems[currentPage].word[0].word + " : " + poems[currentPage].word[0].line + "\n" + poems[currentPage].word[1].word + " : " + poems[currentPage].word[1].line + "\n" + poems[currentPage].word[2].word + " : " + poems[currentPage].word[2].line
 
+                let textToShare = [ text ]
+
+                let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+
+                activityViewController.excludedActivityTypes = [UIActivity.ActivityType.airDrop]
+
+                self.present(activityViewController, animated: true, completion: nil)
+            }
+        }
+}
+    
 extension ViewController : UICollectionViewDelegate {
     // CollectionView의 아이템 갯수
         func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -284,9 +323,9 @@ extension ViewController : UICollectionViewDelegate {
     //        return cell
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PoemCell.identifier, for: indexPath) as! PoemCell
 
-            cell.titleFirst.text = titleFirst.text
-            cell.titleSecond.text = titleSecond.text
-            cell.titleThird.text = titleThird.text
+            cell.titleFirst.text = poems[indexPath.row].word[0].word
+            cell.titleSecond.text = poems[indexPath.row].word[1].word
+            cell.titleThird.text = poems[indexPath.row].word[2].word
             cell.wordFirst.text = poems[indexPath.row].word[0].line
             cell.wordSecond.text = poems[indexPath.row].word[1].line
             cell.wordThird.text = poems[indexPath.row].word[2].line
@@ -297,3 +336,4 @@ extension ViewController : UICollectionViewDelegate {
         return collectionView.frame.size
     }
 }
+
