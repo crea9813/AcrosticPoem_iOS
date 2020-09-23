@@ -44,21 +44,16 @@ class NetworkService {
             }
         }
     }
-    func tokenValidation(token : String) -> Observable<String> {
+    func tokenValidation(token : String) -> Observable<Void> {
         let url = BaseUrl + "guest"
         
-        return Observable<String>.create { observer in
-            let request = Alamofire.request(url, method: .post, parameters: ["token" : token], encoding: JSONEncoding.default).responseString { response in
-                switch response.result {
-                case .success(let value):
-                    observer.onNext(value)
-                    observer.onCompleted()
-                case .failure(let error):
-                    switch response.response?.statusCode {
-                    case 401: observer.onError(ApiError.unAuthorized)
-                    case 500: observer.onError(ApiError.internalServerError)
-                    default : observer.onError(error)
-                    }
+        return Observable<Void>.create { observer in
+            let request = Alamofire.request(url, method: .post, parameters: ["token": token], encoding: JSONEncoding.default).response { response in
+                switch response.response?.statusCode {
+                case 200: observer.onCompleted()
+                case 401: observer.onError(ApiError.unAuthorized)
+                case 500: observer.onError(ApiError.internalServerError)
+                default: observer.onError(response.error!)
                 }
             }
             return Disposables.create {

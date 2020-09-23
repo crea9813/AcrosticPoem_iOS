@@ -19,54 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         
-        if ( UserDefaults.standard.value(forKey: "launchedBefore") == nil){
-            UserDefaults.standard.set(true, forKey: "launchedBefore")
-            NetworkService().generationToken()
-                .observeOn(MainScheduler.instance)
-            .subscribe(
-                onNext: { token in
-                    UserDefaults.standard.set(token, forKey: "token")
-                },
-                onError: { error in
-                    switch error {
-                    case ApiError.unAuthorized:
-                        print("unAuthorized")
-                    case ApiError.internalServerError:
-                        print("Server Error")
-                    default:
-                        print("Unkown Error")
-                    }
-                }).disposed(by: disposeBag)
-        } else {
-            NetworkService().tokenValidation(token: UserDefaults.standard.value(forKey: "token") as! String)
-                .observeOn(MainScheduler.instance)
-            .subscribe(
-                onError: { error in
-                    switch error {
-                    case ApiError.unAuthorized:
-                        NetworkService().generationToken()
-                            .observeOn(MainScheduler.instance)
-                        .subscribe(
-                        onNext: { token in
-                            UserDefaults.standard.set(token, forKey: "token")
-                        },
-                        onError: { error in
-                            switch error {
-                            case ApiError.unAuthorized:
-                                print("unAuthorized")
-                            case ApiError.internalServerError:
-                                print("Server Error")
-                            default:
-                                print("Unkown Error")
-                            }
-                        }).disposed(by: self.disposeBag)
-                    case ApiError.internalServerError:
-                        print("Server Error")
-                    default:
-                        print("Unknown Error")
-                    }
-                }).disposed(by: disposeBag)
-        }
+        
         
         guard let _ = (scene as? UIWindowScene) else { return }
     }

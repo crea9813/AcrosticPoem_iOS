@@ -50,7 +50,6 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
     override func viewWillLayoutSubviews() {
         
         navigationItem.setHidesBackButton(true, animated: false)
-        navigationController?.isNavigationBarHidden = false
         
         //let moreIcon = UIImage(named: "more")
         
@@ -62,16 +61,16 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
         //(image: moreIcon, style: .plain, target: self, action: nil)
         
         self.navigationItem.rightBarButtonItems = [add]
-        self.navigationController?.navigationBar.topItem?.title = ""
+        self.navigationController?.navigationBar.topItem?.title = "삼행시"
     }
     
     @objc func addTapped() {
         let pushViewController = AddViewController()
         pushViewController.title = "작성하기"
         pushViewController.todayTitle.text = todayTitle.text
-        pushViewController.wordTitleFirst.text = poems[0].word[0].word + " :"
-        pushViewController.wordTitleSecond.text = poems[0].word[1].word + " :"
-        pushViewController.wordTitleThird.text = poems[0].word[2].word + " :"
+        pushViewController.wordTitleFirst.text = String(todayTitle.text![(todayTitle.text!.startIndex)])
+        pushViewController.wordTitleSecond.text = String(todayTitle.text![todayTitle.text!.index(todayTitle.text!.startIndex, offsetBy: 1)])
+        pushViewController.wordTitleThird.text = String(todayTitle.text![todayTitle.text!.index(before: todayTitle.text!.endIndex)])
         self.navigationController?.pushViewController(pushViewController, animated: true)
     }
     override func viewDidLoad()
