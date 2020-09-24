@@ -312,7 +312,11 @@ class ViewController: UIViewController, UICollectionViewDataSource, UICollection
 extension ViewController : UICollectionViewDelegate {
     // CollectionView의 아이템 갯수
         func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-            
+            if poems.count == 0 {
+                collectionView.setEmptyView(title: "아직 등록된 시가 없습니다.", message: "첫번째로 시를 등록해봐요.")
+            } else {
+                collectionView.restore()
+            }
             return poems.count
         }
         // CollectionViewCell 설정
@@ -333,6 +337,47 @@ extension ViewController : UICollectionViewDelegate {
         }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return collectionView.frame.size
+    }
+    
+
+}
+
+extension UICollectionView {
+    func setEmptyView(title: String, message: String) {
+        let emptyView = UIView(frame: CGRect(x: self.center.x, y: self.center.y, width: self.bounds.size.width, height: self.bounds.size.height))
+        
+        let titleLabel = UILabel()
+        let messageLabel = UILabel()
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        titleLabel.textColor = UIColor.black
+        titleLabel.font = UIFont(name: "BM YEONSUNG", size: 23)
+        messageLabel.textColor = UIColor.lightGray
+        messageLabel.font = UIFont(name: "BM YEONSUNG", size: 17)
+        
+        emptyView.addSubview(titleLabel)
+        emptyView.addSubview(messageLabel)
+        
+        titleLabel.snp.makeConstraints {
+            $0.centerX.equalTo(emptyView)
+            $0.centerY.equalTo(emptyView).offset(-(emptyView.frame.height/8))
+        }
+        messageLabel.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(20)
+            $0.centerX.equalTo(emptyView)
+        }
+        
+        titleLabel.text = title
+        messageLabel.text = message
+        messageLabel.numberOfLines = 0
+        messageLabel.textAlignment = .center
+        // The only tricky part is here:
+        self.backgroundView = emptyView
+    }
+    func restore() {
+        self.backgroundView = nil
     }
 }
 

@@ -30,6 +30,7 @@ class NetworkService {
                 switch response.result {
                 case .success(let value):
                     observer.onNext(value)
+                    UserDefaults.standard.set(value, forKey: "token")
                     observer.onCompleted()
                 case .failure(let error):
                     switch response.response?.statusCode {
