@@ -7,7 +7,8 @@ target 'AcrosticPoem_ios' do
 
   # Pods for AcrosticPoem_ios
 
-  pod 'Alamofire', '4.7.3'
+  pod 'Alamofire'
+  pod 'Moya'
   pod 'SwiftyJSON', '~> 4.0'
   pod 'SnapKit', '~> 5.0.0'
   pod 'RxSwift'

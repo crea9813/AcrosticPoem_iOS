@@ -81,24 +81,33 @@ class AddViewController : UIViewController {
     
     let textFieldFirst : UITextField = {
         let textField = UITextField()
-        textField.placeholder = "최대 30자"
+        textField.attributedPlaceholder = NSAttributedString(string: "최대 30자",
+                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        textField.backgroundColor = .clear
         textField.textColor = .black
+        textField.layer.borderWidth = 1.0
         textField.borderStyle = .roundedRect
         return textField
     }()
     
     let textFieldSecond : UITextField = {
         let textField = UITextField()
-        textField.placeholder = "최대 30자"
+        textField.backgroundColor = .clear
         textField.textColor = .black
+        textField.attributedPlaceholder = NSAttributedString(string: "최대 30자",
+                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        textField.layer.borderWidth = 1.0
         textField.borderStyle = .roundedRect
         return textField
     }()
     
     let textFieldThird : UITextField = {
         let textField = UITextField()
-        textField.placeholder = "최대 30자"
+        textField.attributedPlaceholder = NSAttributedString(string: "최대 30자",
+                                                             attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
+        textField.backgroundColor = .clear
         textField.textColor = .black
+        textField.layer.borderWidth = 1.0
         textField.borderStyle = .roundedRect
         return textField
     }()

@@ -60,7 +60,7 @@ class NetworkService {
             return Disposables.create {
                 request.cancel()
             }
-        }
+    }
     }
     
     func todayTitle() -> Observable<[String:String]>{
@@ -132,6 +132,7 @@ class NetworkService {
         var list:[String] = []
         return Observable<[String]>.create { observer in
             let request = Alamofire.request(url,method: .get, encoding: JSONEncoding.default).responseJSON { response in
+                print("\(String(data: response.data!, encoding: .utf8))")
                 switch response.result {
                 case .success(let value):
                     if let data = value as? [String:Any] {
@@ -164,6 +165,7 @@ class NetworkService {
         let url = BaseUrl + "poem/3?token="+token+"&poemid="+poemId
         return Observable<Poem>.create { observer in
             let request = Alamofire.request(url,method: .get, encoding: JSONEncoding.default,headers: ["Content-Type":"application/json;charset=utf-8"]).responseJSON { response in
+                print("\(String(data: response.data!, encoding: .utf8))")
             switch response.result {
             case .success(let value):
                     do {
