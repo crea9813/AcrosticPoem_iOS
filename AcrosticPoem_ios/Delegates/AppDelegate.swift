@@ -21,57 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
-        
-        
-        if ( UserDefaults.standard.value(forKey: "launchedBefore") == nil){
-            UserDefaults.standard.set(true, forKey: "launchedBefore")
-            NetworkService().generationToken()
-                .observeOn(MainScheduler.instance)
-                .subscribe(
-                    onNext: { token in
-                        print(token)
-                    },
-                    onError: { error in
-                        switch error {
-                        case ApiError.unAuthorized:
-                            print("unAuthorized")
-                        case ApiError.internalServerError:
-                            print("Server Error")
-                        default:
-                            print("Unkown Error")
-                        }
-                    }).disposed(by: disposeBag)
-        } else if UserDefaults.standard.value(forKey: "launchedBefore") as! Bool {
-            let token = UserDefaults.standard.value(forKey: "token") as! String
-            NetworkService().tokenValidation(token: token)
-                .observeOn(MainScheduler.instance)
-                .subscribe(
-                    onError: { error in
-                        switch error {
-                        case ApiError.unAuthorized:
-                            NetworkService().generationToken()
-                                .observeOn(MainScheduler.instance)
-                            .subscribe(
-                            onNext: { token in
-                                UserDefaults.standard.set(token, forKey: "token")
-                            },
-                            onError: { error in
-                                switch error {
-                                case ApiError.unAuthorized:
-                                    print("unAuthorized")
-                                case ApiError.internalServerError:
-                                    print("Server Error")
-                                default:
-                                    print("Unkown Error")
-                                }
-                            }).disposed(by: self.disposeBag)
-                        case ApiError.internalServerError:
-                            print("Server Error")
-                        default:
-                            print("Unknown Error")
-                        }
-                    }).disposed(by: disposeBag)
-        }
         //네비게이션바 스타일 설정
         navigationBarAppearace.shadowImage = UIImage()
         navigationBarAppearace.barTintColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)

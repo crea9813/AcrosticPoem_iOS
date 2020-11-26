@@ -27,7 +27,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
         
-        window?.rootViewController = UINavigationController(rootViewController: PoemView())
+        window?.rootViewController = UINavigationController(rootViewController: SplashView())
         window?.makeKeyAndVisible()
     }
 

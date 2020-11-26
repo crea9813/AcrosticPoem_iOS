@@ -12,7 +12,8 @@ enum API {
     case getPoemInfo(reqModel : PoemInfoGetReqModel)
     case getPoemList(reqModel : PoemListGetReqModel)
     case getTodayTitle(wordCount : Int)
-    
+    case generationToken(Void)
+    case validationToken(token : String)
 }
 
 extension API: TargetType {
@@ -32,6 +33,10 @@ extension API: TargetType {
             return "/poem/random/"+reqModel.wordCount+"?count=100"
         case .getTodayTitle(let wordCount):
             return "/title/"+String(wordCount)
+        case .generationToken:
+            return "/guest"
+        case .validationToken:
+            return "/guest"
         }
     }
     var method: Method {
@@ -42,6 +47,10 @@ extension API: TargetType {
             return .get
         case .getTodayTitle:
             return .get
+        case .generationToken:
+            return .get
+        case .validationToken:
+            return .post
         }
     }
     
@@ -53,6 +62,12 @@ extension API: TargetType {
             return .requestPlain
         case .getTodayTitle:
             return .requestPlain
+        case .generationToken:
+            return .requestPlain
+        case .validationToken(let token):
+            return .requestParameters(parameters: [
+                "token" : token
+            ], encoding: JSONEncoding.default)
         }
     }
     

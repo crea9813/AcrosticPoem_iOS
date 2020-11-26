@@ -18,7 +18,7 @@ class PoemViewModel {
     private let poemInfoResultRelay = BehaviorRelay<PoemModel?>(value: nil)
     private let todayTitleResultRelay = BehaviorRelay<String?>(value: nil)
     
-    private let token = UserDefaults.standard.value(forKey: "token") as! String
+   
     
     var errorMessage : Observable<String> {
         return errorMessageRelay
@@ -60,7 +60,6 @@ class PoemViewModel {
             response in
             switch response {
             case .success(let todayTitle):
-                print("viewModel Response : \(todayTitle)")
                 self.todayTitleResultRelay.accept(todayTitle)
             case .failure(_):
                 self.errorMessageRelay.accept("오늘의 주제를 불러오는데 실패하였습니다.")
@@ -68,12 +67,12 @@ class PoemViewModel {
         })
     }
     
-    func requestPoems(wordCount : String) {
-        requestPoemList(wordCount)
+    func requestPoems(wordCount : Int) {
+        requestPoemList(String(wordCount))
     }
     
     func requestPoemList(_ wordCount : String) {
-        let reqModel = PoemListGetReqModel(token: UserDefaults.standard.value(forKey: "token") as! String, wordCount: wordCount)
+        let reqModel = PoemListGetReqModel(token: Constant.shared.token, wordCount: wordCount)
         
         PoemService.requestPoemList(reqModel: reqModel, completion: {
             response in
@@ -91,7 +90,7 @@ class PoemViewModel {
     }
     
     func requestPoemInfo(wordCount: Int, poemId : String) {
-        let reqModel = PoemInfoGetReqModel(wordCount: wordCount, token: token, poemId: poemId)
+        let reqModel = PoemInfoGetReqModel(wordCount: wordCount, token: Constant.shared.token, poemId: poemId)
         
         PoemService.requestPoemInfo(reqModel: reqModel, completion: {
             response in

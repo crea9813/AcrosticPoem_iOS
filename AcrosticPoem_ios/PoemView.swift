@@ -182,6 +182,8 @@ class PoemView: UIViewController {
         view.addSubview(poemView)
         view.addSubview(tabView)
         
+        poemView.backgroundColor = UIColor(red: 0.94, green: 0.93, blue: 0.89, alpha: 1.00)
+        collectionView.backgroundColor = .clear
         poemView.addSubview(titleBackgroundImage)
         poemView.addSubview(todayTitle)
         poemView.addSubview(collectionView)
@@ -226,13 +228,15 @@ class PoemView: UIViewController {
             $0.top.trailing.bottom.equalTo(tabView)
             $0.width.equalTo(view).dividedBy(3)
         }
-        
+        bind()
+        requestPoem()
         setCollectionView()
         setTitle()
+        
     }
     
     private func requestPoem() {
-        
+        viewModel.requestPoems(wordCount: 3)
     }
     
     private func setGestureRecognizer() {
@@ -283,7 +287,6 @@ class PoemView: UIViewController {
     }
     
     private func setPoem(){
-        
         NetworkService().getPoem()
             .observeOn(MainScheduler.instance)
         .subscribe(
@@ -322,6 +325,7 @@ class PoemView: UIViewController {
                 }
             }).disposed(by: disposeBag)
     }
+    
     //MARK: - 탭바 버튼 이벤트
     @objc private func likeAction() {
         print("like Tapped")
@@ -404,12 +408,12 @@ class PoemView: UIViewController {
 extension PoemView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if poems.count == 0 {
+        if poemList.count == 0 {
             collectionView.setEmptyView()
         } else {
             collectionView.backgroundView = nil
         }
-        return poems.count
+        return poemList.count
     }
     
     // CollectionViewCell 설정
@@ -419,12 +423,7 @@ extension PoemView : UICollectionViewDelegate, UICollectionViewDataSource, UICol
 //        return cell
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PoemCell.identifier, for: indexPath) as! PoemCell
 
-        cell.titleFirst.text = poems[indexPath.row].word[0].word
-        cell.titleSecond.text = poems[indexPath.row].word[1].word
-        cell.titleThird.text = poems[indexPath.row].word[2].word
-        cell.wordFirst.text = poems[indexPath.row].word[0].line
-        cell.wordSecond.text = poems[indexPath.row].word[1].line
-        cell.wordThird.text = poems[indexPath.row].word[2].line
+        //TODO: 여기에 cell Configuration 하기
         
         return cell
     }

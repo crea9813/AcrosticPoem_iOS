@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 class PoemService : APIService {
     
@@ -16,14 +17,8 @@ class PoemService : APIService {
             switch response {
             case .success(let response):
                 let data = response.data
-                do {
                     print("Today Title Response : \(String(data: data, encoding: .utf8)!)")
-                    let decoded = try JSONDecoder().decode(String.self, from: data)
-                    print("Today Title Response 2 : \(decoded)")
-                    completion(.success(decoded))
-                } catch {
-                    completion(.failure(error))
-                }
+                    completion(.success(String(data: data, encoding: .utf8)!))
             case .failure(let error):
                 completion(.failure(error))
             }
@@ -40,6 +35,7 @@ class PoemService : APIService {
                     let decoded = try JSONDecoder().decode(PoemListGetResModel.self, from: data)
                     completion(.success(decoded))
                 } catch {
+                    print(error)
                     completion(.failure(error))
                 }
             case .failure(let error):
@@ -54,6 +50,7 @@ class PoemService : APIService {
             switch response {
             case .success(let response):
                 let data = response.data
+                print(String(data: data, encoding: .utf8)!)
                 do {
                     let decoded = try JSONDecoder().decode(PoemModel.self, from: data)
                     completion(.success(decoded))
@@ -65,5 +62,4 @@ class PoemService : APIService {
             }
         })
     }
-    
 }
