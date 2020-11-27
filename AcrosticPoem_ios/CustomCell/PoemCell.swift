@@ -2,69 +2,159 @@
 //  PoemCell.swift
 //  AcrosticPoem_ios
 //
-//  Created by Yang on 2019/12/10.
-//  Copyright © 2019 Minestrone. All rights reserved.
+//  Created by Poto on 2020/11/27.
+//  Copyright © 2020 Minestrone. All rights reserved.
 //
 
 import UIKit
+import RxSwift
+import RxRelay
+import RxCocoa
 
 class PoemCell: UICollectionViewCell {
     
     static let identifier = "PoemCell"
     
-    @IBOutlet var poemImage: UIImageView!
-    @IBOutlet var titleFirst: UILabel!
-    @IBOutlet var titleSecond: UILabel!
-    @IBOutlet var titleThird: UILabel!
-    @IBOutlet var wordFirst: UILabel!
-    @IBOutlet var wordSecond: UILabel!
-    @IBOutlet var wordThird: UILabel!
+    let disposeBag = DisposeBag()
+
+    let poemFirst = UILabel()
+    let poemSecond = UILabel()
+    let poemThird = UILabel()
+    let poemImage = UIImageView()
+    
+    let likeButton : UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "heart"), for: .normal)
+        button.setImage(UIImage(named: "heart_fill"), for: .selected)
+        return button
+    }()
+    let shareButton : UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "share"), for: .normal)
+        button.setImage(UIImage(named: "share_fill"), for: .selected)
+        return button
+    }()
+    let reportButton : UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "report"), for: .normal)
+        return button
+    }()
+    
+    let likeCount = UILabel()
     
     let BASE_URL = "http://149.28.22.157:4567/"
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
     // PoemModel로 Cell의 내용을 초기화
-    public func configure(with model: Poem){
+    public func configure(with model: PoemModel){
         
-        if model.image != ""{
-            let url = URL(string: BASE_URL+model.image)
+        if !model.image!.isEmpty {
+            let url = URL(string: BASE_URL+model.image!)
             let data = try! Data(contentsOf: url!)
             
             poemImage.image = UIImage(data: data)
         }else{
             poemImage.image = nil
+            poemImage.snp.remakeConstraints {
+                $0.top.equalTo(poemThird.snp.bottom).offset(30)
+                $0.leading.equalTo(self).offset(20)
+                $0.trailing.equalTo(self).inset(20)
+                $0.height.equalTo(poemImage.snp.width).multipliedBy(0)
+            }
         }
         
-        setTitle(todayTitle: model.title, wordTitle: model.word)
+        poemFirst.text = "\(model.word![0].word!) : \(model.word![0].line!)"
+        poemSecond.text = "\(model.word![1].word!) : \(model.word![1].line!)"
+        poemThird.text = "\(model.word![2].word!) : \(model.word![2].line!)"
+        
+        if model.liked! {
+            likeButton.isSelected = true
+        }
+        
+        likeCount.text = "\(model.like!)"
+        
+        likeButton.rx.tap.bind { _ in
+            
+        }.disposed(by: disposeBag)
         
     }
     
-    private func setTitle(todayTitle : String, wordTitle : [Words]) {
-        //삼행시 제목 첫번째 글자 초기화
-        titleFirst.font = UIFont(name: "HYgsrB", size: 27)
-        titleFirst.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
-        titleFirst.text = String(todayTitle[(todayTitle.startIndex)])
+    private func setupView() {
+        self.addSubview(poemImage)
+        self.addSubview(poemFirst)
+        self.addSubview(poemSecond)
+        self.addSubview(poemThird)
+        self.addSubview(likeButton)
+        self.addSubview(shareButton)
+        self.addSubview(reportButton)
+        self.addSubview(likeCount)
         
-        //삼행시 제목 두번째 글자 초기화
-        titleSecond.font = UIFont(name: "HYgsrB", size: 27)
-        titleSecond.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
-        titleSecond.text = String(todayTitle[todayTitle.index(todayTitle.startIndex, offsetBy: 1)])
+        poemFirst.snp.makeConstraints {
+            $0.centerX.equalTo(self)
+            $0.leading.trailing.equalTo(poemThird)
+            $0.top.equalTo(self).offset(20)
+        }
+        poemSecond.snp.makeConstraints{
+            $0.top.equalTo(poemFirst.snp.bottom).offset(20)
+            $0.leading.trailing.equalTo(poemFirst)
+            $0.centerX.equalTo(self)
+        }
+        poemThird.snp.makeConstraints {
+            $0.top.equalTo(poemSecond.snp.bottom).offset(20)
+            $0.leading.trailing.equalTo(poemSecond)
+            $0.centerX.equalTo(self)
+        }
+        poemImage.snp.makeConstraints {
+            $0.top.equalTo(poemThird.snp.bottom).offset(30)
+            $0.leading.equalTo(self).offset(20)
+            $0.trailing.equalTo(self).inset(20)
+            $0.height.equalTo(poemImage.snp.width).multipliedBy(0.6)
+        }
+        likeButton.snp.makeConstraints {
+            $0.top.equalTo(poemImage.snp.bottom).offset(15)
+            $0.leading.equalTo(self).offset(30)
+            $0.width.height.equalTo(25)
+        }
+        likeCount.snp.makeConstraints {
+            $0.top.equalTo(likeButton)
+            $0.leading.equalTo(likeButton.snp.trailing).offset(10)
+        }
+        reportButton.snp.makeConstraints {
+            $0.top.equalTo(likeButton)
+            $0.trailing.equalTo(self).inset(30)
+            $0.width.height.equalTo(25)
+        }
+        shareButton.snp.makeConstraints {
+            $0.top.equalTo(likeButton)
+            $0.trailing.equalTo(self).inset(70)
+            $0.width.height.equalTo(25)
+        }
         
-        //삼행시 제목 세번째 글자 초기화
-        titleThird.font = UIFont(name: "HYgsrB", size: 27)
-        titleThird.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
-        titleThird.text = String(todayTitle[todayTitle.index(before: todayTitle.endIndex)])
+        poemImage.contentMode = .scaleAspectFill
+        poemImage.clipsToBounds = true
+        poemImage.layer.cornerRadius = 10
         
-        wordFirst.text = String(wordTitle[0].word)
-        wordSecond.text = String(wordTitle[1].word)
-        wordThird.text = String(wordTitle[2].word)
-        wordFirst.adjustsFontSizeToFitWidth = true
-        wordSecond.adjustsFontSizeToFitWidth = true
-        wordThird.adjustsFontSizeToFitWidth = true
+        poemFirst.textAlignment = .left
+        poemSecond.textAlignment = .left
+        poemThird.textAlignment = .left
+        
+        poemFirst.font = UIFont(name: "HYgsrB", size: 25)
+        poemSecond.font = UIFont(name: "HYgsrB", size: 25)
+        poemThird.font = UIFont(name: "HYgsrB", size: 25)
+        likeCount.font = UIFont.systemFont(ofSize: 20)
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+        
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func prepareForReuse() {
+        
     }
 
 }

@@ -34,26 +34,6 @@ class PoemView: UIViewController {
     }()
     
     let tabView = UIView()
-    let likeCount : UILabel = {
-        let label = UILabel()
-        
-        return label
-    }()
-    let likeButton : UIButton = {
-        let button = UIButton()
-        
-        return button
-    }()
-    let shareButton : UIButton = {
-        let button = UIButton()
-        
-        return button
-    }()
-    let reportButton : UIButton = {
-        let button = UIButton()
-        
-        return button
-    }()
     
     private var nowPage:Int = 0
     private var poemItems:Int = 0
@@ -74,7 +54,7 @@ class PoemView: UIViewController {
         let title = UILabel()
         
         title.translatesAutoresizingMaskIntoConstraints = false
-        title.font = UIFont(name: "HYgsrB", size: 27)
+        title.font = UIFont(name: "HYgsrB", size: 32)
         title.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         title.adjustsFontSizeToFitWidth = true
         title.textAlignment = .center
@@ -132,13 +112,14 @@ class PoemView: UIViewController {
             title in
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(5)) {
                 self.todayTitle.text = title
-                self.todayTitle.addCharacterSpacing(kernValue: 33)
+                self.todayTitle.addCharacterSpacing(kernValue: 32)
             }
         }).disposed(by: disposeBag)
         
         viewModel.poemInfoSuccess.subscribe(onNext : {
             poem in
             self.poemList.append(poem)
+            self.collectionView.reloadData()
         }).disposed(by: disposeBag)
     }
     
@@ -149,7 +130,6 @@ class PoemView: UIViewController {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumLineSpacing = 0
-        flowLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
 
         // CollectionView 초기화
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
@@ -182,7 +162,7 @@ class PoemView: UIViewController {
         view.addSubview(poemView)
         view.addSubview(tabView)
         
-        poemView.backgroundColor = UIColor(red: 0.94, green: 0.93, blue: 0.89, alpha: 1.00)
+        poemView.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.94, alpha: 1.00)
         collectionView.backgroundColor = .clear
         poemView.addSubview(titleBackgroundImage)
         poemView.addSubview(todayTitle)
@@ -198,6 +178,7 @@ class PoemView: UIViewController {
         }
         
         titleBackgroundImage.snp.makeConstraints {
+            $0.width.equalTo(poemView.snp.width)
             $0.top.leading.trailing.equalTo(poemView)
         }
         
@@ -207,27 +188,11 @@ class PoemView: UIViewController {
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(titleBackgroundImage.snp.bottom)
+            $0.top.equalTo(titleBackgroundImage.snp.bottom).inset(30)
             $0.leading.trailing.equalTo(poemView)
             $0.bottom.equalTo(poemView)
         }
-        
-        tabView.addSubview(likeButton)
-        tabView.addSubview(shareButton)
-        tabView.addSubview(reportButton)
-        
-        likeButton.snp.makeConstraints {
-            $0.top.leading.bottom.equalTo(tabView)
-            $0.width.equalTo(view).dividedBy(3)
-        }
-        shareButton.snp.makeConstraints {
-            $0.top.centerX.bottom.equalTo(tabView)
-            $0.width.equalTo(view).dividedBy(3)
-        }
-        reportButton.snp.makeConstraints {
-            $0.top.trailing.bottom.equalTo(tabView)
-            $0.width.equalTo(view).dividedBy(3)
-        }
+
         bind()
         requestPoem()
         setCollectionView()
@@ -239,24 +204,10 @@ class PoemView: UIViewController {
         viewModel.requestPoems(wordCount: 3)
     }
     
-    private func setGestureRecognizer() {
-        let reportGesture = UITapGestureRecognizer(target: self, action: #selector(reportAction))
-        reportButton.addGestureRecognizer(reportGesture)
-        reportButton.isUserInteractionEnabled = true
-        
-        let likeGesture = UITapGestureRecognizer(target: self, action: #selector(likeAction))
-        likeButton.addGestureRecognizer(likeGesture)
-        likeButton.isUserInteractionEnabled = true
-        
-        let shareGesture = UITapGestureRecognizer(target: self, action: #selector(shareAction))
-        shareButton.addGestureRecognizer(shareGesture)
-        shareButton.isUserInteractionEnabled = true
-    }
-    
     private func setCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(UINib(nibName: "PoemCell", bundle: nil), forCellWithReuseIdentifier: "PoemCell")
+        collectionView.register(PoemCell.self, forCellWithReuseIdentifier: PoemCell.identifier)
         
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
@@ -285,124 +236,6 @@ class PoemView: UIViewController {
                 }
         }).disposed(by: disposeBag)*/
     }
-    
-    private func setPoem(){
-        NetworkService().getPoem()
-            .observeOn(MainScheduler.instance)
-        .subscribe(
-            onNext: { poem in
-                for count in 0..<poem.count {
-                    NetworkService().poemInfo(poemId: poem[count])
-                    .subscribe(
-                        onNext: { info in
-                            self.poems.append(info)
-                        },
-                        onError: { error in
-                            switch error {
-                            case ApiError.unAuthorized:
-                                print("unAuthorized")
-                            case ApiError.internalServerError:
-                                print("Info Server Error")
-                            default:
-                                print("Unknown Error")
-                            }
-                    },
-                        onCompleted: {
-                            if count == poem.count-1 {
-                                self.setCollectionView()
-                            }
-                    }).disposed(by: self.disposeBag)
-                }
-            },
-            onError: { error in
-                switch error {
-                case ApiError.unAuthorized:
-                    print("unAuthorized")
-                case ApiError.internalServerError:
-                    print("Poem Server Error")
-                default:
-                    print("Unknown Error")
-                }
-            }).disposed(by: disposeBag)
-    }
-    
-    //MARK: - 탭바 버튼 이벤트
-    @objc private func likeAction() {
-        print("like Tapped")
-    }
-//    @objc private func likeAction() {
-//        if !( poemList.isEmpty ) {
-//            let poemId = poemList[currentPage].poemId
-//
-//            if !( poemList[currentPage].liked ) {
-//                NetworkService().likePoem(poemId: poemId)
-//                    .observeOn(MainScheduler.instance)
-//                    .subscribe(
-//                        onError: { error in
-//                            switch error {
-//                            case ApiError.unAuthorized:
-//                                print("unAuthorized")
-//                            case ApiError.internalServerError:
-//                                print("Poem Server Error")
-//                            default:
-//                                print("Unknown Error")
-//                            }
-//                    },onCompleted: {
-//                        self.likeHeart.image = UIImage(systemName: "heart.fill")
-//                        self.likeHeart.tintColor = UIColor(red: 0.84, green: 0.35, blue: 0.29, alpha: 1)
-//                        self.carouselCollectionView.reloadData()
-//                    }).disposed(by: disposeBag)
-//            }
-//        }
-//    }
-    
-    @objc private func reportAction() {
-        if poems.isEmpty == false {
-            let poemId = poems[currentPage].poemId
-            
-            if !(poems[currentPage].reported) {
-                NetworkService().reportPoem(poemId: poemId)
-                    .observeOn(MainScheduler.instance)
-                    .subscribe(
-                        onError: { error in
-                            switch error {
-                            case ApiError.unAuthorized:
-                                print("unAuthorized")
-                            case ApiError.internalServerError:
-                                print("Report Server Error")
-                            default:
-                                print("Unknown Error")
-                            }
-                    }, onCompleted: {
-                        let alert = UIAlertController(title: "알림", message: "신고되었습니다", preferredStyle: UIAlertController.Style.alert)
-                        let cancel = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
-                                           alert.addAction(cancel)
-                        self.present(alert, animated: false)
-                    }
-                ).disposed(by: disposeBag)
-            }
-            else{
-                let alert = UIAlertController(title: "알림", message: "이미 신고된 시 입니다", preferredStyle: UIAlertController.Style.alert)
-                let cancel = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
-                alert.addAction(cancel)
-                self.present(alert, animated: false)
-            }
-        }
-    }
-    
-    @objc private func shareAction() {
-        if !(poems.isEmpty) {
-            let text = poems[currentPage].word[0].word + " : " + poems[currentPage].word[0].line + "\n" + poems[currentPage].word[1].word + " : " + poems[currentPage].word[1].line + "\n" + poems[currentPage].word[2].word + " : " + poems[currentPage].word[2].line
-
-                let textToShare = [ text ]
-
-                let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
-
-                activityViewController.excludedActivityTypes = [UIActivity.ActivityType.airDrop]
-
-                self.present(activityViewController, animated: true, completion: nil)
-        }
-    }
 }
 
 extension PoemView : UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
@@ -424,12 +257,15 @@ extension PoemView : UICollectionViewDelegate, UICollectionViewDataSource, UICol
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PoemCell.identifier, for: indexPath) as! PoemCell
 
         //TODO: 여기에 cell Configuration 하기
+        cell.configure(with: poemList[indexPath.row])
         
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return collectionView.frame.size
+        let width = collectionView.frame.width
+        let height = collectionView.frame.height
+        return CGSize(width: width, height: height)
     }
 }
 

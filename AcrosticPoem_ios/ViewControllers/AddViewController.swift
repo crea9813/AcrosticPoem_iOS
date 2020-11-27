@@ -220,28 +220,6 @@ class AddViewController : UIViewController {
             let wordThird = Words(word: wordTitleThird.text!, line: textFieldThird.text!)
             let poem = PostPoem(token: token, image: imageUrl, word: [wordFirst,wordSecond,wordThird])
             
-            NetworkService().submitPoem(poem: poem)
-                .observeOn(MainScheduler.instance)
-                .subscribe(
-                    onError: { error in
-                        switch error {
-                        case ApiError.unAuthorized:
-                            let alert = UIAlertController(title: "오류", message: "서버에 오류가 발생했습니다.", preferredStyle: UIAlertController.Style.alert)
-                            let cancel = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
-                                alert.addAction(cancel)
-                            self.present(alert, animated: false)
-                        case ApiError.internalServerError:
-                            let alert = UIAlertController(title: "오류", message: "서버에 오류가 발생했습니다.", preferredStyle: UIAlertController.Style.alert)
-                            let cancel = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
-                                alert.addAction(cancel)
-                            self.present(alert, animated: false)
-                        default:
-                            print("Unknown Error")
-                        }
-                    },
-                    onCompleted: {
-                        self.navigationController?.popViewController(animated: true)
-                }).disposed(by: disposeBag)
         } else {
             let alert = UIAlertController(title: "알림", message: "글을 입력해주세요", preferredStyle: UIAlertController.Style.alert)
             let cancel = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)
