@@ -14,6 +14,8 @@ enum API {
     case getTodayTitle(wordCount : Int)
     case generationToken(Void)
     case validationToken(token : String)
+    case likePoem(reqModel : PoemLikeReqModel)
+    case reportPoem(reqModel : PoemReportReqModel)
 }
 
 extension API: TargetType {
@@ -37,6 +39,10 @@ extension API: TargetType {
             return "/guest"
         case .validationToken:
             return "/guest"
+        case .likePoem(let reqModel):
+            return "/poem/like/"+String(reqModel.wordCount)
+        case .reportPoem(let reqModel):
+            return "/poem/report/"+String(reqModel.wordCount)
         }
     }
     var method: Method {
@@ -50,6 +56,10 @@ extension API: TargetType {
         case .generationToken:
             return .get
         case .validationToken:
+            return .post
+        case .likePoem:
+            return .post
+        case .reportPoem:
             return .post
         }
     }
@@ -67,6 +77,16 @@ extension API: TargetType {
         case .validationToken(let token):
             return .requestParameters(parameters: [
                 "token" : token
+            ], encoding: JSONEncoding.default)
+        case .likePoem(let reqModel):
+            return .requestParameters(parameters: [
+                "token" : reqModel.token,
+                "poemid" : reqModel.poemId
+            ], encoding: JSONEncoding.default)
+        case .reportPoem(let reqModel):
+            return .requestParameters(parameters: [
+                "token" : reqModel.token,
+                "poemId" : reqModel.poemId
             ], encoding: JSONEncoding.default)
         }
     }

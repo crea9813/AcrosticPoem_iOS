@@ -16,10 +16,11 @@ class PoemViewModel {
     private let errorMessageRelay = BehaviorRelay<String?>(value: nil)
     private let poemListResultRelay = BehaviorRelay<PoemListGetResModel?>(value: nil)
     private let poemInfoResultRelay = BehaviorRelay<PoemModel?>(value: nil)
+    private let poemUpdateResultRelay = BehaviorRelay<PoemModel?>(value: nil)
     private let todayTitleResultRelay = BehaviorRelay<String?>(value: nil)
-    
-   
-    
+    private let poemLikeResultRelay = BehaviorRelay<Int?>(value: nil)
+    private let poemReportResultRelay = BehaviorRelay<Int?>(value: nil)
+  
     var errorMessage : Observable<String> {
         return errorMessageRelay
             .compactMap { $0 }
@@ -29,6 +30,11 @@ class PoemViewModel {
             .compactMap { $0 }
             .filter { $0.poemId != nil }
             .map { $0.poemId! }
+    }
+    var poemUpdateSuccess : Observable<PoemModel> {
+        return poemUpdateResultRelay
+            .compactMap { $0 }
+            .filter { $0.poemId != nil }
     }
     
     var poemInfoSuccess : Observable<PoemModel> {
@@ -40,6 +46,18 @@ class PoemViewModel {
         return todayTitleResultRelay
             .compactMap { $0 }
     }
+    var likeSuccess : Observable<Int> {
+        return poemLikeResultRelay
+            .filter { $0 == 200 }
+            .map { $0! }
+    }
+    
+    var reportSuccess : Observable<Int> {
+        return poemReportResultRelay
+            .filter { $0 == 200 }
+            .map { $0! }
+    }
+    
     
     
     init() {
@@ -99,6 +117,47 @@ class PoemViewModel {
                 self.poemInfoResultRelay.accept(resModel)
             case .failure(_):
                 self.errorMessageRelay.accept("시 정보를 불러오는데 실패하였습니다.")
+            }
+        })
+    }
+    
+    func updatePoemInfo(poemId : String, wordCount : Int) {
+        let reqModel = PoemInfoGetReqModel(wordCount: wordCount, token: Constant.shared.token, poemId: poemId)
+        
+        PoemService.requestPoemInfo(reqModel: reqModel, completion: {
+            response in
+            switch response {
+            case .success(let resModel):
+                self.poemUpdateResultRelay.accept(resModel)
+            case .failure(_):
+                self.errorMessageRelay.accept("시 정보를 불러오는데 실패하였습니다.")
+            }
+        })
+    }
+    
+    
+   
+    func requestLikePoem(poemId : String, wordCount : Int) {
+        print(poemId)
+        PoemService.requestPoemLike(reqModel: PoemLikeReqModel(token: Constant.shared.token, poemId: poemId, wordCount: wordCount), completion: {
+            response in
+            switch response {
+            case .success(let code):
+                self.poemLikeResultRelay.accept(code)
+            case .failure(_):
+                self.errorMessageRelay.accept("서버에 오류가 발생하였습니다.")
+            }
+        })
+    }
+    
+    func requestReportPoem(poemId : String, wordCount : Int) {
+        PoemService.requestPoemReport(reqModel: PoemReportReqModel(token: Constant.shared.token, poemId: poemId, wordCount: wordCount), completion: {
+            response in
+            switch response {
+            case .success(let code):
+                self.poemReportResultRelay.accept(code)
+            case .failure(_):
+                self.errorMessageRelay.accept("서버에 오류가 발생하였습니다.")
             }
         })
     }

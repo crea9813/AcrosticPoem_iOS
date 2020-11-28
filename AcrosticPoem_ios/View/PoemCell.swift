@@ -14,8 +14,7 @@ import RxCocoa
 class PoemCell: UICollectionViewCell {
     
     static let identifier = "PoemCell"
-    
-    let disposeBag = DisposeBag()
+
 
     let poemFirst = UILabel()
     let poemSecond = UILabel()
@@ -66,16 +65,32 @@ class PoemCell: UICollectionViewCell {
         poemSecond.text = "\(model.word![1].word!) : \(model.word![1].line!)"
         poemThird.text = "\(model.word![2].word!) : \(model.word![2].line!)"
         
+        
+        if model.word![0].line!.count >= 16 {
+            let attributedStr = NSMutableAttributedString(string: poemFirst.text!)
+            
+            attributedStr.addAttribute(.font, value: UIFont(name: "HYgsrB", size: CGFloat(40-model.word![1].line!.count))!, range: (poemFirst.text! as NSString).range(of: model.word![0].line! ))
+            poemFirst.attributedText = attributedStr
+        }
+        if model.word![1].line!.count >= 16 {
+            let attributedStr = NSMutableAttributedString(string: poemSecond.text!)
+            
+            attributedStr.addAttribute(.font, value: UIFont(name: "HYgsrB", size: CGFloat(40-model.word![1].line!.count))!, range: (poemSecond.text! as NSString).range(of: model.word![1].line! ))
+            poemSecond.attributedText = attributedStr
+        }
+        if model.word![2].line!.count >= 16 {
+            let attributedStr = NSMutableAttributedString(string: poemThird.text!)
+            
+            attributedStr.addAttribute(.font, value: UIFont(name: "HYgsrB", size: CGFloat(40-model.word![2].line!.count))!, range: (poemThird.text! as NSString).range(of: model.word![2].line! ))
+            poemThird.attributedText = attributedStr
+        }
         if model.liked! {
             likeButton.isSelected = true
+        } else {
+            likeButton.isSelected = false
         }
         
         likeCount.text = "\(model.like!)"
-        
-        likeButton.rx.tap.bind { _ in
-            
-        }.disposed(by: disposeBag)
-        
     }
     
     private func setupView() {
@@ -141,12 +156,12 @@ class PoemCell: UICollectionViewCell {
         poemSecond.font = UIFont(name: "HYgsrB", size: 25)
         poemThird.font = UIFont(name: "HYgsrB", size: 25)
         likeCount.font = UIFont.systemFont(ofSize: 20)
+        
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        
     }
     
     required init?(coder: NSCoder) {

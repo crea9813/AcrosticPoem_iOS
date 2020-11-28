@@ -22,6 +22,7 @@ class PoemView: UIViewController {
 //    @IBOutlet var poemView: UIView!
 //    @IBOutlet weak var titleView: UIImageView!
 //    @IBOutlet var likeHeart: UIImageView!
+    let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
     
     let poemView = UIView()
     
@@ -33,8 +34,6 @@ class PoemView: UIViewController {
         return imageView
     }()
     
-    let tabView = UIView()
-    
     private var nowPage:Int = 0
     private var poemItems:Int = 0
     private let ad = UIApplication.shared.delegate as? AppDelegate
@@ -43,13 +42,15 @@ class PoemView: UIViewController {
     
     private var currentPage = 0
     
-    private var poems : [Poem] = []
-    
     private var poemList : [PoemModel] = []
+    private var poemListOb : Observable<[PoemModel]> = Observable.just([])
+    
+    private var selectedPoem : PoemModel? = nil
     
     let disposeBag = DisposeBag()
     
     let viewModel = PoemViewModel()
+    
     let todayTitle : UILabel = {
         let title = UILabel()
         
@@ -71,23 +72,11 @@ class PoemView: UIViewController {
         self.view.backgroundColor = UIColor(red: 0.94, green: 0.93, blue: 0.89, alpha: 1.00)
         // Do any additional setup after loading the view.
         
-        let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addTapped))
-        //let more = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(moreTapped))
-        //(image: moreIcon, style: .plain, target: self, action: nil)
-        
         self.navigationItem.rightBarButtonItems = [add]
         self.navigationController?.navigationBar.topItem?.title = "삼행시"
+        
     }
     
-    @objc func addTapped() {
-        let pushViewController = AddViewController()
-        pushViewController.title = "작성하기"
-        pushViewController.todayTitle.text = todayTitle.text
-        pushViewController.wordTitleFirst.text = String(todayTitle.text![(todayTitle.text!.startIndex)])
-        pushViewController.wordTitleSecond.text = String(todayTitle.text![todayTitle.text!.index(todayTitle.text!.startIndex, offsetBy: 1)])
-        pushViewController.wordTitleThird.text = String(todayTitle.text![todayTitle.text!.index(before: todayTitle.text!.endIndex)])
-        self.navigationController?.pushViewController(pushViewController, animated: true)
-    }
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -112,15 +101,48 @@ class PoemView: UIViewController {
             title in
             DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(5)) {
                 self.todayTitle.text = title
-                self.todayTitle.addCharacterSpacing(kernValue: 32)
+                self.todayTitle.addCharacterSpacing(kernValue: 30)
             }
         }).disposed(by: disposeBag)
         
         viewModel.poemInfoSuccess.subscribe(onNext : {
             poem in
             self.poemList.append(poem)
+            self.poemListOb = Observable.of(self.poemList)
             self.collectionView.reloadData()
         }).disposed(by: disposeBag)
+        
+        viewModel.likeSuccess.subscribe(onNext: {
+            _ in
+            self.updatePoem(poem: self.selectedPoem!)
+        }).disposed(by: disposeBag)
+        
+        viewModel.reportSuccess.subscribe(onNext: {
+            _ in
+            print("Report Success")
+        }).disposed(by: disposeBag)
+        
+        viewModel.poemUpdateSuccess.subscribe(onNext: {
+            poem in
+            self.poemList.enumerated().forEach {
+                if $1.poemId!.contains(poem.poemId!) {
+                    self.poemList.remove(at: $0)
+                    self.poemList.insert(poem, at: $0)
+                    self.collectionView.reloadItems(at: [IndexPath.init(row: $0, section: 0)])
+                    let cell = self.collectionView.cellForItem(at: IndexPath.init(row: $0, section: 0)) as! PoemCell
+                    cell.configure(with: poem)
+                }
+            }
+        }).disposed(by: disposeBag)
+        
+        add.rx.tap.bind { [self]
+            _ in
+            let targetVC = PoemAddView()
+            targetVC.textFieldFirst.wordView.text = "\(poemList[0].word![0].word!) :"
+            targetVC.textFieldSecond.wordView.text = "\(poemList[0].word![1].word!) :"
+            targetVC.textFieldThird.wordView.text = "\(poemList[0].word![2].word!) :"
+            self.navigationController?.pushViewController(targetVC, animated: true)
+        }.disposed(by: disposeBag)
     }
     
     //MARK: - HorizontalCollectionView 초기화
@@ -160,7 +182,6 @@ class PoemView: UIViewController {
     // MARK: - 뷰 초기화
     func initView() {
         view.addSubview(poemView)
-        view.addSubview(tabView)
         
         poemView.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.94, alpha: 1.00)
         collectionView.backgroundColor = .clear
@@ -168,13 +189,8 @@ class PoemView: UIViewController {
         poemView.addSubview(todayTitle)
         poemView.addSubview(collectionView)
         
-        tabView.snp.makeConstraints {
-            $0.leading.bottom.trailing.equalTo(view)
-            $0.height.equalTo(50)
-        }
         poemView.snp.makeConstraints {
-            $0.top.leading.trailing.equalTo(view.safeAreaLayoutGuide)
-            $0.bottom.equalTo(tabView.snp.top)
+            $0.top.bottom.leading.trailing.equalTo(view.safeAreaLayoutGuide)
         }
         
         titleBackgroundImage.snp.makeConstraints {
@@ -204,6 +220,10 @@ class PoemView: UIViewController {
         viewModel.requestPoems(wordCount: 3)
     }
     
+    private func updatePoem(poem : PoemModel) {
+        viewModel.updatePoemInfo(poemId: poem.poemId!, wordCount: poem.wordCount!)
+    }
+    
     private func setCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
@@ -211,6 +231,12 @@ class PoemView: UIViewController {
         
         collectionView.showsHorizontalScrollIndicator = false
         collectionView.showsVerticalScrollIndicator = false
+        
+//        poemListOb.bind(to: collectionView.rx.items(cellIdentifier: PoemCell.identifier,cellType: PoemCell.self)) { index,poem,cell in
+//            cell.configure(with: poem)
+//        }.disposed(by: disposeBag)
+//
+        
     }
     
     // 삼행시 주제 설정
@@ -258,6 +284,20 @@ extension PoemView : UICollectionViewDelegate, UICollectionViewDataSource, UICol
 
         //TODO: 여기에 cell Configuration 하기
         cell.configure(with: poemList[indexPath.row])
+        
+        cell.likeButton.rx.tap.bind { _ in
+            self.selectedPoem = self.poemList[indexPath.row]
+            self.viewModel.requestLikePoem(poemId: self.poemList[indexPath.row].poemId!, wordCount: self.poemList[indexPath.row].wordCount!)
+        }.disposed(by: disposeBag)
+        
+        cell.reportButton.rx.tap.bind { _ in
+            if self.poemList[indexPath.row].reported! {
+                AlertUtil.shared.showErrorAlert(vc: self, title: "신고하기", message: "이미 신고했어요.")
+            } else {
+                self.selectedPoem = self.poemList[indexPath.row]
+                self.viewModel.requestReportPoem(poemId: self.poemList[indexPath.row].poemId!, wordCount: self.poemList[indexPath.row].wordCount!)
+            }
+        }.disposed(by: disposeBag)
         
         return cell
     }

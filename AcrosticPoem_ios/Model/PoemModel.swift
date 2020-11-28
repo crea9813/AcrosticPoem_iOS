@@ -8,6 +8,13 @@
 
 import Foundation
 
+class PoemAddReqModel {
+    let token : String
+    let image : String
+    let 
+    
+}
+
 class TodayTitle : Codable {
     let title : String?
     

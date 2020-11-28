@@ -62,4 +62,31 @@ class PoemService : APIService {
             }
         })
     }
+    
+    static func requestPoemLike(reqModel : PoemLikeReqModel, completion: @escaping(Result<Int,Error>) -> Void) {
+        provider.request(.likePoem(reqModel: reqModel), completion: {
+            response in
+            switch response {
+            case .success(let response):
+                print(response.statusCode)
+                let data = response.statusCode
+                completion(.success(data))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        })
+    }
+    
+    static func requestPoemReport(reqModel : PoemReportReqModel, completion: @escaping(Result<Int,Error>) -> Void) {
+        provider.request(.reportPoem(reqModel: reqModel), completion: {
+            response in
+            switch response {
+            case .success(let response):
+                let data = response.statusCode
+                completion(.success(data))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        })
+    }
 }

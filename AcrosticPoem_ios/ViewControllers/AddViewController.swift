@@ -214,12 +214,6 @@ class AddViewController : UIViewController {
             
         if textFieldFirst.text! != "" && textFieldSecond.text! != "" && textFieldThird.text! != "" {
         
-            let token = UserDefaults.standard.value(forKey: "token") as! String
-            let wordFirst = Words(word:wordTitleFirst.text!, line: textFieldFirst.text!)
-            let wordSecond = Words(word: wordTitleSecond.text!, line: textFieldSecond.text!)
-            let wordThird = Words(word: wordTitleThird.text!, line: textFieldThird.text!)
-            let poem = PostPoem(token: token, image: imageUrl, word: [wordFirst,wordSecond,wordThird])
-            
         } else {
             let alert = UIAlertController(title: "알림", message: "글을 입력해주세요", preferredStyle: UIAlertController.Style.alert)
             let cancel = UIAlertAction(title: "확인", style: UIAlertAction.Style.cancel)

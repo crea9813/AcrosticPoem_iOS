@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearace.shadowImage = UIImage()
         navigationBarAppearace.barTintColor = UIColor(red: 0.96, green: 0.96, blue: 0.94, alpha: 1.00)
         navigationBarAppearace.tintAdjustmentMode = .normal
+        navigationBarAppearace.tintColor = .black
         navigationBarAppearace.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "HYgsrB", size: 16)!, NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationBarAppearace.topItem?.title = ""
         
