@@ -12,6 +12,7 @@ target 'AcrosticPoem_ios' do
   pod 'SwiftyJSON', '~> 4.0'
   pod 'SnapKit', '~> 5.0.0'
   pod 'Toast-Swift', '~> 5.0.1'
+  pod 'Google-Mobile-Ads-SDK'
   pod 'RxSwift'
   pod 'RxCocoa'
 end

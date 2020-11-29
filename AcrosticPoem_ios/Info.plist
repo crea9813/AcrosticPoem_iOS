@@ -18,10 +18,12 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>GADApplicationIdentifier</key>
+	<string>ca-app-pub-4708624776405006~5610961319</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>&quot;삼행시&quot;가 사진 및 이미지 첨부를 위해 사진 라이브러리에 접근하도록 허용합니다.</string>
+	<string>"삼행시"가 사진 및 이미지 첨부를 위해 사진 라이브러리에 접근하도록 허용합니다.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>gungseo.ttf</string>

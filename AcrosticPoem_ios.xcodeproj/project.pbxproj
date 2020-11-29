@@ -24,6 +24,7 @@
 		85316BEE2572839600694B80 /* PoemAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85316BED2572839600694B80 /* PoemAddView.swift */; };
 		85316BF125728E6800694B80 /* PoemAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85316BF025728E6800694B80 /* PoemAddViewModel.swift */; };
 		85316BF525731E9800694B80 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85316BF425731E9800694B80 /* UITextField+Extension.swift */; };
+		85316C1B25734ADB00694B80 /* BannerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85316C1A25734ADB00694B80 /* BannerCell.swift */; };
 		8576BF1E256FCDA3001AFB2A /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576BF1D256FCDA3001AFB2A /* UserService.swift */; };
 		8576BF25256FD060001AFB2A /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576BF24256FD060001AFB2A /* SplashViewModel.swift */; };
 		8576BF28256FD3B5001AFB2A /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576BF27256FD3B5001AFB2A /* SplashView.swift */; };
@@ -61,6 +62,7 @@
 		85316BED2572839600694B80 /* PoemAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemAddView.swift; sourceTree = "<group>"; };
 		85316BF025728E6800694B80 /* PoemAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemAddViewModel.swift; sourceTree = "<group>"; };
 		85316BF425731E9800694B80 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
+		85316C1A25734ADB00694B80 /* BannerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BannerCell.swift; sourceTree = "<group>"; };
 		8576BF1D256FCDA3001AFB2A /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		8576BF24256FD060001AFB2A /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		8576BF27256FD3B5001AFB2A /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				85D1FB3B256D30540005E7A1 /* PoemView.swift */,
 				8576BF27256FD3B5001AFB2A /* SplashView.swift */,
 				85316BED2572839600694B80 /* PoemAddView.swift */,
+				85316C1A25734ADB00694B80 /* BannerCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -242,6 +245,7 @@
 			buildConfigurationList = 2F5C966023714CAA00A248C1 /* Build configuration list for PBXNativeTarget "AcrosticPoem_ios" */;
 			buildPhases = (
 				122ABF39C56F33A3FEC9C454 /* [CP] Check Pods Manifest.lock */,
+				BF2102D6A047D00DD49F1772 /* [CP] Prepare Artifacts */,
 				2F5C964823714CA500A248C1 /* Sources */,
 				2F5C964923714CA500A248C1 /* Frameworks */,
 				2F5C964A23714CA500A248C1 /* Resources */,
@@ -328,6 +332,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		BF2102D6A047D00DD49F1772 /* [CP] Prepare Artifacts */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AcrosticPoem_ios/Pods-AcrosticPoem_ios-artifacts-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Prepare Artifacts";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AcrosticPoem_ios/Pods-AcrosticPoem_ios-artifacts-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AcrosticPoem_ios/Pods-AcrosticPoem_ios-artifacts.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F1C96DC0769E4156332DFE8B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -373,6 +394,7 @@
 				85316BEE2572839600694B80 /* PoemAddView.swift in Sources */,
 				2FF6730125124F350043BABC /* AddViewController.swift in Sources */,
 				85D1FB3F256D319F0005E7A1 /* UICollectionView+Extension.swift in Sources */,
+				85316C1B25734ADB00694B80 /* BannerCell.swift in Sources */,
 				85316BF525731E9800694B80 /* UITextField+Extension.swift in Sources */,
 				8576BF28256FD3B5001AFB2A /* SplashView.swift in Sources */,
 				85316BF125728E6800694B80 /* PoemAddViewModel.swift in Sources */,
@@ -528,7 +550,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4;
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "minestrone.AcrosticPoem-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -555,7 +577,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4;
+				MARKETING_VERSION = 2.5;
 				PRODUCT_BUNDLE_IDENTIFIER = "minestrone.AcrosticPoem-ios";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

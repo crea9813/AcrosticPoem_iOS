@@ -8,6 +8,7 @@
 
 import UIKit
 import RxSwift
+import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +31,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearace.topItem?.title = ""
         
         uiLabelAppearace.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
+        
+        GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         return true
     }
