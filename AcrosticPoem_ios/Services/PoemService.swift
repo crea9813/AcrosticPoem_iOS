@@ -63,6 +63,20 @@ class PoemService : APIService {
         })
     }
     
+    static func requestPoemAdd(reqModel : PoemAddReqModel, completion: @escaping(Result<Int,Error>) -> Void) {
+        provider.request(.addPoem(reqModel: reqModel), completion: {
+            response in
+            switch response {
+            case .success(let response):
+                print(response.statusCode)
+                let data = response.statusCode
+                completion(.success(data))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        })
+    }
+    
     static func requestPoemLike(reqModel : PoemLikeReqModel, completion: @escaping(Result<Int,Error>) -> Void) {
         provider.request(.likePoem(reqModel: reqModel), completion: {
             response in

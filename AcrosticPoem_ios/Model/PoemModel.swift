@@ -11,8 +11,15 @@ import Foundation
 class PoemAddReqModel {
     let token : String
     let image : String
-    let 
+    let word : [Word]
+    let wordCount : String
     
+    init(token : String, image : String, word : [Word], wordCount : Int) {
+        self.token = token
+        self.image = image
+        self.word = word
+        self.wordCount = String(wordCount)
+    }
 }
 
 class TodayTitle : Codable {
@@ -113,6 +120,11 @@ class PoemModel : Codable {
 class Word : Codable {
     let word : String?
     let line : String?
+    
+    init(word : String, line : String) {
+        self.word = word
+        self.line = line
+    }
     
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

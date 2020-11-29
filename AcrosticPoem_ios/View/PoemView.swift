@@ -5,12 +5,10 @@
 //  Created by Poto on 2020/11/24.
 //  Copyright © 2020 Minestrone. All rights reserved.
 //
-
-import UIKit
-
 import UIKit
 import SnapKit
 import RxSwift
+import Toast_Swift
 
 class PoemView: UIViewController {
     
@@ -64,7 +62,6 @@ class PoemView: UIViewController {
     }()
     
     override func viewWillLayoutSubviews() {
-        
         navigationItem.setHidesBackButton(true, animated: false)
         
         //let moreIcon = UIImage(named: "more")
@@ -74,7 +71,6 @@ class PoemView: UIViewController {
         
         self.navigationItem.rightBarButtonItems = [add]
         self.navigationController?.navigationBar.topItem?.title = "삼행시"
-        
     }
     
     override func viewDidLoad()
@@ -84,8 +80,10 @@ class PoemView: UIViewController {
         view.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         initView()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
-        collectionView.reloadData()
+        poemList.removeAll()
+        requestPoem()
     }
     
     private func bind() {
@@ -138,9 +136,9 @@ class PoemView: UIViewController {
         add.rx.tap.bind { [self]
             _ in
             let targetVC = PoemAddView()
-            targetVC.textFieldFirst.wordView.text = "\(poemList[0].word![0].word!) :"
-            targetVC.textFieldSecond.wordView.text = "\(poemList[0].word![1].word!) :"
-            targetVC.textFieldThird.wordView.text = "\(poemList[0].word![2].word!) :"
+            targetVC.titleFirst = poemList[0].word![0].word!
+            targetVC.titleSecond = poemList[0].word![1].word!
+            targetVC.titleThird = poemList[0].word![2].word!
             self.navigationController?.pushViewController(targetVC, animated: true)
         }.disposed(by: disposeBag)
     }
@@ -210,7 +208,6 @@ class PoemView: UIViewController {
         }
 
         bind()
-        requestPoem()
         setCollectionView()
         setTitle()
         
@@ -236,7 +233,6 @@ class PoemView: UIViewController {
 //            cell.configure(with: poem)
 //        }.disposed(by: disposeBag)
 //
-        
     }
     
     // 삼행시 주제 설정
@@ -244,23 +240,6 @@ class PoemView: UIViewController {
         navigationController?.title = "삼행시"
         
         viewModel.requestTodayTitle(wordCount: 3)
-       /* NetworkService().todayTitle()
-        .observeOn(MainScheduler.instance)
-        .subscribe (
-            onNext: { title in
-                self.todayTitle.text = title["3"]!
-                self.todayTitle.addCharacterSpacing(kernValue: 33)
-            },
-            onError: { error in
-                switch error {
-                case ApiError.unAuthorized:
-                    print("unAuthorized")
-                case ApiError.internalServerError:
-                    print("getTitle Server Error")
-                default:
-                    print("Unknown Error")
-                }
-        }).disposed(by: disposeBag)*/
     }
 }
 
@@ -290,9 +269,23 @@ extension PoemView : UICollectionViewDelegate, UICollectionViewDataSource, UICol
             self.viewModel.requestLikePoem(poemId: self.poemList[indexPath.row].poemId!, wordCount: self.poemList[indexPath.row].wordCount!)
         }.disposed(by: disposeBag)
         
+        cell.shareButton.rx.tap.bind { _ in
+            if !(self.poemList.isEmpty) {
+                let text = "\(self.poemList[indexPath.row].word![0].word!) : \(self.poemList[indexPath.row].word![0].line!) \n \(self.poemList[indexPath.row].word![1].word!) : \(self.poemList[indexPath.row].word![1].line!) \n \(self.poemList[indexPath.row].word![2].word!) : \(self.poemList[indexPath.row].word![2].line!) "
+                
+                     let textToShare = [ text ]
+
+                     let activityViewController = UIActivityViewController(activityItems: textToShare, applicationActivities: nil)
+
+                     activityViewController.excludedActivityTypes = [UIActivity.ActivityType.airDrop]
+
+                     self.present(activityViewController, animated: true, completion: nil)
+            }
+        }.disposed(by: disposeBag)
+        
         cell.reportButton.rx.tap.bind { _ in
             if self.poemList[indexPath.row].reported! {
-                AlertUtil.shared.showErrorAlert(vc: self, title: "신고하기", message: "이미 신고했어요.")
+                self.view.makeToast("이미 신고했어요.", duration : 2)
             } else {
                 self.selectedPoem = self.poemList[indexPath.row]
                 self.viewModel.requestReportPoem(poemId: self.poemList[indexPath.row].poemId!, wordCount: self.poemList[indexPath.row].wordCount!)

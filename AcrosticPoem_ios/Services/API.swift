@@ -16,6 +16,7 @@ enum API {
     case validationToken(token : String)
     case likePoem(reqModel : PoemLikeReqModel)
     case reportPoem(reqModel : PoemReportReqModel)
+    case addPoem(reqModel : PoemAddReqModel)
 }
 
 extension API: TargetType {
@@ -43,6 +44,8 @@ extension API: TargetType {
             return "/poem/like/"+String(reqModel.wordCount)
         case .reportPoem(let reqModel):
             return "/poem/report/"+String(reqModel.wordCount)
+        case .addPoem(let reqModel):
+            return "/poem/"+reqModel.wordCount
         }
     }
     var method: Method {
@@ -60,6 +63,8 @@ extension API: TargetType {
         case .likePoem:
             return .post
         case .reportPoem:
+            return .post
+        case .addPoem:
             return .post
         }
     }
@@ -87,6 +92,17 @@ extension API: TargetType {
             return .requestParameters(parameters: [
                 "token" : reqModel.token,
                 "poemId" : reqModel.poemId
+            ], encoding: JSONEncoding.default)
+        case .addPoem(let reqModel):
+            return .requestParameters(parameters: [
+                "token" : reqModel.token,
+                "image" : reqModel.image,
+                "word" :
+                [
+                    [ "word" : reqModel.word[0].word!, "line" : reqModel.word[0].line! ],
+                    [ "word" : reqModel.word[1].word!, "line" : reqModel.word[1].line! ],
+                    [ "word" : reqModel.word[2 ].word!, "line" : reqModel.word[2].line! ]
+                ]
             ], encoding: JSONEncoding.default)
         }
     }

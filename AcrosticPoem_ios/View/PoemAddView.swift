@@ -46,6 +46,10 @@ class PoemAddView : UIViewController {
     let textFieldSecond = PoemInputView()
     let textFieldThird = PoemInputView()
     
+    var titleFirst : String? = nil
+    var titleSecond : String? = nil
+    var titleThird : String? = nil
+    
     let uploadImageView : UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "add_image")
@@ -62,6 +66,12 @@ class PoemAddView : UIViewController {
             title in
             self.todayTitle.text = title
             self.todayTitle.addCharacterSpacing(kernValue: 30)
+        }).disposed(by: disposeBag)
+        
+        viewModel.poemAddSuccess.subscribe(onNext: {
+            _ in
+            self.parent?.view.makeToast("등록했어요.")
+            self.navigationController?.popViewController(animated: true)
         }).disposed(by: disposeBag)
     }
     
@@ -91,11 +101,11 @@ class PoemAddView : UIViewController {
         
         
         
-        textFieldFirst.textFieldView.attributedPlaceholder = NSAttributedString(string: "  최대 30글자",
+        textFieldFirst.textFieldView.attributedPlaceholder = NSAttributedString(string: "최대 30글자",
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        textFieldSecond.textFieldView.attributedPlaceholder = NSAttributedString(string: "  표현의 자유 보장",
+        textFieldSecond.textFieldView.attributedPlaceholder = NSAttributedString(string: "표현의 자유 보장",
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
-        textFieldThird.textFieldView.attributedPlaceholder = NSAttributedString(string: "  사진도 등록해봐요",
+        textFieldThird.textFieldView.attributedPlaceholder = NSAttributedString(string: "사진도 등록해봐요",
                                                              attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         
         poemView.snp.makeConstraints {
@@ -138,6 +148,10 @@ class PoemAddView : UIViewController {
             $0.height.equalTo(200)
         }
         
+        textFieldFirst.wordView.text = "\(titleFirst ?? "삼") :"
+        textFieldSecond.wordView.text = "\(titleSecond ?? "행") :"
+        textFieldThird.wordView.text = "\(titleThird ?? "시") :"
+        
         uploadImageView.isUserInteractionEnabled = true
         uploadImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(addPhoto)))
     }
@@ -166,6 +180,7 @@ class PoemAddView : UIViewController {
                 AlertUtil.shared.showErrorAlert(vc: self, title: "알림", message: "삼행시 규정에 맞게 다시 지어주세요")
             } else {
                 //등록
+                viewModel.requestPoemAdd(image: imageUrl, word: [Word(word: self.titleFirst!, line: textFieldFirst.textFieldView.text!), Word(word: self.titleSecond!, line: textFieldSecond.textFieldView.text!), Word(word: self.titleThird!, line: textFieldThird.textFieldView.text!)])
             }
         }
     }
@@ -220,10 +235,11 @@ class PoemInputView : UIView {
     let textFieldView : UITextField = {
         let textField = UITextField()
         textField.backgroundColor = .clear
-        textField.textColor = .black
+        textField.textColor = UIColor(red: 0.20, green: 0.20, blue: 0.20, alpha: 1.00)
         textField.layer.borderWidth = 1.5
         textField.layer.borderColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0).cgColor
         textField.layer.cornerRadius = 10
+        textField.addLeftPadding()
         return textField
     }()
     

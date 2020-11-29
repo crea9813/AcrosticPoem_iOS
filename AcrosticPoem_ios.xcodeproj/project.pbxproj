@@ -23,6 +23,7 @@
 		852ED1B925715CC300697512 /* PoemActionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852ED1B825715CC300697512 /* PoemActionModel.swift */; };
 		85316BEE2572839600694B80 /* PoemAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85316BED2572839600694B80 /* PoemAddView.swift */; };
 		85316BF125728E6800694B80 /* PoemAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85316BF025728E6800694B80 /* PoemAddViewModel.swift */; };
+		85316BF525731E9800694B80 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85316BF425731E9800694B80 /* UITextField+Extension.swift */; };
 		8576BF1E256FCDA3001AFB2A /* UserService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576BF1D256FCDA3001AFB2A /* UserService.swift */; };
 		8576BF25256FD060001AFB2A /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576BF24256FD060001AFB2A /* SplashViewModel.swift */; };
 		8576BF28256FD3B5001AFB2A /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576BF27256FD3B5001AFB2A /* SplashView.swift */; };
@@ -59,6 +60,7 @@
 		852ED1B825715CC300697512 /* PoemActionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemActionModel.swift; sourceTree = "<group>"; };
 		85316BED2572839600694B80 /* PoemAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemAddView.swift; sourceTree = "<group>"; };
 		85316BF025728E6800694B80 /* PoemAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemAddViewModel.swift; sourceTree = "<group>"; };
+		85316BF425731E9800694B80 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		8576BF1D256FCDA3001AFB2A /* UserService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserService.swift; sourceTree = "<group>"; };
 		8576BF24256FD060001AFB2A /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		8576BF27256FD3B5001AFB2A /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				2F2071FE251488AD009B48FF /* ImageConvert.swift */,
 				8576BF2A256FD7A2001AFB2A /* AlertUtil.swift */,
 				85D1FB3E256D319F0005E7A1 /* UICollectionView+Extension.swift */,
+				85316BF425731E9800694B80 /* UITextField+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -370,6 +373,7 @@
 				85316BEE2572839600694B80 /* PoemAddView.swift in Sources */,
 				2FF6730125124F350043BABC /* AddViewController.swift in Sources */,
 				85D1FB3F256D319F0005E7A1 /* UICollectionView+Extension.swift in Sources */,
+				85316BF525731E9800694B80 /* UITextField+Extension.swift in Sources */,
 				8576BF28256FD3B5001AFB2A /* SplashView.swift in Sources */,
 				85316BF125728E6800694B80 /* PoemAddViewModel.swift in Sources */,
 			);
