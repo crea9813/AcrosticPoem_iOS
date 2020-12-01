@@ -74,18 +74,16 @@ class PoemView: UIViewController {
         
         //let moreIcon = UIImage(named: "more")
         
-        self.view.backgroundColor = UIColor(red: 0.94, green: 0.93, blue: 0.89, alpha: 1.00)
+        view.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.94, alpha: 1.00)
         // Do any additional setup after loading the view.
         
         self.navigationItem.rightBarButtonItems = [add]
-        self.navigationController?.navigationBar.topItem?.title = "삼행시"
     }
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         initView()
     }
     
@@ -97,10 +95,7 @@ class PoemView: UIViewController {
     private func bind() {
         viewModel.errorMessage.subscribe(onNext : {
             error in
-            let errorAlert = UIAlertController(title: "오류", message: error, preferredStyle: .alert)
-            errorAlert.addAction(UIAlertAction(title: "확인", style: .default, handler: nil))
-            
-            self.present(errorAlert, animated: true, completion: nil)
+            print("No Poem")
         }).disposed(by: disposeBag)
         
         viewModel.todayTitleSuccess.subscribe(onNext: {
@@ -149,11 +144,6 @@ class PoemView: UIViewController {
         add.rx.tap.bind { [self]
             _ in
             let targetVC = PoemAddView()
-            if let list = poemList[0] as? PoemModel {
-                targetVC.titleFirst = list.word![0].word!
-                targetVC.titleSecond = list.word![1].word!
-                targetVC.titleThird = list.word![2].word!
-            }
             self.navigationController?.pushViewController(targetVC, animated: true)
         }.disposed(by: disposeBag)
     }

@@ -16,9 +16,9 @@ extension UICollectionView {
         let messageLabel = UILabel()
         
         titleLabel.textColor = UIColor.black
-        titleLabel.font = UIFont(name: "BM YEONSUNG", size: 23)
+        titleLabel.font = UIFont(name: "Song Myung", size: 20)
         messageLabel.textColor = UIColor.lightGray
-        messageLabel.font = UIFont(name: "BM YEONSUNG", size: 17)
+        messageLabel.font = UIFont(name: "Song Myung", size: 15)
         
         emptyView.addSubview(titleLabel)
         emptyView.addSubview(messageLabel)

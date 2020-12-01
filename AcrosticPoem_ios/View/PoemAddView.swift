@@ -66,6 +66,10 @@ class PoemAddView : UIViewController {
             title in
             self.todayTitle.text = title
             self.todayTitle.addCharacterSpacing(kernValue: 30)
+            
+            self.textFieldFirst.wordView.text = String(title[title.startIndex])
+            self.textFieldSecond.wordView.text = String(title[title.index(after: title.startIndex)])
+            self.textFieldThird.wordView.text = String(title[title.index(before: title.endIndex)])
         }).disposed(by: disposeBag)
         
         viewModel.poemAddSuccess.subscribe(onNext: {
@@ -86,7 +90,7 @@ class PoemAddView : UIViewController {
     }
     
     func setupView() {
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.94, alpha: 1.00)
         
         view.addSubview(poemView)
         
