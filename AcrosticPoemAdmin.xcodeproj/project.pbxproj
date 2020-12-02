@@ -14,6 +14,7 @@
 		85FF6BA22577D95A00ADC4EE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 85FF6BA02577D95A00ADC4EE /* Main.storyboard */; };
 		85FF6BAE2577D95A00ADC4EE /* AcrosticPoemAdminTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF6BAD2577D95A00ADC4EE /* AcrosticPoemAdminTests.swift */; };
 		85FF6BB92577D95A00ADC4EE /* AcrosticPoemAdminUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF6BB82577D95A00ADC4EE /* AcrosticPoemAdminUITests.swift */; };
+		85FF6BCA2577D9E500ADC4EE /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FF6BC92577D9E500ADC4EE /* LoginView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 		85FF6BB42577D95A00ADC4EE /* AcrosticPoemAdminUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AcrosticPoemAdminUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		85FF6BB82577D95A00ADC4EE /* AcrosticPoemAdminUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcrosticPoemAdminUITests.swift; sourceTree = "<group>"; };
 		85FF6BBA2577D95A00ADC4EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		85FF6BC92577D9E500ADC4EE /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				85FF6BA32577D95A00ADC4EE /* Info.plist */,
 				85FF6BA42577D95A00ADC4EE /* AcrosticPoemAdmin.entitlements */,
 				85FF6B9D2577D95A00ADC4EE /* Preview Content */,
+				85FF6BC92577D9E500ADC4EE /* LoginView.swift */,
 			);
 			path = AcrosticPoemAdmin;
 			sourceTree = "<group>";
@@ -265,6 +268,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85FF6BCA2577D9E500ADC4EE /* LoginView.swift in Sources */,
 				85FF6B9A2577D95800ADC4EE /* ContentView.swift in Sources */,
 				85FF6B982577D95800ADC4EE /* AppDelegate.swift in Sources */,
 			);
