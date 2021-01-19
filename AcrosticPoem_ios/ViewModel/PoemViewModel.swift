@@ -58,9 +58,10 @@ class PoemViewModel {
             .map { $0! }
     }
     
-    
+    var networkService : NetworkService
     
     init() {
+        networkService = NetworkService()
         bind()
     }
     
@@ -74,7 +75,7 @@ class PoemViewModel {
     }
     
     func requestTodayTitle(wordCount : Int) {
-        PoemService.requestTodayTitle(wordCount: wordCount, completion: {
+        networkService.requestTodayTitle(wordCount: wordCount, completion: {
             response in
             switch response {
             case .success(let todayTitle):
@@ -92,7 +93,7 @@ class PoemViewModel {
     func requestPoemList(_ wordCount : String) {
         let reqModel = PoemListGetReqModel(token: Constant.shared.token, wordCount: wordCount)
         
-        PoemService.requestPoemList(reqModel: reqModel, completion: {
+        networkService.requestPoemList(reqModel: reqModel, completion: {
             response in
             switch response {
             case .success(let resModel):
@@ -110,7 +111,7 @@ class PoemViewModel {
     func requestPoemInfo(wordCount: Int, poemId : String) {
         let reqModel = PoemInfoGetReqModel(wordCount: wordCount, token: Constant.shared.token, poemId: poemId)
         
-        PoemService.requestPoemInfo(reqModel: reqModel, completion: {
+        networkService.requestPoemInfo(reqModel: reqModel, completion: {
             response in
             switch response {
             case .success(let resModel):
@@ -124,7 +125,7 @@ class PoemViewModel {
     func updatePoemInfo(poemId : String, wordCount : Int) {
         let reqModel = PoemInfoGetReqModel(wordCount: wordCount, token: Constant.shared.token, poemId: poemId)
         
-        PoemService.requestPoemInfo(reqModel: reqModel, completion: {
+        networkService.requestPoemInfo(reqModel: reqModel, completion: {
             response in
             switch response {
             case .success(let resModel):
@@ -139,7 +140,7 @@ class PoemViewModel {
    
     func requestLikePoem(poemId : String, wordCount : Int) {
         print(poemId)
-        PoemService.requestPoemLike(reqModel: PoemLikeReqModel(token: Constant.shared.token, poemId: poemId, wordCount: wordCount), completion: {
+        networkService.requestPoemLike(reqModel: PoemLikeReqModel(token: Constant.shared.token, poemId: poemId, wordCount: wordCount), completion: {
             response in
             switch response {
             case .success(let code):
@@ -151,7 +152,7 @@ class PoemViewModel {
     }
     
     func requestReportPoem(poemId : String, wordCount : Int) {
-        PoemService.requestPoemReport(reqModel: PoemReportReqModel(token: Constant.shared.token, poemId: poemId, wordCount: wordCount), completion: {
+        networkService.requestPoemReport(reqModel: PoemReportReqModel(token: Constant.shared.token, poemId: poemId, wordCount: wordCount), completion: {
             response in
             switch response {
             case .success(let code):

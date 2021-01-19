@@ -290,6 +290,7 @@ extension PoemView : UICollectionViewDelegate, UICollectionViewDataSource, UICol
 //        cell.backgroundColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
 //        return cell
         
+        //중간 배너 광고 셀
         if let BannerView = poemList[indexPath.row] as? GADBannerView {
           let reusableAdCell = collectionView.dequeueReusableCell(
             withReuseIdentifier: BannerCell.identifier,
@@ -311,6 +312,7 @@ extension PoemView : UICollectionViewDelegate, UICollectionViewDataSource, UICol
 
             return reusableAdCell
         } else {
+            //일반 시
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PoemCell.identifier, for: indexPath) as! PoemCell
             
             let list = poemList[indexPath.row] as? PoemModel

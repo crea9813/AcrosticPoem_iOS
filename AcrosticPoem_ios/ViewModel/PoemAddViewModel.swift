@@ -31,8 +31,14 @@ class PoemAddViewModel {
             .map { $0! }
     }
     
+    var networkService : NetworkService
+    
+    init() {
+        networkService = NetworkService()
+    }
+    
     func requestTodayTitle(wordCount : Int) {
-        PoemService.requestTodayTitle(wordCount: wordCount, completion: {
+        networkService.requestTodayTitle(wordCount: wordCount, completion: {
             response in
             switch response {
             case .success(let todayTitle):
@@ -44,7 +50,7 @@ class PoemAddViewModel {
     }
     
     func requestPoemAdd(image : String, word : [Word]) {
-        PoemService.requestPoemAdd(reqModel: PoemAddReqModel(token: Constant.shared.token, image: image, word: word, wordCount: word.count), completion: {
+        networkService.requestPoemAdd(reqModel: PoemAddReqModel(token: Constant.shared.token, image: image, word: word, wordCount: word.count), completion: {
             response in
             switch response {
             case .success(let code):

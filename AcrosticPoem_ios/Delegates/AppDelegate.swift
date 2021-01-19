@@ -8,7 +8,7 @@
 
 import UIKit
 import RxSwift
-import GoogleMobileAds
+//import GoogleMobileAds
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -26,13 +26,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         navigationBarAppearace.shadowImage = UIImage()
         navigationBarAppearace.barTintColor = UIColor(red: 0.96, green: 0.96, blue: 0.94, alpha: 1.00)
         navigationBarAppearace.tintAdjustmentMode = .normal
-        navigationBarAppearace.tintColor = .black
+        navigationBarAppearace.tintColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         navigationBarAppearace.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "HYgsrB", size: 16)!, NSAttributedString.Key.foregroundColor: UIColor.white]
         navigationBarAppearace.topItem?.title = ""
         
         uiLabelAppearace.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
         
-        GADMobileAds.sharedInstance().start(completionHandler: nil)
+//        GADMobileAds.sharedInstance().start(completionHandler: nil)
         
         return true
     }

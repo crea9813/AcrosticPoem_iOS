@@ -31,8 +31,14 @@ class SplashViewModel {
             .map { $0! }
     }
     
+    var networkService : NetworkService
+    
+    init() {
+        networkService = NetworkService()
+    }
+    
     func requestToken() {
-        UserService.requestToken(completion: {
+        networkService.requestToken(completion: {
             response in
             switch response {
             case .success(let token):
@@ -44,7 +50,7 @@ class SplashViewModel {
     }
     
     func validateToken(token : String) {
-        UserService.validateToken(token: token, completion: {
+        networkService.validateToken(token: token, completion: {
             response in
             switch response {
             case .success(let code):

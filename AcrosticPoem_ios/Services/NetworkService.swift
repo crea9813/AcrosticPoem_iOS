@@ -1,17 +1,19 @@
 //
-//  PoemService.swift
+//  UserService.swift
 //  AcrosticPoem_ios
 //
-//  Created by Poto on 2020/11/24.
+//  Created by Poto on 2020/11/26.
 //  Copyright © 2020 Minestrone. All rights reserved.
 //
 
 import Foundation
-import SwiftyJSON
+import Moya
 
-class PoemService : APIService {
+class NetworkService : Networkable {
     
-    static func requestTodayTitle(wordCount : Int, completion: @escaping(Result<String,Error>)->Void) {
+    var provider: MoyaProvider<API> = MoyaProvider<API>()
+    
+     func requestTodayTitle(wordCount : Int, completion: @escaping(Result<String,Error>)->Void) {
         provider.request(.getTodayTitle(wordCount: wordCount), completion: {
             response in
             switch response {
@@ -25,7 +27,7 @@ class PoemService : APIService {
         })
     }
     
-    static func requestPoemList(reqModel : PoemListGetReqModel, completion: @escaping(Result<PoemListGetResModel, Error>)->Void) {
+     func requestPoemList(reqModel : PoemListGetReqModel, completion: @escaping(Result<PoemListGetResModel, Error>)->Void) {
         provider.request(.getPoemList(reqModel: reqModel), completion: {
             response in
             switch response {
@@ -44,7 +46,7 @@ class PoemService : APIService {
         })
     }
     
-    static func requestPoemInfo(reqModel : PoemInfoGetReqModel, completion: @escaping(Result<PoemModel,Error>) -> Void) {
+     func requestPoemInfo(reqModel : PoemInfoGetReqModel, completion: @escaping(Result<PoemModel,Error>) -> Void) {
         provider.request(.getPoemInfo(reqModel: reqModel), completion: {
             response in
             switch response {
@@ -63,7 +65,7 @@ class PoemService : APIService {
         })
     }
     
-    static func requestPoemAdd(reqModel : PoemAddReqModel, completion: @escaping(Result<Int,Error>) -> Void) {
+     func requestPoemAdd(reqModel : PoemAddReqModel, completion: @escaping(Result<Int,Error>) -> Void) {
         provider.request(.addPoem(reqModel: reqModel), completion: {
             response in
             switch response {
@@ -77,7 +79,7 @@ class PoemService : APIService {
         })
     }
     
-    static func requestPoemLike(reqModel : PoemLikeReqModel, completion: @escaping(Result<Int,Error>) -> Void) {
+     func requestPoemLike(reqModel : PoemLikeReqModel, completion: @escaping(Result<Int,Error>) -> Void) {
         provider.request(.likePoem(reqModel: reqModel), completion: {
             response in
             switch response {
@@ -91,8 +93,35 @@ class PoemService : APIService {
         })
     }
     
-    static func requestPoemReport(reqModel : PoemReportReqModel, completion: @escaping(Result<Int,Error>) -> Void) {
+     func requestPoemReport(reqModel : PoemReportReqModel, completion: @escaping(Result<Int,Error>) -> Void) {
         provider.request(.reportPoem(reqModel: reqModel), completion: {
+            response in
+            switch response {
+            case .success(let response):
+                let data = response.statusCode
+                completion(.success(data))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        })
+    }
+    
+    func requestToken(completion: @escaping(Result<String,Error>)->Void) {
+        provider.request(.generationToken(()) , completion: {
+            response in
+            switch response {
+            case .success(let response):
+                let data = response.data
+                    print("Token Response : \(String(data: data, encoding: .utf8)!)")
+                    completion(.success(String(data: data, encoding: .utf8)!))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        })
+    }
+    
+    func validateToken(token : String, completion: @escaping(Result<Int,Error>)->()) {
+        provider.request(.validationToken(token: token), completion: {
             response in
             switch response {
             case .success(let response):
