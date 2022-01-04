@@ -152,7 +152,7 @@ class PoemAddViewController : UIViewController {
                     AlertUtil.shared.showErrorAlert(vc: self, title: "알림", message: "삼행시 규정에 맞게 다시 지어주세요")
                 } else {
                     //등록
-                    viewModel.requestPoemAdd(image: imageUrl, word: [Word(word: self.textFieldFirst.wordView.text!, line: textFieldFirst.textFieldView.text!), Word(word: self.textFieldSecond.wordView.text!, line: textFieldSecond.textFieldView.text!), Word(word: self.textFieldThird.wordView.text!, line: textFieldThird.textFieldView.text!)])
+//                    viewModel.requestPoemAdd(image: imageUrl, word: [Word(word: self.textFieldFirst.wordView.text!, line: textFieldFirst.textFieldView.text!), Word(word: self.textFieldSecond.wordView.text!, line: textFieldSecond.textFieldView.text!), Word(word: self.textFieldThird.wordView.text!, line: textFieldThird.textFieldView.text!)])
                 }
             }
         }
