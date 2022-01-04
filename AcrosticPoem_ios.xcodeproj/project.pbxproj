@@ -181,6 +181,7 @@
 		2F19402D2784006B001C75A3 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				2FEFF07C25146A9900AB7DD8 /* Extensions */,
 				2F1940212783F4BA001C75A3 /* SceneDIContainer.swift */,
 				2F1940272783F98C001C75A3 /* AppFlowCoordinator.swift */,
 				2F1940252783F936001C75A3 /* AppDiContainer.swift */,
@@ -204,7 +205,6 @@
 			isa = PBXGroup;
 			children = (
 				2F5C964E23714CA500A248C1 /* AcrosticPoem_ios */,
-				2FEFF07C25146A9900AB7DD8 /* Extensions */,
 				2F5C964D23714CA500A248C1 /* Products */,
 				5195FC6FD03FBDFF0296B64F /* Pods */,
 				C2D1468C1650BA55448DB746 /* Frameworks */,
