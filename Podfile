@@ -15,4 +15,6 @@ target 'AcrosticPoem_ios' do
   pod 'Google-Mobile-Ads-SDK'
   pod 'RxSwift'
   pod 'RxCocoa'
+  pod 'Moya/RxSwift'
+  pod 'Then'
 end
