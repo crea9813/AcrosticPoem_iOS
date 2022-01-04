@@ -11,7 +11,7 @@ import UIKit
 import RxSwift
 import SnapKit
 
-class PoemViewController : UIViewController, StoryboardInstantiable {
+class PoemViewController : UIViewController {
     
     private var viewModel: PoemViewModel!
     private var disposeBag = DisposeBag()

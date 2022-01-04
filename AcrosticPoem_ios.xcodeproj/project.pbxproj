@@ -15,6 +15,12 @@
 		2F1940262783F936001C75A3 /* AppDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1940252783F936001C75A3 /* AppDiContainer.swift */; };
 		2F1940282783F98C001C75A3 /* AppFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1940272783F98C001C75A3 /* AppFlowCoordinator.swift */; };
 		2F2071FF251488AD009B48FF /* ImageConvert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2071FE251488AD009B48FF /* ImageConvert.swift */; };
+		2F2A48052784424800B2F861 /* PoemAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A48042784424800B2F861 /* PoemAddViewController.swift */; };
+		2F2A48092784426400B2F861 /* PoemAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A48082784426400B2F861 /* PoemAddViewModel.swift */; };
+		2F2A480C2784444100B2F861 /* PoemAddRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A480B2784444100B2F861 /* PoemAddRepository.swift */; };
+		2F2A480E278444AE00B2F861 /* PoemAddRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A480D278444AE00B2F861 /* PoemAddRequestDTO.swift */; };
+		2F2A48102784457700B2F861 /* DefaultPoemAddRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A480F2784457700B2F861 /* DefaultPoemAddRepository.swift */; };
+		2F2A481227844A9000B2F861 /* WordInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A481127844A9000B2F861 /* WordInputField.swift */; };
 		2F5C965023714CA500A248C1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C964F23714CA500A248C1 /* AppDelegate.swift */; };
 		2F5C965223714CA500A248C1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C965123714CA500A248C1 /* SceneDelegate.swift */; };
 		2F5C965923714CAA00A248C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F5C965823714CAA00A248C1 /* Assets.xcassets */; };
@@ -51,6 +57,12 @@
 		2F1940252783F936001C75A3 /* AppDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDiContainer.swift; sourceTree = "<group>"; };
 		2F1940272783F98C001C75A3 /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
 		2F2071FE251488AD009B48FF /* ImageConvert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageConvert.swift; sourceTree = "<group>"; };
+		2F2A48042784424800B2F861 /* PoemAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemAddViewController.swift; sourceTree = "<group>"; };
+		2F2A48082784426400B2F861 /* PoemAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemAddViewModel.swift; sourceTree = "<group>"; };
+		2F2A480B2784444100B2F861 /* PoemAddRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemAddRepository.swift; sourceTree = "<group>"; };
+		2F2A480D278444AE00B2F861 /* PoemAddRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemAddRequestDTO.swift; sourceTree = "<group>"; };
+		2F2A480F2784457700B2F861 /* DefaultPoemAddRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultPoemAddRepository.swift; sourceTree = "<group>"; };
+		2F2A481127844A9000B2F861 /* WordInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordInputField.swift; sourceTree = "<group>"; };
 		2F5C964C23714CA500A248C1 /* AcrosticPoem_ios.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AcrosticPoem_ios.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2F5C964F23714CA500A248C1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2F5C965123714CA500A248C1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -94,19 +106,19 @@
 		2F1940192783EFB3001C75A3 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				2F19401A2783EFC7001C75A3 /* Poem */,
+				2F19401A2783EFC7001C75A3 /* PoemScene */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
 		};
-		2F19401A2783EFC7001C75A3 /* Poem */ = {
+		2F19401A2783EFC7001C75A3 /* PoemScene */ = {
 			isa = PBXGroup;
 			children = (
 				2F19402B2783FFBE001C75A3 /* Flow */,
-				2F1940292783FFA3001C75A3 /* View */,
-				2F19402A2783FFAC001C75A3 /* ViewModel */,
+				2F2A48032784423B00B2F861 /* Poem */,
+				2F2A48062784424F00B2F861 /* Add */,
 			);
-			path = Poem;
+			path = PoemScene;
 			sourceTree = "<group>";
 		};
 		2F19401B2783EFEE001C75A3 /* Data */ = {
@@ -124,6 +136,7 @@
 			children = (
 				2F1940152783E807001C75A3 /* PoemResponseDTO.swift */,
 				2F1940172783EB57001C75A3 /* PoemRequestDTO.swift */,
+				2F2A480D278444AE00B2F861 /* PoemAddRequestDTO.swift */,
 				2FA9268E2783DE0D0024044F /* APIError.swift */,
 			);
 			path = DataMapping;
@@ -133,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				2FA9268A2783D0E60024044F /* DefaultPoemRepository.swift */,
+				2F2A480F2784457700B2F861 /* DefaultPoemAddRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -199,6 +213,41 @@
 				2F5C965D23714CAA00A248C1 /* Info.plist */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		2F2A48032784423B00B2F861 /* Poem */ = {
+			isa = PBXGroup;
+			children = (
+				2F1940292783FFA3001C75A3 /* View */,
+				2F19402A2783FFAC001C75A3 /* ViewModel */,
+			);
+			path = Poem;
+			sourceTree = "<group>";
+		};
+		2F2A48062784424F00B2F861 /* Add */ = {
+			isa = PBXGroup;
+			children = (
+				2F2A48072784425900B2F861 /* View */,
+				2F2A480A2784426700B2F861 /* ViewModel */,
+			);
+			path = Add;
+			sourceTree = "<group>";
+		};
+		2F2A48072784425900B2F861 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2F2A48042784424800B2F861 /* PoemAddViewController.swift */,
+				2F2A481127844A9000B2F861 /* WordInputField.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2F2A480A2784426700B2F861 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2F2A48082784426400B2F861 /* PoemAddViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		2F5C964323714CA500A248C1 = {
@@ -270,6 +319,7 @@
 			isa = PBXGroup;
 			children = (
 				2FA9267E2783C1870024044F /* PoemRepository.swift */,
+				2F2A480B2784444100B2F861 /* PoemAddRepository.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -436,15 +486,19 @@
 				2FA9268B2783D0E60024044F /* DefaultPoemRepository.swift in Sources */,
 				2F1940202783F1C8001C75A3 /* StoryboardInstantiable.swift in Sources */,
 				8576BF2B256FD7A2001AFB2A /* AlertUtil.swift in Sources */,
+				2F2A48052784424800B2F861 /* PoemAddViewController.swift in Sources */,
 				2FA9267D2783C0DE0024044F /* Poems.swift in Sources */,
 				85D1FB2D256549FF0005E7A1 /* API.swift in Sources */,
 				2F1940182783EB57001C75A3 /* PoemRequestDTO.swift in Sources */,
+				2F2A48102784457700B2F861 /* DefaultPoemAddRepository.swift in Sources */,
+				2F2A48092784426400B2F861 /* PoemAddViewModel.swift in Sources */,
 				2F2071FF251488AD009B48FF /* ImageConvert.swift in Sources */,
 				2FEFF07B25146A7C00AB7DD8 /* LabelTextSpacing.swift in Sources */,
 				2F1940162783E807001C75A3 /* PoemResponseDTO.swift in Sources */,
 				2F1940262783F936001C75A3 /* AppDiContainer.swift in Sources */,
 				2F5C965023714CA500A248C1 /* AppDelegate.swift in Sources */,
 				2FA9267F2783C1870024044F /* PoemRepository.swift in Sources */,
+				2F2A480C2784444100B2F861 /* PoemAddRepository.swift in Sources */,
 				8576BF2E256FD949001AFB2A /* Constant.swift in Sources */,
 				2F1940242783F5F8001C75A3 /* PoemFlowCoordinator.swift in Sources */,
 				2FA9267B2782EA710024044F /* PoemUseCase.swift in Sources */,
@@ -458,7 +512,9 @@
 				85D1FB3F256D319F0005E7A1 /* UICollectionView+Extension.swift in Sources */,
 				85316BF525731E9800694B80 /* UITextField+Extension.swift in Sources */,
 				2FA9268F2783DE0D0024044F /* APIError.swift in Sources */,
+				2F2A480E278444AE00B2F861 /* PoemAddRequestDTO.swift in Sources */,
 				2FA926892783C88E0024044F /* PoemViewModel.swift in Sources */,
+				2F2A481227844A9000B2F861 /* WordInputField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
