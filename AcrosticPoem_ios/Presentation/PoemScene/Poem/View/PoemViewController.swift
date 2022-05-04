@@ -13,12 +13,53 @@ import SnapKit
 
 class PoemViewController : UIViewController {
     
+    // MARK: - Vars & Lets
+    
     private var viewModel: PoemViewModel!
-    private var disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     private var wordCount : Int = 3
     private var currentIndex : Int = 0
     private let poemView = UIView()
+    
+    static func create(with viewModel: PoemViewModel) -> PoemViewController {
+        let view = PoemViewController()
+        view.viewModel = viewModel
+        return view
+    }
+    
+    // MARK: - Binding
+    
+    private func bind() {
+        assert(viewModel != nil)
+        
+        let input = PoemViewModel.Input(
+            viewWillAppear: self.rx.viewWillAppear.map { _ in Void() }.asObservable(),
+            didAddButtonClicked: add.rx.tap.asObservable()
+        )
+        
+        let output = viewModel.transform(input: input)
+        
+        output.info.drive(onNext: {
+            [weak self] info in
+            guard let self = self else { return }
+            self.todayTitle.text = info.title
+        }).disposed(by: disposeBag)
+        
+        output.poems.drive(collectionView.rx.items(cellIdentifier: PoemCell.identifier, cellType: PoemCell.self)) {
+            index, item, cell in
+            cell.configure(with: item)
+        }.disposed(by: disposeBag)
+    }
+    
+    // MARK: - viewDidLoad
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        initView()
+        bind()
+    }
+    
     
     let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
     let titleBackgroundImage = UIImageView().then {
@@ -40,13 +81,13 @@ class PoemViewController : UIViewController {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumLineSpacing = 0
-
+        
         // CollectionView 초기화
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
         collectionView.isPagingEnabled = true
-        
+        collectionView.register(PoemCell.self, forCellWithReuseIdentifier: PoemCell.identifier)
         return collectionView
     }()
     
@@ -84,31 +125,6 @@ class PoemViewController : UIViewController {
         }
     }
     
-    private func bind() {
-        assert(viewModel != nil)
-        
-        
-        
-        
-        viewModel.items.bind {
-            items in
-            print(items)
-        }.disposed(by: disposeBag)
-        
-        viewModel.getList(wordCount: "\(self.wordCount)")
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        initView()
-        bind()
-    }
-    
-    static func create(with viewModel: PoemViewModel) -> PoemViewController {
-        let view = PoemViewController()
-        view.viewModel = viewModel
-        return view
-    }
     
     
 }

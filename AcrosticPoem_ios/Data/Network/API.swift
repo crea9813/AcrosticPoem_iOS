@@ -9,8 +9,8 @@
 import Moya
 
 enum API {
-    case getPoemInfo(reqModel : PoemReqDTO)
-    case getPoemList(reqModel : PoemListReqDTO)
+    case getPoemInfo(type: Int, id: String)
+    case getPoemList(type : PoemType)
     case getTodayTitle(wordCount : Int)
     case generationToken(Void)
     case validationToken(token : String)
@@ -30,10 +30,10 @@ extension API: TargetType {
     
     var path: String {
         switch self {
-        case .getPoemInfo(let reqModel):
-            return "/poem/"+String(reqModel.wordCount)+"?token="+reqModel.token+"&poemId="+reqModel.poemId
-        case .getPoemList(let reqModel):
-            return "/poem/random/"+reqModel.wordCount+"?count=100"
+        case .getPoemInfo:
+            return "/poem"
+        case .getPoemList:
+            return "/poem/random"
         case .getTodayTitle(let wordCount):
             return "/title/"+String(wordCount)
         case .generationToken:
@@ -71,10 +71,17 @@ extension API: TargetType {
     
     var task: Task {
         switch self {
-        case .getPoemInfo:
-            return .requestPlain
-        case .getPoemList:
-            return .requestPlain
+        case let .getPoemInfo(type, id):
+            return .requestParameters(parameters: [
+                "" : type,
+                "token" : Constant.shared.token,
+                "poemId" : id
+            ], encoding: URLEncoding.default)
+        case let .getPoemList(type):
+            return .requestParameters(parameters: [
+                "" : type.rawValue,
+                "count" : 100
+            ], encoding: URLEncoding.default)
         case .getTodayTitle:
             return .requestPlain
         case .generationToken:

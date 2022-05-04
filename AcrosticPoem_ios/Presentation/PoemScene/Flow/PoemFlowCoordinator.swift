@@ -12,14 +12,14 @@ protocol PoemFlowCoordinatorDepencies {
     
     func makePoemViewController(coordinator: PoemFlowCoordinator) -> PoemViewController
     
-//    func makePoemAddViewController(title: String) -> PoemViewController
+    func makePoemAddViewController(title: String) -> PoemAddViewController
 }
 
 protocol PoemFlowCoordinator {
     
     func start()
     
-//    func showPoemAdds(title : String)
+    func showPoemAdds(title : String)
 }
 
 class DefaultPoemFlowCoordinator: PoemFlowCoordinator {
@@ -42,9 +42,9 @@ class DefaultPoemFlowCoordinator: PoemFlowCoordinator {
         //moviesListVC = vc
     }
     
-//    func showPoemAdds(title: String) {
-//        let vc = dependencies.makePoemAddViewController(title: title)
-//        navigationController.pushViewController(vc, animated: true)
-//    }
+    func showPoemAdds(title: String) {
+        let vc = dependencies.makePoemAddViewController(title: title)
+        navigationController.pushViewController(vc, animated: true)
+    }
     
 }

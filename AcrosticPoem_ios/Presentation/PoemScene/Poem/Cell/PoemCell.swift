@@ -43,6 +43,10 @@ class PoemCell: UICollectionViewCell {
     
     let BASE_URL = "http://149.28.22.157:4567/"
     
+    public func configure(with poemID : String) {
+        
+    }
+    
     // PoemModel로 Cell의 내용을 초기화
     public func configure(with model: PoemModel){
         

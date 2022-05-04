@@ -46,8 +46,4 @@ final class PoemAddViewModel : PoemAddViewModelInput, PoemAddViewModelOutput {
             }
         }.disposed(by: disposeBag)
     }
-    
-    
-     
-    
 }

@@ -9,14 +9,14 @@
 import Foundation
 import RxSwift
 
-protocol PoemUseCaseInterface {
-    func getPoemList(param : PoemListReqDTO) -> Single<Poems>
-    func getPoemInfo(param : PoemReqDTO) -> Single<PoemModel>
+protocol PoemUseCaseProtocol {
+    func getPoemList(type : PoemType) -> Single<Poems>
+    func getPoemInfo(param : PoemInfoRequestModel) -> Single<[PoemModel]>
 //    func postPoemLike() -> Single<Int>
 //    func postPoemReport() -> Single<Int>
 }
 
-final class PoemUseCase: PoemUseCaseInterface {
+final class PoemUseCase: PoemUseCaseProtocol {
 
     private let repository: PoemRepository
 
@@ -24,11 +24,11 @@ final class PoemUseCase: PoemUseCaseInterface {
         self.repository = repository
     }
 
-    public func getPoemList(param : PoemListReqDTO) -> Single<Poems> {
-        return repository.getPoemList(param: param)
+    public func getPoemList(type : PoemType) -> Single<Poems> {
+        return repository.getPoemList(type: type)
     }
     
-    public func getPoemInfo(param : PoemReqDTO) -> Single<PoemModel> {
+    public func getPoemInfo(param : PoemInfoRequestModel) -> Single<[PoemModel]> {
         return repository.getPoemInfo(param: param)
     }
     
@@ -39,6 +39,11 @@ final class PoemUseCase: PoemUseCaseInterface {
 //    public func postPoemReport() -> Single<Int> {
 //        return repository.postPoemReport()
 //    }
+}
+
+struct PoemInfoRequestModel {
+    let wordCount: Int
+    let id: [String]
 }
 
 

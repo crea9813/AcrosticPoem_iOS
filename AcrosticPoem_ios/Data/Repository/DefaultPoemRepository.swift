@@ -19,21 +19,27 @@ final class DefaultPoemRepository : PoemRepository {
         self.service = service
     }
     
-    func getPoemList(param : PoemListReqDTO) -> Single<Poems> {
-        
-        return service.rx.request(.getPoemList(reqModel: param))
+    func getPoemList(type: PoemType) -> Single<Poems> {
+        return service.rx.request(.getPoemList(type: type))
             .catchAPIError(APIErrorResponse.self)
               .filterSuccessfulStatusCodes()
             .map(PoemListResDTO.self)
             .map { $0.toDomain() }
     }
     
-    func getPoemInfo(param : PoemReqDTO) -> Single<PoemModel> {
-        return service.rx.request(.getPoemInfo(reqModel: param))
+    func getPoemInfo(param : PoemInfoRequestModel) -> Single<[PoemModel]> {
+        let poemObservables = param.id.map { getPoemInfo(type: param.wordCount, id: $0).asObservable() }
+        
+        return Observable.merge(poemObservables).asSingle()
+        
+    }
+    
+    private func getPoemInfo(type: Int, id: String) -> Single<[PoemModel]>{
+        return service.rx.request(.getPoemInfo(type: type, id: id))
             .catchAPIError(APIErrorResponse.self)
               .filterSuccessfulStatusCodes()
             .map(PoemResDTO.self)
-            .map { $0.toDomain() }
+            .map { [$0.toDomain()] }
     }
     
 //    func postPoemLike() -> Single<Int> {
@@ -44,6 +50,7 @@ final class DefaultPoemRepository : PoemRepository {
 //        
 //    }
 }
+
 
 
 

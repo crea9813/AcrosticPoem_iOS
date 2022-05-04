@@ -22,13 +22,17 @@ final class SceneDIContainer {
     }
     
     // MARK: - Use Cases
-    func makePoemUseCase() -> PoemUseCaseInterface {
+    func makePoemUseCase() -> PoemUseCaseProtocol {
         return PoemUseCase(repository: makePoemRepository())
     }
     
     // MARK: - Repositories
     func makePoemRepository() -> PoemRepository {
         return DefaultPoemRepository(service: dependencies.service)
+    }
+    
+    func makePoemAddRepository() -> PoemAddRepository {
+        return DefaultPoemAddRepository(service: dependencies.service)
     }
     
     // MARK: - Movies List
@@ -49,7 +53,14 @@ final class SceneDIContainer {
         )
     }
     
+    func makePoemAddViewController(title: String) -> PoemAddViewController {
+        PoemAddViewController.create(with: makePoemAddViewModel())
+    }
         
+    func makePoemAddViewModel()-> PoemAddViewModel {
+        return PoemAddViewModel(makePoemAddRepository())
+    }
+    
     // MARK: - Flow Coordinators
     func makePoemFlowCoordinator(
         navigationController: UINavigationController
@@ -62,4 +73,4 @@ final class SceneDIContainer {
     
 }
 
-extension SceneDIContainer: PoemFlowCoordinatorDepencies {}
+extension SceneDIContainer: PoemFlowCoordinatorDepencies { }

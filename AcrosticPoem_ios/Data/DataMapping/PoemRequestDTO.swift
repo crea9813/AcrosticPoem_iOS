@@ -8,18 +8,8 @@
 
 import Foundation
 
-struct PoemListReqDTO : Codable {
-    
-    let token : String
+struct PoemListRequestModel : Codable {
     let wordCount : String
-    
-    func asDictionary() throws -> [String: Any] {
-      let data = try JSONEncoder().encode(self)
-      guard let dictionary = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? [String: Any] else {
-        throw NSError()
-      }
-      return dictionary
-    }
 }
 
 

@@ -19,6 +19,11 @@ class PoemAddViewController : UIViewController {
     private func bind() {
         assert(viewModel != nil)
         
+        add.rx.tap.bind {
+            [weak self] _ in
+            guard let self = self else { return }
+            self.viewModel.postPoem(word:  [Word(word: self.textFieldFirst.wordView.text!, line: self.textFieldFirst.textFieldView.text!), Word(word: self.textFieldSecond.wordView.text!, line: self.textFieldSecond.textFieldView.text!), Word(word: self.textFieldThird.wordView.text!, line: self.textFieldThird.textFieldView.text!)], image: self.convertImageToBase64(self.uploadImageView.image!) )
+        }.disposed(by: disposeBag)
     }
     
     override func viewWillLayoutSubviews() {

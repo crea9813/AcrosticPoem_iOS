@@ -10,8 +10,8 @@ import Foundation
 import RxSwift
 
 protocol PoemRepository {
-    func getPoemList(param : PoemListReqDTO) -> Single<Poems>
-    func getPoemInfo(param : PoemReqDTO) -> Single<PoemModel>
+    func getPoemList(type : PoemType) -> Single<Poems>
+    func getPoemInfo(param : PoemInfoRequestModel) -> Single<[PoemModel]>
 //    func postPoemLike() -> Single<Int>
 //    func postPoemReport() -> Single<Int>
 }
