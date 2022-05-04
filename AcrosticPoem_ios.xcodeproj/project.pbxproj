@@ -9,13 +9,14 @@
 /* Begin PBXBuildFile section */
 		2F1940162783E807001C75A3 /* PoemResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1940152783E807001C75A3 /* PoemResponseDTO.swift */; };
 		2F1940182783EB57001C75A3 /* PoemRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1940172783EB57001C75A3 /* PoemRequestDTO.swift */; };
-		2F1940202783F1C8001C75A3 /* StoryboardInstantiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F19401F2783F1C8001C75A3 /* StoryboardInstantiable.swift */; };
 		2F1940222783F4BA001C75A3 /* SceneDIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1940212783F4BA001C75A3 /* SceneDIContainer.swift */; };
 		2F1940242783F5F8001C75A3 /* PoemFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1940232783F5F8001C75A3 /* PoemFlowCoordinator.swift */; };
 		2F1940262783F936001C75A3 /* AppDiContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1940252783F936001C75A3 /* AppDiContainer.swift */; };
 		2F1940282783F98C001C75A3 /* AppFlowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F1940272783F98C001C75A3 /* AppFlowCoordinator.swift */; };
 		2F2071FF251488AD009B48FF /* ImageConvert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2071FE251488AD009B48FF /* ImageConvert.swift */; };
 		2F212DEC2822347B00DAAA52 /* Reactive+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F212DEB2822347B00DAAA52 /* Reactive+Extension.swift */; };
+		2F212DEE282271EE00DAAA52 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F212DED282271EE00DAAA52 /* SplashViewController.swift */; };
+		2F212DF02822720900DAAA52 /* SplashViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F212DEF2822720900DAAA52 /* SplashViewModel.swift */; };
 		2F2A48052784424800B2F861 /* PoemAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A48042784424800B2F861 /* PoemAddViewController.swift */; };
 		2F2A48092784426400B2F861 /* PoemAddViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A48082784426400B2F861 /* PoemAddViewModel.swift */; };
 		2F2A480C2784444100B2F861 /* PoemAddRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F2A480B2784444100B2F861 /* PoemAddRepository.swift */; };
@@ -26,7 +27,6 @@
 		2F5C965223714CA500A248C1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C965123714CA500A248C1 /* SceneDelegate.swift */; };
 		2F5C965923714CAA00A248C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2F5C965823714CAA00A248C1 /* Assets.xcassets */; };
 		2F5C965C23714CAA00A248C1 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2F5C965A23714CAA00A248C1 /* LaunchScreen.storyboard */; };
-		2F5C96642371775800A248C1 /* CornerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F5C96632371775800A248C1 /* CornerView.swift */; };
 		2F875A6C2428601E00691273 /* Pods_AcrosticPoem_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15E9C15D80C3F95C3EDB1D6B /* Pods_AcrosticPoem_ios.framework */; };
 		2FA9267B2782EA710024044F /* PoemUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA9267A2782EA710024044F /* PoemUseCase.swift */; };
 		2FA9267D2783C0DE0024044F /* Poems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA9267C2783C0DE0024044F /* Poems.swift */; };
@@ -52,13 +52,14 @@
 		253D7F72AECCB5A0DE6F16C0 /* Pods-AcrosticPoem_ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AcrosticPoem_ios.release.xcconfig"; path = "Target Support Files/Pods-AcrosticPoem_ios/Pods-AcrosticPoem_ios.release.xcconfig"; sourceTree = "<group>"; };
 		2F1940152783E807001C75A3 /* PoemResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemResponseDTO.swift; sourceTree = "<group>"; };
 		2F1940172783EB57001C75A3 /* PoemRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemRequestDTO.swift; sourceTree = "<group>"; };
-		2F19401F2783F1C8001C75A3 /* StoryboardInstantiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoryboardInstantiable.swift; sourceTree = "<group>"; };
 		2F1940212783F4BA001C75A3 /* SceneDIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDIContainer.swift; sourceTree = "<group>"; };
 		2F1940232783F5F8001C75A3 /* PoemFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemFlowCoordinator.swift; sourceTree = "<group>"; };
 		2F1940252783F936001C75A3 /* AppDiContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDiContainer.swift; sourceTree = "<group>"; };
 		2F1940272783F98C001C75A3 /* AppFlowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlowCoordinator.swift; sourceTree = "<group>"; };
 		2F2071FE251488AD009B48FF /* ImageConvert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageConvert.swift; sourceTree = "<group>"; };
 		2F212DEB2822347B00DAAA52 /* Reactive+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Reactive+Extension.swift"; sourceTree = "<group>"; };
+		2F212DED282271EE00DAAA52 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		2F212DEF2822720900DAAA52 /* SplashViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewModel.swift; sourceTree = "<group>"; };
 		2F2A48042784424800B2F861 /* PoemAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemAddViewController.swift; sourceTree = "<group>"; };
 		2F2A48082784426400B2F861 /* PoemAddViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemAddViewModel.swift; sourceTree = "<group>"; };
 		2F2A480B2784444100B2F861 /* PoemAddRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemAddRepository.swift; sourceTree = "<group>"; };
@@ -71,7 +72,6 @@
 		2F5C965823714CAA00A248C1 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2F5C965B23714CAA00A248C1 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2F5C965D23714CAA00A248C1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		2F5C96632371775800A248C1 /* CornerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerView.swift; sourceTree = "<group>"; };
 		2F828D462394F2FF007E743E /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		2FA9267A2782EA710024044F /* PoemUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemUseCase.swift; sourceTree = "<group>"; };
 		2FA9267C2783C0DE0024044F /* Poems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Poems.swift; sourceTree = "<group>"; };
@@ -108,6 +108,7 @@
 		2F1940192783EFB3001C75A3 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				2F212DF12822726B00DAAA52 /* SplashScene */,
 				2F19401A2783EFC7001C75A3 /* PoemScene */,
 			);
 			path = Presentation;
@@ -139,7 +140,6 @@
 				2F1940152783E807001C75A3 /* PoemResponseDTO.swift */,
 				2F1940172783EB57001C75A3 /* PoemRequestDTO.swift */,
 				2F2A480D278444AE00B2F861 /* PoemAddRequestDTO.swift */,
-				2FA9268E2783DE0D0024044F /* APIError.swift */,
 			);
 			path = DataMapping;
 			sourceTree = "<group>";
@@ -156,6 +156,7 @@
 		2F19401E2783F033001C75A3 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				2FA9268E2783DE0D0024044F /* APIError.swift */,
 				85D1FB2C256549FF0005E7A1 /* API.swift */,
 			);
 			path = Network;
@@ -214,6 +215,31 @@
 				2F5C965D23714CAA00A248C1 /* Info.plist */,
 			);
 			path = Resource;
+			sourceTree = "<group>";
+		};
+		2F212DF12822726B00DAAA52 /* SplashScene */ = {
+			isa = PBXGroup;
+			children = (
+				2F212DF22822729700DAAA52 /* View */,
+				2F212DF32822729F00DAAA52 /* ViewModel */,
+			);
+			path = SplashScene;
+			sourceTree = "<group>";
+		};
+		2F212DF22822729700DAAA52 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2F212DED282271EE00DAAA52 /* SplashViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2F212DF32822729F00DAAA52 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2F212DEF2822720900DAAA52 /* SplashViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		2F2A48032784423B00B2F861 /* Poem */ = {
@@ -330,14 +356,12 @@
 			isa = PBXGroup;
 			children = (
 				8576BF2D256FD949001AFB2A /* Constant.swift */,
-				2F5C96632371775800A248C1 /* CornerView.swift */,
 				2FEFF07A25146A7C00AB7DD8 /* LabelTextSpacing.swift */,
 				2F2071FE251488AD009B48FF /* ImageConvert.swift */,
 				8576BF2A256FD7A2001AFB2A /* AlertUtil.swift */,
 				85D1FB3E256D319F0005E7A1 /* UICollectionView+Extension.swift */,
 				85316BF425731E9800694B80 /* UITextField+Extension.swift */,
 				85569D7825B6BF9E004BB1BE /* Loading.swift */,
-				2F19401F2783F1C8001C75A3 /* StoryboardInstantiable.swift */,
 				2F212DEB2822347B00DAAA52 /* Reactive+Extension.swift */,
 			);
 			path = Extensions;
@@ -487,7 +511,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				2FA9268B2783D0E60024044F /* DefaultPoemRepository.swift in Sources */,
-				2F1940202783F1C8001C75A3 /* StoryboardInstantiable.swift in Sources */,
 				8576BF2B256FD7A2001AFB2A /* AlertUtil.swift in Sources */,
 				2F2A48052784424800B2F861 /* PoemAddViewController.swift in Sources */,
 				2FA9267D2783C0DE0024044F /* Poems.swift in Sources */,
@@ -502,6 +525,7 @@
 				2F1940262783F936001C75A3 /* AppDiContainer.swift in Sources */,
 				2F5C965023714CA500A248C1 /* AppDelegate.swift in Sources */,
 				2FA9267F2783C1870024044F /* PoemRepository.swift in Sources */,
+				2F212DF02822720900DAAA52 /* SplashViewModel.swift in Sources */,
 				2F2A480C2784444100B2F861 /* PoemAddRepository.swift in Sources */,
 				8576BF2E256FD949001AFB2A /* Constant.swift in Sources */,
 				2F1940242783F5F8001C75A3 /* PoemFlowCoordinator.swift in Sources */,
@@ -511,7 +535,6 @@
 				2F1940222783F4BA001C75A3 /* SceneDIContainer.swift in Sources */,
 				2F5C965223714CA500A248C1 /* SceneDelegate.swift in Sources */,
 				85569D7925B6BF9E004BB1BE /* Loading.swift in Sources */,
-				2F5C96642371775800A248C1 /* CornerView.swift in Sources */,
 				8576BF3325712D9C001AFB2A /* PoemCell.swift in Sources */,
 				85D1FB3F256D319F0005E7A1 /* UICollectionView+Extension.swift in Sources */,
 				85316BF525731E9800694B80 /* UITextField+Extension.swift in Sources */,
@@ -519,6 +542,7 @@
 				2F2A480E278444AE00B2F861 /* PoemAddRequestDTO.swift in Sources */,
 				2FA926892783C88E0024044F /* PoemViewModel.swift in Sources */,
 				2F2A481227844A9000B2F861 /* WordInputField.swift in Sources */,
+				2F212DEE282271EE00DAAA52 /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -662,7 +686,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = BZSC89933R;
+				DEVELOPMENT_TEAM = PDVB5YP5F7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -691,7 +715,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
-				DEVELOPMENT_TEAM = BZSC89933R;
+				DEVELOPMENT_TEAM = PDVB5YP5F7;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",

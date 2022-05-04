@@ -38,7 +38,7 @@ struct PoemModel : Codable {
     let reported : Bool
     let title : String
     let date : Date
-    let image : String
+    let image : String?
     let word : [Word]
 }
 

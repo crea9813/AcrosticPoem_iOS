@@ -16,9 +16,9 @@ extension UICollectionView {
         let messageLabel = UILabel()
         
         titleLabel.textColor = UIColor.black
-        titleLabel.font = UIFont(name: "Song Myung", size: 20)
+        titleLabel.font = UIFont(name: "HYgsrB", size: 20)
         messageLabel.textColor = UIColor.lightGray
-        messageLabel.font = UIFont(name: "Song Myung", size: 15)
+        messageLabel.font = UIFont(name: "HYgsrB", size: 15)
         
         emptyView.addSubview(titleLabel)
         emptyView.addSubview(messageLabel)
@@ -33,7 +33,7 @@ extension UICollectionView {
         }
         
         titleLabel.text = "아직 등록된 시가 없습니다"
-        messageLabel.text = "오른쪽 위 추가 버튼으로 첫번째로 시를 등록해보세요"
+        messageLabel.text = "추가 버튼을 눌러 가장 먼저 시를 등록해보세요!"
         messageLabel.numberOfLines = 1
         messageLabel.textAlignment = .center
         // The only tricky part is here:

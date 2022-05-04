@@ -10,6 +10,7 @@ import Then
 import UIKit
 import RxSwift
 import SnapKit
+import RxRelay
 
 class PoemViewController : UIViewController {
     
@@ -17,6 +18,9 @@ class PoemViewController : UIViewController {
     
     private var viewModel: PoemViewModel!
     private let disposeBag = DisposeBag()
+    
+    private let didLikeButtonClicked = PublishRelay<String>()
+    private let didReportButtonClicked = PublishRelay<String>()
     
     private var wordCount : Int = 3
     private var currentIndex : Int = 0
@@ -35,10 +39,23 @@ class PoemViewController : UIViewController {
         
         let input = PoemViewModel.Input(
             viewWillAppear: self.rx.viewWillAppear.map { _ in Void() }.asObservable(),
-            didAddButtonClicked: add.rx.tap.asObservable()
+            didAddButtonClicked: add.rx.tap.asObservable(),
+            didLikeButtonClicked: didLikeButtonClicked.asObservable(),
+            didReportButtonClicked: didReportButtonClicked.asObservable()
         )
         
         let output = viewModel.transform(input: input)
+        
+        output.isLoading.drive(onNext: {
+            isLoading in
+            if isLoading { Loading.show() } else { Loading.hide() }
+        }).disposed(by: disposeBag)
+        
+        output.error.drive(onNext: {
+            [weak self] error in
+            guard let self = self else { return }
+            self.collectionView.setEmptyView()
+        }).disposed(by: disposeBag)
         
         output.info.drive(onNext: {
             [weak self] info in
@@ -47,8 +64,10 @@ class PoemViewController : UIViewController {
         }).disposed(by: disposeBag)
         
         output.poems.drive(collectionView.rx.items(cellIdentifier: PoemCell.identifier, cellType: PoemCell.self)) {
-            index, item, cell in
+            [weak self] index, item, cell in
+            guard let self = self else { return }
             cell.configure(with: item)
+            cell.action = self
         }.disposed(by: disposeBag)
     }
     
@@ -60,14 +79,13 @@ class PoemViewController : UIViewController {
         bind()
     }
     
-    
-    let add = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: nil)
-    let titleBackgroundImage = UIImageView().then {
+    private let add = UIBarButtonItem(barButtonSystemItem: .add, target: PoemViewController.self, action: nil)
+    private let titleBackgroundImage = UIImageView().then {
         $0.image = UIImage(named: "title_3")
         $0.contentMode = .scaleAspectFit
     }
     
-    let todayTitle = UILabel().then {
+    private let todayTitle = UILabel().then {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.font = UIFont(name: "HYgsrB", size: 32)
         $0.textColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0)
@@ -75,14 +93,11 @@ class PoemViewController : UIViewController {
         $0.textAlignment = .center
     }
     
-    let collectionView: UICollectionView = {
-        
-        // 전체 레이아웃 초기화
+    private let collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumLineSpacing = 0
         
-        // CollectionView 초기화
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.backgroundColor = .white
@@ -124,7 +139,17 @@ class PoemViewController : UIViewController {
             $0.bottom.equalTo(poemView)
         }
     }
+}
+
+// MARK: - PoemCellAction
+
+extension PoemViewController : PoemCellAction {
+    func didLikeButtonClicked(with id: String) {
+        self.didLikeButtonClicked.accept(id)
+    }
     
-    
+    func didReportButtonClicked(with id: String) {
+        self.didReportButtonClicked.accept(id)
+    }
     
 }

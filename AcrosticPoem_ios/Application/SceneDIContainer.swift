@@ -70,7 +70,6 @@ final class SceneDIContainer {
             dependencies: self
         )
     }
-    
 }
 
 extension SceneDIContainer: PoemFlowCoordinatorDepencies { }

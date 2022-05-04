@@ -31,7 +31,6 @@ final class DefaultPoemRepository : PoemRepository {
         let poemObservables = param.id.map { getPoemInfo(type: param.wordCount, id: $0).asObservable() }
         
         return Observable.merge(poemObservables).asSingle()
-        
     }
     
     private func getPoemInfo(type: Int, id: String) -> Single<[PoemModel]>{
@@ -50,8 +49,5 @@ final class DefaultPoemRepository : PoemRepository {
 //        
 //    }
 }
-
-
-
 
 typealias PoemService = MoyaProvider<API>

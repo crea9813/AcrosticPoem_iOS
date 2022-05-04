@@ -75,6 +75,12 @@ class PoemAddViewController : UIViewController {
            $0.layer.borderColor = UIColor(red:0.66, green:0.58, blue:0.56, alpha:1.0).cgColor
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        initView()
+        bind()
+    }
+    
     func initView() {
            view.backgroundColor = UIColor(red: 0.96, green: 0.96, blue: 0.94, alpha: 1.00)
            

@@ -11,11 +11,16 @@ import RxSwift
 import RxRelay
 import RxCocoa
 
+protocol PoemCellAction: AnyObject {
+    func didLikeButtonClicked(with id: String)
+    func didReportButtonClicked(with id: String)
+}
+
 class PoemCell: UICollectionViewCell {
-    
     static let identifier = "PoemCell"
-
-
+    
+    weak var action: PoemCellAction?
+    
     let poemFirst = UILabel()
     let poemSecond = UILabel()
     let poemThird = UILabel()
@@ -41,30 +46,16 @@ class PoemCell: UICollectionViewCell {
     
     let likeCount = UILabel()
     
-    let BASE_URL = "http://149.28.22.157:4567/"
-    
-    public func configure(with poemID : String) {
-        
-    }
-    
     // PoemModel로 Cell의 내용을 초기화
     public func configure(with model: PoemModel){
-        
-        if !model.image.isEmpty {
-            let url = URL(string: BASE_URL+model.image)
-            let data = try! Data(contentsOf: url!)
-            
+        if let imageURL = model.image, let url = URL(string: "http://149.28.22.157:4567/\(imageURL)") {
+            let data = try! Data(contentsOf: url)
+            poemImage.isHidden = false
             poemImage.image = UIImage(data: data)
-        }else{
-            poemImage.image = nil
-            poemImage.snp.remakeConstraints {
-                $0.top.equalTo(poemThird.snp.bottom).offset(30)
-                $0.leading.equalTo(self).offset(20)
-                $0.trailing.equalTo(self).inset(20)
-                $0.height.equalTo(poemImage.snp.width).multipliedBy(0)
-            }
-        }
+        } else { poemImage.isHidden = true }
         
+        likeButton.isSelected = model.liked
+        likeCount.text = "\(model.like)"
         poemFirst.text = "\(model.word[0].word) : \(model.word[0].line)"
         poemSecond.text = "\(model.word[1].word) : \(model.word[1].line)"
         poemThird.text = "\(model.word[2].word) : \(model.word[2].line)"
@@ -88,13 +79,6 @@ class PoemCell: UICollectionViewCell {
             attributedStr.addAttribute(.font, value: UIFont(name: "HYgsrB", size: CGFloat(40-model.word[2].line.count))!, range: (poemThird.text! as NSString).range(of: model.word[2].line ))
             poemThird.attributedText = attributedStr
         }
-        if model.liked {
-            likeButton.isSelected = true
-        } else {
-            likeButton.isSelected = false
-        }
-        
-        likeCount.text = "\(model.like)"
     }
     
     private func setupView() {
@@ -173,7 +157,7 @@ class PoemCell: UICollectionViewCell {
     }
     
     override func prepareForReuse() {
-        
+        poemImage.image = nil
     }
 
 }

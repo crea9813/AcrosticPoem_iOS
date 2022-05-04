@@ -79,36 +79,7 @@ final class PoemViewModel: ViewModelType {
     private let poemType = BehaviorRelay<PoemType>(value: .three)
     private let useCase : PoemUseCaseProtocol
     private let coordinator: PoemFlowCoordinator
-    // MARK: - Input & Output
-    
-    struct Input {
-        let viewWillAppear : Observable<Void>
-        let didAddButtonClicked: Observable<Void>
-//        let didLikeButtonClicked: Observable<String>
-//        let didReportButtonClicked: Observable<String>
-    }
-    
-    struct Output {
-        let error: Driver<Error>
-        let info: Driver<Poems>
-        let poems: Driver<[PoemModel]>
-    }
-    
-    // MARK: - Transform
-    
-    func transform(input: Input) -> Output {
-        let errorTracker = ErrorTracker()
-        
-        let info = input.viewWillAppear.withLatestFrom(self.poemType).flatMapLatest { [unowned self] type -> Observable<Poems> in
-            return self.useCase.getPoemList(type: type).trackError(errorTracker).catchErrorJustComplete()
-        }
-        
-        let poems = info.map { $0.poemID }.flatMapLatest { [unowned self] list -> Observable<[PoemModel]> in
-            return self.useCase.getPoemInfo(param: PoemInfoRequestModel(wordCount: self.poemType.value.rawValue, id: list)).trackError(errorTracker).catchErrorJustComplete()
-        }
-        
-        return Output(error: errorTracker.asDriver(), info: info.asDriverOnErrorJustComplete(), poems: poems.asDriver(onErrorJustReturn: []))
-    }
+    private let disposeBag = DisposeBag()
     
     // MARK: - Init
     
@@ -117,6 +88,63 @@ final class PoemViewModel: ViewModelType {
         self.coordinator = coordinator
     }
     
+    // MARK: - Input & Output
+    
+    struct Input {
+        let viewWillAppear : Observable<Void>
+        let didAddButtonClicked: Observable<Void>
+        let didLikeButtonClicked: Observable<String>
+        let didReportButtonClicked: Observable<String>
+    }
+    
+    struct Output {
+        let error: Driver<Error>
+        let isLoading: Driver<Bool>
+        let info: Driver<Poems>
+        let poems: Driver<[PoemModel]>
+    }
+    
+    // MARK: - Transform
+    
+    func transform(input: Input) -> Output {
+        let errorTracker = ErrorTracker()
+        let loadingTracker = BehaviorRelay<Bool>(value: false)
+        
+        let info = input.viewWillAppear.withLatestFrom(self.poemType).flatMapLatest { [unowned self] type -> Observable<Poems> in
+            loadingTracker.accept(true)
+            return self.useCase.getPoemList(type: type)
+                .trackError(errorTracker)
+                .do(onError: {
+                    _ in
+                    loadingTracker.accept(false)
+                })
+                .catchErrorJustComplete()
+        }
+        
+        let poems = info.map { $0.poemID }.flatMapLatest { [unowned self] list -> Observable<[PoemModel]> in
+            return self.useCase.getPoemInfo(param: PoemInfoRequestModel(wordCount: self.poemType.value.rawValue, id: list))
+                .trackError(errorTracker)
+                .do(onNext: {
+                    _ in
+                    loadingTracker.accept(false)
+                }, onError: {
+                    _ in
+                    loadingTracker.accept(false)
+                })
+                .catchErrorJustComplete()
+        }
+        
+        input.didAddButtonClicked.withLatestFrom(info).bind {
+            [weak self] info in
+            guard let self = self else { return }
+            self.coordinator.showPoemAdds(title: info.title)
+        }.disposed(by: disposeBag)
+        
+        return Output(error: errorTracker.asDriver(),
+                      isLoading: loadingTracker.asDriver(),
+                      info: info.asDriverOnErrorJustComplete(),
+                      poems: poems.asDriver(onErrorJustReturn: []))
+    }
 }
 
 
@@ -127,7 +155,7 @@ final class ErrorTracker: SharedSequenceConvertibleType {
     
     func trackError<O: ObservableConvertibleType>(from source: O) -> Observable<O.Element> {
         return source.asObservable().do(onError: onError)
-            }
+    }
     
     func asSharedSequence() -> SharedSequence<SharingStrategy, Error> {
         return _subject.asObservable().asDriverOnErrorJustComplete()

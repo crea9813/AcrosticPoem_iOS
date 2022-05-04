@@ -39,7 +39,6 @@ class DefaultPoemFlowCoordinator: PoemFlowCoordinator {
     func start() {
         let vc = dependencies.makePoemViewController(coordinator: self)
         navigationController.pushViewController(vc, animated: false)
-        //moviesListVC = vc
     }
     
     func showPoemAdds(title: String) {
