@@ -22,7 +22,6 @@ class PoemViewController : UIViewController {
     private let didLikeButtonClicked = PublishRelay<String>()
     private let didReportButtonClicked = PublishRelay<String>()
     
-    private var wordCount : Int = 3
     private var currentIndex : Int = 0
     private let poemView = UIView()
     
