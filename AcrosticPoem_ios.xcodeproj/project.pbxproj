@@ -45,6 +45,9 @@
 		8576BF3325712D9C001AFB2A /* PoemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8576BF3225712D9C001AFB2A /* PoemCell.swift */; };
 		85D1FB2D256549FF0005E7A1 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D1FB2C256549FF0005E7A1 /* API.swift */; };
 		85D1FB3F256D319F0005E7A1 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D1FB3E256D319F0005E7A1 /* UICollectionView+Extension.swift */; };
+		8807515529B810BA00B89E79 /* LoadingTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8807515429B810BA00B89E79 /* LoadingTracker.swift */; };
+		8807515729B810C700B89E79 /* ErrorTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8807515629B810C700B89E79 /* ErrorTracker.swift */; };
+		8807515A29B8160200B89E79 /* ViewModelType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8807515929B8160200B89E79 /* ViewModelType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -90,6 +93,9 @@
 		8576BF3225712D9C001AFB2A /* PoemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PoemCell.swift; sourceTree = "<group>"; };
 		85D1FB2C256549FF0005E7A1 /* API.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = "<group>"; };
 		85D1FB3E256D319F0005E7A1 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
+		8807515429B810BA00B89E79 /* LoadingTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingTracker.swift; sourceTree = "<group>"; };
+		8807515629B810C700B89E79 /* ErrorTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorTracker.swift; sourceTree = "<group>"; };
+		8807515929B8160200B89E79 /* ViewModelType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelType.swift; sourceTree = "<group>"; };
 		C6AAD7468D29BB4951E9952B /* Pods-AcrosticPoem_ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AcrosticPoem_ios.debug.xcconfig"; path = "Target Support Files/Pods-AcrosticPoem_ios/Pods-AcrosticPoem_ios.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -203,6 +209,7 @@
 				2F1940252783F936001C75A3 /* AppDiContainer.swift */,
 				2FA60E322375027F006A2445 /* Fonts */,
 				2FEFF08025146C9C00AB7DD8 /* Delegates */,
+				8807515829B810DB00B89E79 /* Utility */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -355,13 +362,8 @@
 		2FEFF07C25146A9900AB7DD8 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				8576BF2D256FD949001AFB2A /* Constant.swift */,
-				2FEFF07A25146A7C00AB7DD8 /* LabelTextSpacing.swift */,
-				2F2071FE251488AD009B48FF /* ImageConvert.swift */,
-				8576BF2A256FD7A2001AFB2A /* AlertUtil.swift */,
 				85D1FB3E256D319F0005E7A1 /* UICollectionView+Extension.swift */,
 				85316BF425731E9800694B80 /* UITextField+Extension.swift */,
-				85569D7825B6BF9E004BB1BE /* Loading.swift */,
 				2F212DEB2822347B00DAAA52 /* Reactive+Extension.swift */,
 			);
 			path = Extensions;
@@ -383,6 +385,21 @@
 				253D7F72AECCB5A0DE6F16C0 /* Pods-AcrosticPoem_ios.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		8807515829B810DB00B89E79 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				8576BF2D256FD949001AFB2A /* Constant.swift */,
+				2F2071FE251488AD009B48FF /* ImageConvert.swift */,
+				85569D7825B6BF9E004BB1BE /* Loading.swift */,
+				8576BF2A256FD7A2001AFB2A /* AlertUtil.swift */,
+				2FEFF07A25146A7C00AB7DD8 /* LabelTextSpacing.swift */,
+				8807515429B810BA00B89E79 /* LoadingTracker.swift */,
+				8807515629B810C700B89E79 /* ErrorTracker.swift */,
+				8807515929B8160200B89E79 /* ViewModelType.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 		C2D1468C1650BA55448DB746 /* Frameworks */ = {
@@ -518,12 +535,14 @@
 				2F1940182783EB57001C75A3 /* PoemRequestDTO.swift in Sources */,
 				2F212DEC2822347B00DAAA52 /* Reactive+Extension.swift in Sources */,
 				2F2A48102784457700B2F861 /* DefaultPoemAddRepository.swift in Sources */,
+				8807515A29B8160200B89E79 /* ViewModelType.swift in Sources */,
 				2F2A48092784426400B2F861 /* PoemAddViewModel.swift in Sources */,
 				2F2071FF251488AD009B48FF /* ImageConvert.swift in Sources */,
 				2FEFF07B25146A7C00AB7DD8 /* LabelTextSpacing.swift in Sources */,
 				2F1940162783E807001C75A3 /* PoemResponseDTO.swift in Sources */,
 				2F1940262783F936001C75A3 /* AppDiContainer.swift in Sources */,
 				2F5C965023714CA500A248C1 /* AppDelegate.swift in Sources */,
+				8807515729B810C700B89E79 /* ErrorTracker.swift in Sources */,
 				2FA9267F2783C1870024044F /* PoemRepository.swift in Sources */,
 				2F212DF02822720900DAAA52 /* SplashViewModel.swift in Sources */,
 				2F2A480C2784444100B2F861 /* PoemAddRepository.swift in Sources */,
@@ -535,6 +554,7 @@
 				2F1940222783F4BA001C75A3 /* SceneDIContainer.swift in Sources */,
 				2F5C965223714CA500A248C1 /* SceneDelegate.swift in Sources */,
 				85569D7925B6BF9E004BB1BE /* Loading.swift in Sources */,
+				8807515529B810BA00B89E79 /* LoadingTracker.swift in Sources */,
 				8576BF3325712D9C001AFB2A /* PoemCell.swift in Sources */,
 				85D1FB3F256D319F0005E7A1 /* UICollectionView+Extension.swift in Sources */,
 				85316BF525731E9800694B80 /* UITextField+Extension.swift in Sources */,

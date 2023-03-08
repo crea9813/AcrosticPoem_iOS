@@ -37,12 +37,18 @@ class PoemViewController : UIViewController {
     private func bind() {
         assert(viewModel != nil)
         
-        let input = PoemViewModel.Input(
-            viewWillAppear: self.rx.viewWillAppear.map { _ in Void() }.asObservable(),
-            didAddButtonClicked: add.rx.tap.asObservable(),
-            didLikeButtonClicked: didLikeButtonClicked.asObservable(),
-            didReportButtonClicked: didReportButtonClicked.asObservable()
-        )
+        let viewWillAppear = self.rx.viewWillAppear.mapToVoid().asDriverOnErrorJustComplete()
+        
+        let didAddButtonClicked = self.add.rx.tap.asDriver()
+        
+        let didLikeButtonClicked = self.didLikeButtonClicked.asDriverOnErrorJustComplete()
+        
+        let didReportButtonClicked = self.didReportButtonClicked.asDriverOnErrorJustComplete()
+        
+        let input = PoemViewModel.Input(viewWillAppear: viewWillAppear,
+                                        didAddButtonClicked: didAddButtonClicked,
+                                        didLikeButtonClicked: didLikeButtonClicked,
+                                        didReportButtonClicked: didReportButtonClicked)
         
         let output = viewModel.transform(input: input)
         
@@ -69,6 +75,8 @@ class PoemViewController : UIViewController {
             cell.configure(with: item)
             cell.action = self
         }.disposed(by: disposeBag)
+        
+        output.addPoem.drive().disposed(by: disposeBag)
     }
     
     // MARK: - viewDidLoad
